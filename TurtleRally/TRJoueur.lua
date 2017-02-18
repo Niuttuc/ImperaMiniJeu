@@ -67,7 +67,7 @@ function demandeChoix()
 	affichage("all",{action="CHOIX"})
 	local total=actifs()
 	local retour={}
-	while true end
+	while total~=0 do
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
 		-- TROUVER ID JOUEUR
 		
