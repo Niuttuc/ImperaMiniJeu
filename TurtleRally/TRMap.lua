@@ -4,65 +4,57 @@ print("LOAD Map v0.05")
 -- renvoi bool pour deplacement autorise ou non
 -- verifier apres si il n y pas un autre joueur
 -- renvoi degat subit
-tuilesAvent={
-	libre=function()
+local tuilesAvent={
+	libre=function(x,y)
 		return true, 0
 	end,
-	mur=function()
+	mur=function(x,y)
 		return false,0
 	end,
-	murR=function()
-		if mur.getEtat("rouge") then return false, 0
+	mur2=function(x,y)
+		if mur.getEtat(x,y) then return false, 0
 		else return true,0 end
 	end,
-	murB=function()
-		if mur.getEtat("bleu") then return false, 0
-		else return true,0 end
-	end,
-	boutR=function()
+	bout=function(x,y)
 		return true,0
 	end,
-	boutB=function()
-		return true,0
-	end,
-	pique=function()
+	pique=function(x,y)
 		return false,1
 	end,
-	tapiXP=function()
+	tapiXP=function(x,y)
 		return true,0
 	end,
-	tapiXM=function()
+	tapiXM=function(x,y)
 		return true,0
 	end,
-	tapiYM=function()
+	tapiYM=function(x,y)
 		return true,0
 	end,
-	tapiYP=function()
+	tapiYP=function(x,y)
 		return true,0
 	end,
-	bonus=function()
+	bonus=function(x,y)
 		return true,0
 	end,
-	trou=function()
+	trou=function(x,y)
 		return true,0
 	end,
-	laser=function()
+	laser=function(x,y)
 		return true,0
 	end,
-	etape=function()
+	etape=function(x,y)
 		return true,0
 	end
 }
+function preAction(case,x,y)
+	return tuilesAvent[case](x,y)
+end
 -- Fonction execute apres deplacement ou rotation du joueur
 tuilesApres={
 	libre=function(joueur) return end,
-	murR=function(joueur) return end,
-	murB=function(joueur) return end,
-	boutR=function(joueur)
+	mur2=function(joueur) return end,
+	bout=function(joueur)
 		mur.test("bleu","rouge")
-		return
-	end,
-	boutB=function(joueur)
 		mur.test("rouge","bleu")
 		return
 	end,

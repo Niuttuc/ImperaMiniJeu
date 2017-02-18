@@ -32,8 +32,15 @@ function test(couleurUp,couleurDown)
 		redstone.getBundledInput(redstoneSide,mur[couleurUp].couleur)
 	end	
 end
-function getEtat(couleur)
-	return mur[couleur].etat
+function getEtat(x,y)
+	for cMur, data in pairs(mur) do
+		for i, pos in pairs(data.position) do
+			if pos.x==x and pos.y == y then
+				return data.etat
+			end
+		end
+	end
+	error("Pas de mur en "..x.." "..y)
 end
 function reset()
 	mur["rouge"].etat=false

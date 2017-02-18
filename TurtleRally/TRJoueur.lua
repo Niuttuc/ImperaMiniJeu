@@ -103,7 +103,7 @@ function lancementGame()
 			actuVie(idJoueur)		
 			liste[idJoueur].coeur=config.get("coeur")
 			actuCoeurAff(idJoueur)
-			joueur.affichage("all",{action="LOBY"})
+			joueur.affichage("all",{action="WAIT"})
 		else
 			joueur.affichage("all",{action="TOOLATE"})
 		end
@@ -123,6 +123,13 @@ function affichageJ(idJoueur,quoi)
 	quoi.coeur=liste[idJoueur].coeur
 	quoi.checkpoint=liste[idJoueur].checkpoint
 	modem.pp.transmit(liste[idJoueur].couleur+1,84,quoi)
+end
+function trouver(x,y)
+	for idJoueur=1,#liste do
+		if liste[idJoueur].position.x==x and liste[idJoueur].position.y==y then
+			return idJoueur
+		end
+	end
 end
 function demandeChoix()
 	affichage("all",{action="CHOIX"})
@@ -145,9 +152,10 @@ function attenteInscription()
 		
 		if liste[idJoueur].actif then
 			liste[idJoueur].actif=false	
-			-- DEMANDE AFFICHAGE REGARDE ECRAN
+			joueur.affichage("all",{action="LOBY"})
 		else
 			liste[idJoueur].actif=true
+			joueur.affichage("all",{action="OPEN"})
 			-- DEMANDE AFFICHAGE ECRAN POUR REJOINDRE
 		end
 		local cursY=2
@@ -194,10 +202,16 @@ function envie()
 		return true
 	end
 end
-function actuCoeurAff(i)
-	liste[i].affCoeur.clear()
-	liste[i].affCoeur.setCursorPos(2,1)
-	liste[i].affCoeur.write(liste[i].coeur.." coeur")	
+function actuCoeurAff(idJoueur)
+	liste[idJoueur].affCoeur.clear()
+	liste[idJoueur].affCoeur.setCursorPos(2,1)
+	liste[idJoueur].affCoeur.write(liste[idJoueur].coeur.." coeur")	
+end
+function degat(idJoueur)
+	liste[idJoueur].coeur=liste[idJoueur].coeur-1
+	if liste[idJoueur].coeur<0 then liste[idJoueur].coeur=0 end
+	actuCoeurAff(idJoueur)
+	affichage(idJoueur,{action="INFO"})
 end
 function tirageOrdre()
 	local joueurTirage={}

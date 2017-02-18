@@ -68,9 +68,10 @@ while true do
 							x,y=joueur.calculCoord(idJoueur,actions[idJoueur][tour])
 							if joueur.present(x,y) then
 								reussi=false
+								joueur.degat(joueur.trouver(x,y))
 							else 
 								local case=map.get(x,y)
-								
+								reussi, degat=map.preAction(case,x,y)
 								-- COORD SI AVANT
 								-- POSSIBLE ?
 									-- AVANCER

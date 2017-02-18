@@ -1,0 +1,39 @@
+Tous les objets contienne également vie (nombre de vie restante), coeur (nombre de point de résistance ou coeur), checkpoint (dernier checkpoint atteint, 0 si aucun)
+
+{action="infoTour",status=true,tour=tour}
+Quand : Au moment ou le jeu fait bouger la turtle 
+Pour : mise à jour visuel de la liste d'action choisi
+Quoi : 
+status => si oui on nous l'action à reussi
+tour => numero de l'action entre 1 et 5
+
+{action="WAIT"}
+Quand : Juste avant le lancement de la préparation du jeu (tirage départ, tirage bonus, deplacement des turtles)
+Pour : Afficher un ecran d'attente
+
+{action="TOOLATE"}
+Quand : Juste avant le lancement de la préparation du jeu (tirage départ, tirage bonus, deplacement des turtles)
+Pour : Afficher un ecran partie encours, impossible de rejoindre
+
+{action="LOBY"}
+Quand : Quand le joueur à bien été enregistré dans la partie, en attente de lancement
+Pour : Valider l'inscription du joueur et lui donné la posibilité de leave
+Retour : String "QUIT" pour quitter
+
+{action="CHOIX"}
+Quand : Quand le jeu demande le choix de chaque joueur
+Pour : Tirrage au sort de la liste de choix (autant de choix que de coeur restant + blocage de choix si coeur<5)
+Retour attendu : Liste des 5 actions
+
+{action="TIMER"}
+Quand : Apres que le premier joueur à validé sont choix
+Pour : Déclangé un timer de 30 sec avant validation aléatoire
+Retour attendu : Liste des 5 actions {"avence1","avence1","avence1","avence1","avence1"}
+
+{action="OPEN"}
+Quand : Lancement d'une nouvelle partie
+Pour : Permettre au joueur de rejoindre
+Retour : String "JOIN" pour rejoindre
+
+{action="INFO"}
+Quand : Après changement d'info de coeur, vie, checkoint en dehors d'une action précédente
