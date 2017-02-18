@@ -33,7 +33,7 @@ function proxFunc()
 	local func=functions[id]
 	local prec=0
 	for i=1,id do
-		if functions[i]==func do
+		if functions[i]==func then
 			prec=prec+1
 		end
 	end
