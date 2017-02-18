@@ -119,3 +119,6 @@ function add(x,y,ttype,info,info2)
 		etape.add(x,y,info)
 	end
 end
+function get(x,y)
+	return maps[x][y]
+end

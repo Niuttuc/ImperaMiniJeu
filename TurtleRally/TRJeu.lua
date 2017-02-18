@@ -55,13 +55,36 @@ while true do
 						or  actions[idJoueur][tour]=="trigoTurn" 
 						or  actions[idJoueur][tour]=="turnBack"  
 					then -- Tourne droite
-						joueur.tourne(idJoueur,actions[idJoueur][tour])
+						joueur.tourne(idJoueur,actions[idJoueur][tour],tour)						
 					else
-						-- COORD SI AVANT
-						-- POSSIBLE ?
-							-- AVANCER
-							-- REACTION
+						if actions[idJoueur][tour]=="avance2" then
+							local enXfois=2
+							actions[idJoueur][tour]=="avance1"
+						else 
+							local enXfois=1
+						end
+						for minTour=1, enXfois do
+							local reussi=true
+							x,y=joueur.calculCoord(idJoueur,actions[idJoueur][tour])
+							if joueur.present(x,y) then
+								reussi=false
+							else 
+								local case=map.get(x,y)
+								
+								-- COORD SI AVANT
+								-- POSSIBLE ?
+									-- AVANCER
+									-- REACTION
+							end
+						end
+						if reussi then
+							joueur.affichage(idJoueur,{action="infoTour",tour=tour,status=true})
+						else
+							joueur.affichage(idJoueur,{action="infoTour",tour=tour,status=false})
+						end
 					end
+				else
+					joueur.affichage(idJoueur,{action="infoTour",status=false})
 				end
 			end
 		end

@@ -27,6 +27,65 @@ function config(couleur,nom,y)
 	
 	table.insert(liste,data)
 end
+function tourne(idJoueur,action,tour)
+	if action=="clockTurn" then
+		if liste[idJoueur].direction=="MY" then
+			liste[idJoueur].direction="PX"
+		elseif liste[idJoueur].direction=="PX" then
+			liste[idJoueur].direction="PY"
+		elseif liste[idJoueur].direction=="PY" then
+			liste[idJoueur].direction="MX"
+		elseif liste[idJoueur].direction=="MX" then
+			liste[idJoueur].direction="MY"
+		end
+	elseif action=="trigoTurn" then
+		if liste[idJoueur].direction=="MY" then
+			liste[idJoueur].direction="MX"
+		elseif liste[idJoueur].direction=="PX" then
+			liste[idJoueur].direction="MY"
+		elseif liste[idJoueur].direction=="PY" then
+			liste[idJoueur].direction="PX"
+		elseif liste[idJoueur].direction=="MX" then
+			liste[idJoueur].direction="PY"
+		end
+	elseif action=="turnBack" then
+		if liste[idJoueur].direction=="MY" then
+			liste[idJoueur].direction="PY"
+		elseif liste[idJoueur].direction=="PX" then
+			liste[idJoueur].direction="MX"
+		elseif liste[idJoueur].direction=="PY" then
+			liste[idJoueur].direction="MY"
+		elseif liste[idJoueur].direction=="MX" then
+			liste[idJoueur].direction="PX"
+		end
+	end
+	modem.pp.transmit(liste[idJoueur].couleur,84,action)
+	affichage(idJoueur,{action="infoTour",status=true,tour=tour})
+	event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
+end
+function calculCoord(idJoueur,action)
+	if action=="avance1" then
+		if liste[idJoueur].direction=="MY" then
+			return liste[idJoueur].position.x,liste[idJoueur].position.y-1
+		elseif liste[idJoueur].direction=="PX" then
+			return liste[idJoueur].position.x+1,liste[idJoueur].position.y
+		elseif liste[idJoueur].direction=="PY" then
+			return liste[idJoueur].position.x,liste[idJoueur].position.y+1
+		elseif liste[idJoueur].direction=="MX" then
+			return liste[idJoueur].position.x-1,liste[idJoueur].position.y
+		end
+	elseif action=="backUp" then
+		if liste[idJoueur].direction=="MY" then
+			return liste[idJoueur].position.x,liste[idJoueur].position.y+1
+		elseif liste[idJoueur].direction=="PX" then
+			return liste[idJoueur].position.x-1,liste[idJoueur].position.y
+		elseif liste[idJoueur].direction=="PY" then
+			return liste[idJoueur].position.x,liste[idJoueur].position.y-1
+		elseif liste[idJoueur].direction=="MX" then
+			return liste[idJoueur].position.x+1,liste[idJoueur].position.y
+		end
+	end
+end
 function actifs()
 	local qte=0
 	-- FONCTION NB JOUEUR ACTIF A CREE
@@ -44,7 +103,7 @@ function lancementGame()
 			actuVie(idJoueur)		
 			liste[idJoueur].coeur=config.get("coeur")
 			actuCoeurAff(idJoueur)
-			joueur.affichage("all",{action="ATTENTE"})
+			joueur.affichage("all",{action="LOBY"})
 		else
 			joueur.affichage("all",{action="TOOLATE"})
 		end
@@ -62,6 +121,7 @@ end
 function affichageJ(idJoueur,quoi)
 	quoi.vie=liste[idJoueur].vie
 	quoi.coeur=liste[idJoueur].coeur
+	quoi.checkpoint=liste[idJoueur].checkpoint
 	modem.pp.transmit(liste[idJoueur].couleur+1,84,quoi)
 end
 function demandeChoix()
