@@ -1,4 +1,6 @@
 xmax,ymax=term.getSize()
+colorString=string.lower(string.sub(os.getComputerLabel(),7,-1))
+color=colors[colorString]
 
 beforeGame=window.create(term.current(),1,1,xmax,ymax,false)
 
