@@ -1,6 +1,7 @@
-print("LOAD joueur v1.09")
+print("LOAD joueur v1.11")
 local liste={}
 local ecran=config.ecran()
+local modem=config.modem()
 
 function config(couleur,nom,y)
 	local data={
@@ -61,7 +62,7 @@ end
 function affichageJ(idJoueur,quoi)
 	quoi.vie=liste[idJoueur].vie
 	quoi.coeur=liste[idJoueur].coeur
-	modem.transmit(liste[idJoueur].couleur+1,84,quoi)
+	modem.pp.transmit(liste[idJoueur].couleur+1,84,quoi)
 end
 function demandeChoix()
 	affichage("all",{action="CHOIX"})
@@ -78,7 +79,7 @@ function demandeChoix()
 	return retour
 end
 function attenteInscription()
-	while true end
+	while true do
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
 		-- TROUVER ID JOUEUR
 		
@@ -177,10 +178,10 @@ function tirageDepart()
 		liste[idJoueur].idDepart=idDepart
 		table.remove(joueurTirage,index)
 		if liste[idJoueur].actif then
-			modem.transmit(liste[idJoueur].couleur,84,{"onboard",{x=x,y=y}})
+			modem.pp.transmit(liste[idJoueur].couleur,84,{"onboard",{x=x,y=y}})
 			enAttente=enAttente+1
 		else
-			modem.transmit(liste[idJoueur].couleur,84,"home")
+			modem.pp.transmit(liste[idJoueur].couleur,84,"home")
 		end
 	end
 	print("Attente de "..enAttente.." turtle")
