@@ -10,35 +10,35 @@
 avance1={
 		nomListe='Avance 1',
 		weight=7,
-		message='forward 1',
+		message='avance1',
 		}
 
 avance2={
 		nomListe='Avance 2',
 		weight=1,
-		message='forward 2',
+		message='avance2',
 		}
 
 clockTurn={
 		nomListe='Tour droite',
 		weight=8,
-		message='turnRight 1',
+		message='clockTurn',
 		}
 
 trigoTurn={
 		nomListe='Tour gauche',
 		weight=8,
-		message='turnLeft 1',
+		message='trigoTurn',
 		}
 
 turnBack={
 		nomListe='Demi-tour',
 		weight=8,
-		message='turnLeft 2',
+		message='turnBack',
 		}
 
 backUp={
 		nomListe='Recule 1',
 		weight=8,
-		message='goBack 1',
+		message='backUp',
 		}
