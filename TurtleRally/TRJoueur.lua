@@ -172,7 +172,7 @@ function demandeChoix()
 	while total~=0 do
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
 		for idJoueurTemp=1,#liste do
-			if liste[idJoueurTemp].couleur=replyFrequency-1 then
+			if liste[idJoueurTemp].couleur==replyFrequency-1 then
 				idJoueur=idJoueurTemp
 			end
 		end
@@ -190,7 +190,7 @@ function attenteInscription()
 	while true do		
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
 		for idJoueurTemp=1,#liste do
-			if liste[idJoueurTemp].couleur=replyFrequency-1 then
+			if liste[idJoueurTemp].couleur==replyFrequency-1 then
 				idJoueur=idJoueurTemp
 			end
 		end

@@ -61,7 +61,7 @@ while true do
 						else
 							if actions[idJoueur][tour]=="avance2" then
 								local enXfois=2
-								actions[idJoueur][tour]=="avance1"
+								actions[idJoueur][tour]="avance1"
 							else 
 								local enXfois=1
 							end
