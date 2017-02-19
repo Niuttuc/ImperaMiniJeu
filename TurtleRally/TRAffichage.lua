@@ -48,6 +48,7 @@ function actuFenetre(fenetre,aff,couleur)
 	fenetre.setBackgroundColor(couleur)
 	fenetre.clear()
 	fenetre.setCursorPos(1,1)
+	print("-"..aff.."-")
 	fenetre.write(aff)
 end
 function attenteLancement()
@@ -70,7 +71,7 @@ function attenteLancement()
 	boutonLancement.setVisible(true)
 	while not(config.get("partie")) do
 		event, ecranN, xPos, yPos = os.pullEvent("monitor_touch")
-		print(xPos.." "..yPos)
+		print("Cliquer "..xPos.." "..yPos)
 		print((ecranW-12).." "..(ecranH-3))
 		if xPos>=ecranW-12 and yPos<=ecranH-3 then
 			print("Bouton")
@@ -78,7 +79,7 @@ function attenteLancement()
 				config.set("partie",true)
 			end
 		else
-			for c, d in pairs(choix) do
+			for c, d in pairs(choix) doéa
 				if yPos==ecranH-hauteur+d.y then
 					print("Config "..c)
 					if xPos>=16 then
