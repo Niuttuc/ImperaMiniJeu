@@ -9,7 +9,7 @@ config.tailleY=18
 config.tailleX=14
 config.vie=3
 config.etape=4
-config.tcoeur=10
+config.coeur=10
 config.partie=false
 
 function get(id)
@@ -45,12 +45,12 @@ function affichageConf()
 end
 function joueurDef()
 	joueur.configFenetre(affichage.fenetreJoueurs(),affichage.ecranLargeur())
-	joueur.config(colors.yellow,"Jaune",2)
-	joueur.config(colors.pink,"Rose",3)
-	joueur.config(colors.brown,"Marron",4)
-	joueur.config(colors.purple,"Violet",5)
-	joueur.config(colors.blue,"Bleu",6)
-	joueur.config(colors.green,"Vert",7)
+	joueur.configJ(colors.yellow,"Jaune",2)
+	joueur.configJ(colors.pink,"Rose",3)
+	joueur.configJ(colors.brown,"Marron",4)
+	joueur.configJ(colors.purple,"Violet",5)
+	joueur.configJ(colors.blue,"Bleu",6)
+	joueur.configJ(colors.green,"Vert",7)
 end
 function mapDef()
 	map.add(5,2,"bonus","openperipheral_selector_84")

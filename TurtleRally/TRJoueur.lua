@@ -7,7 +7,7 @@ function configFenetre(fenetreC,tailleC)
 	fenetre=fenetreC
 	taille=tailleC
 end
-function config(couleur,nom,y)
+function configJ(couleur,nom,y)
 	local data={
 		couleur=couleur, -- couleur du joueur
 		nom=nom, -- nom de la couleur
