@@ -1,4 +1,4 @@
-print("LOAD joueur v1.16")
+print("LOAD joueur v1.17")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -14,7 +14,7 @@ function config(couleur,nom,y)
 		actif=false, -- Passe sur true quand le joueur a rejoint
 		vie=0, -- a 0 perdu
 		coeur=0, -- a 0 perd une vie retour au dernier checkpoint
-		position={x=x,y=y}, -- position actuel de la trutle
+		position={x=x,y=y}, -- position actuel de la trutleq
 		direction="MY",
 		checkpoint=0, -- 0 a 4 checkepoin en cours 0 pour départ
 		fenetre={} -- stock toutes les fenetres

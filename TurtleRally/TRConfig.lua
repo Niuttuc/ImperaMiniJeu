@@ -1,4 +1,4 @@
-print("LOAD Config v0.10")
+print("LOAD Config v0.11")
 
 local config=ahb.config("TR",{
 	ecran={typ="side",info="Ecran principal"},
@@ -7,10 +7,8 @@ local config=ahb.config("TR",{
 })
 config.tailleY=18
 config.tailleX=14
-config.tvie=3
-config.tvieDef=3
-config.tetape=4
-config.tetapeDef=4
+config.vie=3
+config.etape=4
 config.tcoeur=10
 config.partie=false
 
@@ -34,16 +32,16 @@ function modem()
 end
 
 function affichageConf()
-	affichage.addConfig("tvie",1,"Nb de vie")
-	affichage.addChoix(1,' 1 ',"tvie",false)
-	affichage.addChoix(3,' 3 ',"tvie",true)
-	affichage.addChoix(9,' 9 ',"tvie",false)
+	affichage.addConfig("vie",1,"Nb de vie")
+	affichage.addChoix(1,' 1 ',"vie",false)
+	affichage.addChoix(3,' 3 ',"vie",true)
+	affichage.addChoix(9,' 9 ',"vie",false)
 
-	affichage.addConfig("tetape",2,"Nb d'etape")
-	affichage.addChoix(1,' 1 ',"tetape",false)
-	affichage.addChoix(2,' 2 ',"tetape",false)
-	affichage.addChoix(3,' 3 ',"tetape",false)
-	affichage.addChoix(4,' 4 ',"tetape",true)
+	affichage.addConfig("etape",2,"Nb d'etape")
+	affichage.addChoix(1,' 1 ',"etape",false)
+	affichage.addChoix(2,' 2 ',"etape",false)
+	affichage.addChoix(3,' 3 ',"etape",false)
+	affichage.addChoix(4,' 4 ',"etape",true)
 end
 function joueurDef()
 	joueur.configFenetre(affichage.fenetreJoueurs(),affichage.ecranLargeur())
