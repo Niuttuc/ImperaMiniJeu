@@ -79,7 +79,7 @@ function attenteLancement()
 				config.set("partie",true)
 			end
 		else
-			for c, d in pairs(choix) doéa
+			for c, d in pairs(choix) do
 				if yPos==ecranH-hauteur+d.y then
 					print("Config "..c)
 					if xPos>=16 then
