@@ -7,7 +7,7 @@ os.loadAPI('choices')
 os.loadAPI('sync')
 os.loadAPI('clicAPI')
 totalWeight=0
-for i=1,#choices do
-	totalWeight=totalWeight+choices[i].weight
+for k,v in pairs(choices) do
+	totalWeight=totalWeight+choices.k.weight
 end
 
