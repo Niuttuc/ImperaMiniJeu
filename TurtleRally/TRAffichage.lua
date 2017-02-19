@@ -27,8 +27,7 @@ function addConfig(c,y,nom)
 		c=c,
 		y=y
 	}
-	hauteur=hauteur+1
-	fenetreConfig.reposition(1,ecranH-hauteur,16,hauteur)
+	hauteur=hauteur+1	
 end
 function addChoix(val,c,def) 
 	local data={
@@ -42,12 +41,14 @@ function addChoix(val,c,def)
 	for c, d in pairs(choix) do
 		m=math.max(m,#d.liste)
 	end
-	largeur=16+(m*3)
-	fenetreConfig.reposition(1,ecranH-hauteur,largeur,hauteur)
+	largeur=16+(m*3)	
 end
 
 function attenteLancement()
 	config.set("partie",false)
+	ecran.pp.clear()
+	fenetreConfig.reposition(1,ecranH-hauteur,largeur,hauteur)
+	fenetreConfig.setVisible(true)
 	for c, d in pairs(choix) do
 		for i=1, #d.liste do
 			if d.liste[i].def then
@@ -60,15 +61,19 @@ function attenteLancement()
 			end
 		end
 	end
+	boutonLancement.setVisible(true)
 	while not(config.get("partie")) do
 		event, ecranN, xPos, yPos = os.pullEvent("monitor_touch")
+		print(xPos.." "..yPos)
 		if xPos>=ecranW-12 and yPos<=ecranH-3 then
+			print("Bouton")
 			if joueur.actifs()>=2 then
 				config.set("partie",true)
 			end
 		else
 			for c, d in pairs(choix) do
 				if yPos==ecranH-hauteur+d.y then
+					print("Config "..c)
 					if xPos>=16 then
 						for i=1, #d.liste do
 							if xPos>=16+((i-1)*3) and xPos<16+(i*3) then
@@ -89,4 +94,6 @@ function attenteLancement()
 			end
 		end
 	end
+	fenetreConfig.setVisible(false)
+	boutonLancement.setVisible(false)
 end
