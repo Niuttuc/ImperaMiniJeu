@@ -15,7 +15,7 @@ Pour : Afficher un ecran d'attente
 Quand : Juste avant le lancement de la préparation du jeu (tirage départ, tirage bonus, deplacement des turtles)
 Pour : Afficher un ecran partie encours, impossible de rejoindre
 
-{action="LOBY"}
+{action="LOBBY"}
 Quand : Quand le joueur à bien été enregistré dans la partie, en attente de lancement
 Pour : Valider l'inscription du joueur et lui donné la posibilité de leave
 Retour : String "QUIT" pour quitter
@@ -28,7 +28,7 @@ Retour attendu : Liste des 5 actions
 {action="TIMER"}
 Quand : Apres que le premier joueur à validé sont choix
 Pour : Déclangé un timer de 30 sec avant validation aléatoire
-Retour attendu : Liste des 5 actions {"avence1","avence1","avence1","avence1","avence1"}
+Retour attendu : Liste des 5 actions {"avance1","avance1","avance1","avance1","avance1"}
 
 {action="OPEN"}
 Quand : Lancement d'une nouvelle partie

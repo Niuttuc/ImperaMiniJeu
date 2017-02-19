@@ -18,6 +18,20 @@ beforeGame.blit('   la  ','fffffff','eeeeeee')
 beforeGame.setCursorPos(xmax-6, 3)
 beforeGame.blit(' partie','fffffff','eeeeeee')
 
+
+
+
+WaitingScreen=window.create(term.current(),1,1,xmax,ymax,false)
+
+WaitingScreen.setBackgroundColor(color)
+WaitingScreen.setTextColor(colors.black)
+WaitingScreen.clear()
+ahb.center('Veuillez patienter',WaitingScreen,math.floor(ymax/2)-1)
+ahb.center("Une opération",WaitingScreen,math.floor(ymax/2))
+ahb.center(" est en cours.",WaitingScreen,math.floor(ymax/2)+1)
+
+
+
 leaveGame=window.create(term.current(),1,1,xmax,ymax,false)
 
 leaveGame.setBackgroundColor(colors.black)
@@ -37,14 +51,9 @@ ahb.center("Trop tard.",gameInProgress,math.floor(ymax/2))
 ahb.center(" Desole!",gameInProgress,math.floor(ymax/2)+1)
 
 
-gameInProgress=window.create(term.current(),1,1,xmax,ymax,false)
 
-gameInProgress.setBackgroundColor(colors.red)
-gameInProgress.setTextColor(colors.black)
-gameInProgress.clear()
-ahb.center('Partie en cours',gameInProgress,math.floor(ymax/2)-1)
-ahb.center("Trop tard.",gameInProgress,math.floor(ymax/2))
-ahb.center(" Desole!",gameInProgress,math.floor(ymax/2)+1)
+
+
 
 playWindow=window.create(term.current(),1,1,xmax,ymax,false)
 playWindow.setBackgroundColor(color)

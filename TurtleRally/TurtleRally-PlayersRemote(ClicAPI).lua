@@ -20,5 +20,4 @@ function waitCLic(xstart,ystart,xend,yend,func,...)
 		end
 		return false
 	end
-end
-
+end 

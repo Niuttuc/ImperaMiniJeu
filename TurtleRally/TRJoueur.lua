@@ -205,7 +205,7 @@ function attenteInscription()
 		if idJoueur~=-1 then
 			if liste[idJoueur].actif then
 				liste[idJoueur].actif=false	
-				joueur.affichage("all",{action="LOBY"})
+				joueur.affichage("all",{action="LOBBY"})
 			else
 				liste[idJoueur].actif=true
 				joueur.affichage("all",{action="OPEN"})
