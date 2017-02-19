@@ -28,7 +28,7 @@ function proxFunc()
 	local id=0
 	local funcArgs={}
 	for i=1,#actual do
-		if string.sub(tostring(actual[i]),9,-1)==string.sub(tostring(temp,9,1)) then
+		if string.sub(tostring(actual[i]),9,-1)==string.sub(tostring(coroutine.running()),9,1) then
 			print('foundit:',i)
 			id=i
 		end
