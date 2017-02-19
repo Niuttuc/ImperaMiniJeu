@@ -25,26 +25,30 @@ end
 
 function proxFunc()
 	actual[#actual+1]=coroutine.running()
+	local id=0
+	local funcArgs={}
 	for i=1,#actual do
-		if tostring(actual[i])==tostring(coroutine.running()) then
-			local id=i
+		if string.sub(tostring(actual[i]),9,-1)==string.sub(tostring(coroutine.running()),9,1) then
+			print('foundit:',i)
+			id=i
 		end
 	end
+	print(id,type(id))
 	local func=functions[id]
 	local prec=0
 	for i=1,id do
-		if tostringfunctions[i])==tostring(func) then
+		if functions[i]==func then
 			prec=prec+1
 		end
 	end
 	local doublon=0
 	for i=1,#args do
-		if tostring(args[i])==tostring(func) then
+		if args[i]==func then
 			doublon=doublon+1
 			if doublon==prec and args[i+1] and type(args[i+1]~=func) then
-				local funcArgs=args[i+1]
+				funcArgs=args[i+1]
 			else
-				local funcArgs={}
+				funcArgs={}
 			end
 		end
 	end
