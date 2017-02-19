@@ -5,10 +5,13 @@ function tirage()
 		table.insert(etapesTirage,etapesI)
 	end
 	for i=1, #etapes do
-		index=math.random(#etapesTirage)
-		etapes[i].numero=etapesTirage[index]
-		table.remove(etapesTirage,index)
-		
+		if i<=config.get("etape") then
+			index=math.random(#etapesTirage)
+			etapes[i].numero=etapesTirage[index]
+			table.remove(etapesTirage,index)
+		else
+			etapes[i].numero=""
+		end
 		etapes[i].ecran.pp.clear()
 		etapes[i].ecran.pp.setTextScale(5)
 		etapes[i].ecran.pp.setCursorPos(1,1)
@@ -22,7 +25,9 @@ end
 function passage(idJoueur,x,y)
 	for iEt=1,#etapes do
 		if etapes[iEt].x==x and etapes[iEt].y==y then
-			joueur.etape(idJoueur,etapes[iEt].numero)
+			if etapes[iEt].numero~="" then
+				joueur.etape(idJoueur,etapes[iEt].numero)
+			end
 		end
 	end
 end

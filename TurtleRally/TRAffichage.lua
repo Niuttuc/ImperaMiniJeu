@@ -16,7 +16,7 @@ boutonLancement.setTextColor(colors.white)
 ahb.center("Lancer",boutonLancement,2)
 
 local fenetreConfig=window.create(ecran.pp,1,ecranH-1,largeurConf,3,false)
-fenetreConfig.setBackgroundColor(colors.red)
+fenetreConfig.setBackgroundColor(colors.black)
 fenetreConfig.setTextColor(colors.white)
 fenetreConfig.clear()
 

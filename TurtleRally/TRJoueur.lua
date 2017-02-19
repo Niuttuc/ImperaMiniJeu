@@ -1,4 +1,4 @@
-print("LOAD joueur v1.17")
+print("LOAD joueur v1.18")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -347,16 +347,17 @@ function tirageOrdre()
 	for i=1, #joueurTirage do
 		index=math.random(#joueurTirage)
 		idJoueur=joueurTirage[index]		
-		table.remove(joueurTirage,index)
-		table.insert(idJoueur)
+		table.remove(joueurTirage,index)		
 		liste[idJoueur].ligne.reposition(1,cursY)
 		cursY=cursY+1
 	end
 	return retour
 end
 function etape(idJoueur,numero)
-	liste[idJoueur].checkpoint=numero
-	if liste[idJoueur].checkpoint==4 then
+	if liste[idJoueur].checkpoint==numero-1 then
+		liste[idJoueur].checkpoint=numero
+	end
+	if liste[idJoueur].checkpoint==config.get("etape") then
 		affichage(idJoueur,{action="GAGNER"})
 		config.set("partie",false)
 	end
