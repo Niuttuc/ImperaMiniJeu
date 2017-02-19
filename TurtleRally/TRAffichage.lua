@@ -1,4 +1,4 @@
-print("LOAD Affichage v0.02")
+print("LOAD Affichage v0.03")
 
 local ecran=config.ecran()
 local ecranW, ecranH = ecran.pp.getSize()
@@ -12,7 +12,7 @@ boutonLancement.setTextColor(colors.white)
 ahb.center("Lancer",boutonLancement,2)
 
 local fenetreConfig=window.create(ecran.pp,1,ecranH-1,16,3,true)
-fenetreConfig.setBackgroundColor(colors.black)
+fenetreConfig.setBackgroundColor(colors.red)
 fenetreConfig.setTextColor(colors.white)
 fenetreConfig.clear()
 
@@ -28,7 +28,7 @@ function addConfig(c,y,nom)
 		y=y
 	}
 	hauteur=hauteur+1
-	fenetreConfig.reposition(1,ecranH-hauteur,16,hauteur,largeur)
+	fenetreConfig.reposition(1,ecranH-hauteur,16,hauteur)
 end
 function addChoix(val,c,def) 
 	local data={
@@ -42,7 +42,8 @@ function addChoix(val,c,def)
 	for c, d in pairs(choix) do
 		m=math.max(m,#d.liste)
 	end
-	fenetreConfig.reposition(1,ecranH-hauteur,16+(m*3),hauteur,largeur)
+	largeur=16+(m*3)
+	fenetreConfig.reposition(1,ecranH-hauteur,largeur,hauteur)
 end
 
 function attenteLancement()
