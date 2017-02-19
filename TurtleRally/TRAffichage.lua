@@ -4,6 +4,9 @@ local ecran=config.ecran()
 local ecranW, ecranH = ecran.pp.getSize()
 local largeurConf=12
 
+function ecranLargeur()
+	return ecranW
+end
 ecran.pp.clear()
 
 local boutonLancement=window.create(ecran.pp,ecranW-12,ecranH-3,12,3,false)
@@ -57,6 +60,7 @@ end
 function attenteLancement()
 	config.set("partie",false)
 	ecran.pp.clear()
+	print(largeur+4)
 	fenetreConfig.reposition(1,ecranH-hauteur,largeur+4,hauteur)
 	fenetreConfig.setVisible(true)
 	for c, d in pairs(choix) do
