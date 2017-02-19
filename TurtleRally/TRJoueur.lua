@@ -282,7 +282,7 @@ function retourAlavie()
 						liste[idJoueur].position.y=y
 					end
 					modem.pp.transmit(liste[idJoueur].couleur,84,{"onboard",{x=x,y=y}})
-					os.sleep(0.5)
+					os.sleep(1)
 					enAttente=enAttente+1
 				end				
 			end
