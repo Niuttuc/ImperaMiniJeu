@@ -1,4 +1,4 @@
-print("LOAD joueur v1.13")
+print("LOAD joueur v1.14")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -351,7 +351,7 @@ function etape(idJoueur,numero)
 	liste[idJoueur].checkpoint=numero
 	if liste[idJoueur].checkpoint==4 then
 		affichage(idJoueur,{action="GAGNER"})
-		config.set(partie,false)
+		config.set("partie",false)
 	end
 end
 function tirageDepart()

@@ -1,4 +1,4 @@
-print("LOAD jeu v0.11")
+print("LOAD jeu v0.12")
 os.loadAPI("ahb")
 os.loadAPI("config")
 os.loadAPI("joueur")
@@ -8,13 +8,6 @@ os.loadAPI("etape")
 os.loadAPI("depart")
 os.loadAPI("map")
 
-game={
-	depart={},
-	etapes={},
-	partiePret=false,
-	nbJoueurEnvie=false
-}
-
 local modem=config.modem()
 modem.pp.open(84)
 
@@ -22,11 +15,11 @@ config.mapDef()
 config.joueurDef()
 
 function attenteLancement()
-	config.set(partie,false)
-	while not(config.get(partie)) do
+	config.set("partie",false)
+	while not(config.get("partie")) do
 		event, ecranN, xPos, yPos = os.pullEvent("monitor_touch")
 		if joueur.actifs()>=2 then
-			config.set(partie,true)
+			config.set("partie",true)
 		end
 	end
 end
@@ -44,12 +37,12 @@ while true do
 	
 	
 	
-	while config.get(partie) do
+	while config.get("partie") do
 		local ordre=joueur.tirageOrdre()
 		local actions=joueur.demandeChoix()
 		for tour=1, 5 do
 			for i=1, #ordre do
-				if config.get(partie) then
+				if config.get("partie") then
 					idJoueur=ordre[i]
 					if joueur.envie() then
 						if 
