@@ -26,6 +26,7 @@ end
 function proxFunc()
 	actual[#actual+1]=coroutine.running()
 	for i=1,#actual do
+		print('Actual[i]=',string.sub(tostring(actual[i]),9,-1),' Coroutine=',string.sub(tostring(coroutine.running()),9,1) )
 		if string.sub(tostring(actual[i]),9,-1)==string.sub(tostring(coroutine.running()),9,1) then
 			print('foundit:',i)
 			local id=i
