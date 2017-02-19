@@ -94,7 +94,7 @@ function deplacement(idJoueur,x,y,tour,tapis)
 				joueur.degat(idJoueur)
 			end
 			if reussi then
-				modem.pp.transmit(",{x=x,y=y}})
+				modem.pp.transmit(liste[idJoueur].couleur,84,{"bouge",{x=x,y=y}})
 				event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
 				liste[idJoueur].position.x=x
 				liste[idJoueur].position.y=y
