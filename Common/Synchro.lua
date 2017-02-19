@@ -65,6 +65,6 @@ function waitForAll(...)
 	args={...}
 	functions={keepFunc(...)}
 	actual={}
-	local parallel.waitForAll(argRep(#functions,proxFunc))
+	parallel.waitForAll(argRep(#functions,proxFunc))
 	return ret
 end
