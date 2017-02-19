@@ -3,6 +3,8 @@ print("LOAD Affichage v0.02")
 local ecran=config.ecran()
 local ecranW, ecranH = ecran.pp.getSize()
 
+ecran.pp.clear()
+
 local boutonLancement=window.create(ecran.pp,ecranW-12,ecranH-3,12,3,true)
 boutonLancement.setBackgroundColor(colors.yellow)
 boutonLancement.clear()
@@ -28,7 +30,7 @@ function addConfig(c,y,nom)
 	hauteur=hauteur+1
 	fenetreConfig.reposition(1,ecranH-hauteur,16,hauteur,largeur)
 end
-function addChoix(val,c,def) {
+function addChoix(val,c,def) 
 	local data={
 		fenetre=window.create(fenetreConfig,16+(#choix[c].liste*3),choix[c].y,3,1,true),
 		val=val,
@@ -41,9 +43,7 @@ function addChoix(val,c,def) {
 		m=math.max(m,#d.liste)
 	end
 	fenetreConfig.reposition(1,ecranH-hauteur,16+(m*3),hauteur,largeur)
-}
-
-config.affichageConf()
+end
 
 function attenteLancement()
 	config.set("partie",false)
@@ -90,3 +90,4 @@ function attenteLancement()
 	end
 end
 
+config.affichageConf()
