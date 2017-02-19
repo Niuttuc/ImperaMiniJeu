@@ -46,6 +46,7 @@ function affichageConf()
 	affichage.addChoix(4,' 4 ',"tetape",true)
 end
 function joueurDef()
+	joueur.configFenetre(affichage.fenetreJoueurs(),affichage.ecranLargeur())
 	joueur.config(colors.yellow,"Jaune",2)
 	joueur.config(colors.pink,"Rose",3)
 	joueur.config(colors.brown,"Marron",4)
