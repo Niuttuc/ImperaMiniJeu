@@ -31,6 +31,7 @@ function addConfig(c,y,nom)
 	hauteur=hauteur+1	
 end
 function addChoix(val,aff,c,def) 
+	print(aff..tostring(largeurConf+(#choix[c].liste*3)))
 	local data={
 		fenetre=window.create(fenetreConfig,largeurConf+(#choix[c].liste*3),choix[c].y,3,1,true),
 		val=val,
@@ -49,13 +50,11 @@ function actuFenetre(fenetre,aff,couleur)
 	fenetre.setBackgroundColor(couleur)
 	fenetre.clear()
 	fenetre.setCursorPos(1,1)
-	print("-"..aff.."-")
 	fenetre.write(aff)
 end
 function attenteLancement()
 	config.set("partie",false)
 	ecran.pp.clear()
-	print(largeur.." "..hauteur)
 	fenetreConfig.reposition(1,ecranH-hauteur,largeur,hauteur)
 	fenetreConfig.setVisible(true)
 	for c, d in pairs(choix) do
@@ -75,12 +74,13 @@ function attenteLancement()
 		print("Cliquer "..xPos.." "..yPos)
 		print((ecranW-12).." "..(ecranH-3))
 		if xPos>=ecranW-12 and yPos>=ecranH-3 then
-			print("Bouton")
+			print("Nombre de joueur pret "..tostring(joueur.actifs())
 			if joueur.actifs()>=2 then
 				config.set("partie",true)
 			end
 		else
 			for c, d in pairs(choix) do
+				print(yPos.."=="..(ecranH-hauteur+d.y))
 				if yPos==ecranH-hauteur+d.y then
 					print("Config "..c)
 					if xPos>=largeurConf then
