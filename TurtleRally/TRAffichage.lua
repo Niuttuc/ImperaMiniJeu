@@ -5,13 +5,13 @@ local ecranW, ecranH = ecran.pp.getSize()
 
 ecran.pp.clear()
 
-local boutonLancement=window.create(ecran.pp,ecranW-12,ecranH-3,12,3,true)
+local boutonLancement=window.create(ecran.pp,ecranW-12,ecranH-3,12,3,false)
 boutonLancement.setBackgroundColor(colors.yellow)
 boutonLancement.clear()
 boutonLancement.setTextColor(colors.white)
 ahb.center("Lancer",boutonLancement,2)
 
-local fenetreConfig=window.create(ecran.pp,1,ecranH-1,16,3,true)
+local fenetreConfig=window.create(ecran.pp,1,ecranH-1,16,3,false)
 fenetreConfig.setBackgroundColor(colors.red)
 fenetreConfig.setTextColor(colors.white)
 fenetreConfig.clear()
@@ -41,19 +41,22 @@ function addChoix(val,c,def)
 	for c, d in pairs(choix) do
 		m=math.max(m,#d.liste)
 	end
-	largeur=16+(m*3)	
+	largeur=16+((m-1)*3)	
 end
 
 function attenteLancement()
 	config.set("partie",false)
 	ecran.pp.clear()
+	print(largeur.." "..hauteur)
 	fenetreConfig.reposition(1,ecranH-hauteur,largeur,hauteur)
 	fenetreConfig.setVisible(true)
 	for c, d in pairs(choix) do
 		for i=1, #d.liste do
 			if d.liste[i].def then
 				d.liste[i].fenetre.setBackgroundColor(colors.yellow)
-				d.liste[i].fenetre.redraw()
+				d.liste[i].fenetre.clear()
+				d.liste[i].fenetre.write()
+				ahb.center(tostring(d.liste[i].val),d.liste[i].fenetre,1)
 				config.set(d.c,d.liste[i].val)
 			else
 				d.liste[i].fenetre.setBackgroundColor(colors.black)
@@ -77,6 +80,7 @@ function attenteLancement()
 					if xPos>=16 then
 						for i=1, #d.liste do
 							if xPos>=16+((i-1)*3) and xPos<16+(i*3) then
+								print("Option "..c)
 								for i2=1, #d.liste do
 									if i==i2 then
 										d.liste[i].fenetre.setBackgroundColor(colors.yellow)
