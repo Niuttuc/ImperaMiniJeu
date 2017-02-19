@@ -8,6 +8,9 @@ local config=ahb.config("TR",{
 config.tailleY=18
 config.tailleX=14
 config.tvie=3
+config.tvieDef=3
+config.tetape=4
+config.tetapeDef=4
 config.tcoeur=10
 config.partie=false
 
@@ -30,6 +33,18 @@ function modem()
 	return modemP
 end
 
+function affichageConf()
+	affichage.addConfig("tvie",1,"Nombre de vie")
+	affichage.addChoix(1,"tvie",false)
+	affichage.addChoix(3,"tvie",true)
+	affichage.addChoix(9,"tvie",false)
+
+	affichage.addConfig("tetape",2,"Nombre d'etape")
+	affichage.addChoix(1,"tetape",false)
+	affichage.addChoix(2,"tetape",false)
+	affichage.addChoix(3,"tetape",false)
+	affichage.addChoix(4,"tetape",true)
+end
 function joueurDef()
 	joueur.config(colors.yellow,"Jaune",2)
 	joueur.config(colors.pink,"Rose",3)

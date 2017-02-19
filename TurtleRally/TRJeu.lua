@@ -7,47 +7,18 @@ os.loadAPI("mur")
 os.loadAPI("etape")
 os.loadAPI("depart")
 os.loadAPI("map")
+os.loadAPI("affichage")
 
 local modem=config.modem()
 modem.pp.open(84)
 
-local ecran=config.ecran()
-local ecranW, ecranH = term.getSize()
-
-local boutonLancement=window.create(ecran.pp,ecranW-20,ecranH-3,20,3,true)
-boutonLancement.setBackgroundColor(colors.yellow)
-boutonLancement.clear()
-boutonLancement.setTextColor(colors.white)
-ahb.center("Lancer",boutonLancement,2)
-
-fenetreConfig=window.create(ecran.pp,1,ecranH-3,20,3,true)
-fenetreConfig.setBackgroundColor(colors.black)
-fenetreConfig.clear()
-fenetreConfig.setTextColor(colors.white)
-fenetreConfig.setCursorPos(1,1)
-fenetreConfig.write("Nombre de vie  1  3  9 ")
-fenetreConfig.setCursorPos(1,2)
-fenetreConfig.write("Nombre d'etape  1  2  3  4 ")
-
 config.mapDef()
 config.joueurDef()
 
-function attenteLancement()
-	config.set("partie",false)
-	boutonLancement.setVisible(true)
-	while not(config.get("partie")) do
-		event, ecranN, xPos, yPos = os.pullEvent("monitor_touch")
-		if joueur.actifs()>=2 then
-			config.set("partie",true)
-		end
-	end
-	boutonLancement.setVisible(true)
-end
-
-while true do	
-	-- DEMANDE AU POKCET AFFICHAGE JOIN
+while true do
+	
 	joueur.affichage("all",{action="JOIN"})
-	parallel.waitForAny(joueur.attenteInscription,attenteLancement)	
+	parallel.waitForAny(joueur.attenteInscription,affichage.attenteLancement)	
 	
 	joueur.lancementGame()
 	joueur.tirageDepart()
