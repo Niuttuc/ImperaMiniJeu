@@ -32,6 +32,7 @@ function addConfig(c,y,nom)
 end
 function addChoix(val,aff,c,def) 
 	print(aff..tostring(largeurConf+(#choix[c].liste*3)))
+	
 	local data={
 		fenetre=window.create(fenetreConfig,largeurConf+(#choix[c].liste*3),choix[c].y,3,1,true),
 		val=val,
@@ -74,25 +75,24 @@ function attenteLancement()
 		print("Cliquer "..xPos.." "..yPos)
 		print((ecranW-12).." "..(ecranH-3))
 		if xPos>=ecranW-12 and yPos>=ecranH-3 then
-			print("Nombre de joueur pret "..tostring(joueur.actifs())
+			print("Nombre de joueur pret "..tostring(joueur.actifs()))
 			if joueur.actifs()>=2 then
 				config.set("partie",true)
 			end
 		else
 			for c, d in pairs(choix) do
-				print(yPos.."=="..(ecranH-hauteur+d.y))
-				if yPos==ecranH-hauteur+d.y then
-					print("Config "..c)
+				print(yPos.."=="..(ecranH-hauteur+d.y-1))
+				if yPos==ecranH-hauteur+d.y-1 then					
 					if xPos>=largeurConf then
 						for i=1, #d.liste do
-							if xPos>=largeurConf+((i-1)*3) and xPos<largeurConf+(i*3) then
-								print("Option "..c)
+							print(xPos..">="..(largeurConf+((i-1)*3)).." and "..xPos.."<"..(largeurConf+(i*3)))
+							if xPos>=largeurConf+((i-1)*3) and xPos<largeurConf+(i*3) then						
 								for i2=1, #d.liste do
 									if i==i2 then
-										actuFenetre(d.liste[i].fenetre,d.liste[i].aff,colors.yellow)
-										config.set(d.c,d.liste[i].val)
+										actuFenetre(d.liste[i2].fenetre,d.liste[i2].aff,colors.yellow)
+										config.set(d.c,d.liste[i2].val)
 									else
-										actuFenetre(d.liste[i].fenetre,d.liste[i].aff,colors.black)
+										actuFenetre(d.liste[i2].fenetre,d.liste[i2].aff,colors.black)
 									end
 								end
 							end
