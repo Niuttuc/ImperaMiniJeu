@@ -1,4 +1,4 @@
-print("LOAD Affichage v0.04")
+print("LOAD Affichage v0.05")
 
 local ecran=config.ecran()
 local ecranW, ecranH = ecran.pp.getSize()
