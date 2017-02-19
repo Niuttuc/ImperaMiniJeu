@@ -76,7 +76,7 @@ choiceColumn.setTextColor(colors.black)
 choiceColumn.clear()
 
 
-countDown=window.create(playWindow,math.floor(xmax/2)-1,ymax-3,4,4,true)
+countDown=window.create(playWindow,math.floor(xmax/2)-3,ymax-3,8,4,true)
 countDown.setBackgroundColor(colors.black)
 countDown.setTextColor(colors.white)
 countDown.clear()
