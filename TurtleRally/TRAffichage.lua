@@ -31,14 +31,14 @@ function addConfig(c,y,nom)
 	hauteur=hauteur+1	
 end
 function addChoix(val,aff,c,def) 
-	print(aff..tostring(largeurConf+(#choix[c].liste*3)))
-	
+	print(aff..tostring(largeurConf+(#choix[c].liste*3)))	
 	local data={
 		fenetre=window.create(fenetreConfig,largeurConf+(#choix[c].liste*3),choix[c].y,3,1,true),
 		val=val,
 		aff=aff,
 		def=def
 	}
+	
 	data.fenetre.write(aff)
 	table.insert(choix[c].liste,data)
 	local m=0
@@ -47,8 +47,9 @@ function addChoix(val,aff,c,def)
 	end
 	largeur=largeurConf+((m-1)*3)	
 end
-function actuFenetre(fenetre,aff,couleur)
+function actuFenetre(fenetre,aff,couleur,couleurTexte)
 	fenetre.setBackgroundColor(couleur)
+	fenetre.setTextColor(couleurTexte)
 	fenetre.clear()
 	fenetre.setCursorPos(1,1)
 	fenetre.write(aff)
@@ -56,15 +57,15 @@ end
 function attenteLancement()
 	config.set("partie",false)
 	ecran.pp.clear()
-	fenetreConfig.reposition(1,ecranH-hauteur,largeur,hauteur)
+	fenetreConfig.reposition(1,ecranH-hauteur,largeur+4,hauteur)
 	fenetreConfig.setVisible(true)
 	for c, d in pairs(choix) do
 		for i=1, #d.liste do
 			if d.liste[i].def then
-				actuFenetre(d.liste[i].fenetre,d.liste[i].aff,colors.yellow)
+				actuFenetre(d.liste[i].fenetre,d.liste[i].aff,colos.white,colors.black)
 				config.set(d.c,d.liste[i].val)
 			else
-				actuFenetre(d.liste[i].fenetre,d.liste[i].aff,colors.black)
+				actuFenetre(d.liste[i].fenetre,d.liste[i].aff,colors.black,colos.white)
 				d.liste[i].fenetre.write(d.liste[i].aff)
 			end
 		end
@@ -72,8 +73,6 @@ function attenteLancement()
 	boutonLancement.setVisible(true)
 	while not(config.get("partie")) do
 		event, ecranN, xPos, yPos = os.pullEvent("monitor_touch")
-		print("Cliquer "..xPos.." "..yPos)
-		print((ecranW-12).." "..(ecranH-3))
 		if xPos>=ecranW-12 and yPos>=ecranH-3 then
 			print("Nombre de joueur pret "..tostring(joueur.actifs()))
 			if joueur.actifs()>=2 then
@@ -81,18 +80,16 @@ function attenteLancement()
 			end
 		else
 			for c, d in pairs(choix) do
-				print(yPos.."=="..(ecranH-hauteur+d.y-1))
 				if yPos==ecranH-hauteur+d.y-1 then					
 					if xPos>=largeurConf then
 						for i=1, #d.liste do
-							print(xPos..">="..(largeurConf+((i-1)*3)).." and "..xPos.."<"..(largeurConf+(i*3)))
 							if xPos>=largeurConf+((i-1)*3) and xPos<largeurConf+(i*3) then						
 								for i2=1, #d.liste do
 									if i==i2 then
-										actuFenetre(d.liste[i2].fenetre,d.liste[i2].aff,colors.yellow)
+										actuFenetre(d.liste[i2].fenetre,d.liste[i2].aff,colors.white,colors.black)
 										config.set(d.c,d.liste[i2].val)
 									else
-										actuFenetre(d.liste[i2].fenetre,d.liste[i2].aff,colors.black)
+										actuFenetre(d.liste[i2].fenetre,d.liste[i2].aff,colors.black,colos.white)
 									end
 								end
 							end
