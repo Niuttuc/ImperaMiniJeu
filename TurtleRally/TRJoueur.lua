@@ -30,6 +30,8 @@ function configJ(couleur,nom,y)
 	data.affVie=window.create(data.ligne,10,1,8,1,true)
 	data.affCoeur=window.create(data.ligne,19,1,11,1,true)
 	
+	modem.pp.transmit(couleur,84,"home")
+	
 	table.insert(liste,data)
 end
 function tourne(idJoueur,action,tour)
@@ -92,7 +94,7 @@ function deplacement(idJoueur,x,y,tour,tapis)
 				joueur.degat(idJoueur)
 			end
 			if reussi then
-				modem.pp.transmit(liste[idJoueur].couleur,84,{"bouge",{x=x,y=y}})
+				modem.pp.transmit(",{x=x,y=y}})
 				event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
 				liste[idJoueur].position.x=x
 				liste[idJoueur].position.y=y
