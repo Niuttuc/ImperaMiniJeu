@@ -15,7 +15,7 @@ function config(couleur,nom,y)
 		checkpoint=0, -- 0 a 4 checkepoin en cours 0 pour départ
 		fenetre={} -- stock toutes les fenetres
 	}	
-	data.ligne=window.create(ecran.pp,1,1,affichage.ecranLargeur(),1,false)
+	data.ligne=window.create(ecran.pp,1,1,82,1,false)
 	data.ligne.setBackgroundColor(couleur)
 	data.ligne.clear()
 	data.ligne.setTextColor(colors.white)

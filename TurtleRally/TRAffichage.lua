@@ -66,10 +66,10 @@ function attenteLancement()
 	for c, d in pairs(choix) do
 		for i=1, #d.liste do
 			if d.liste[i].def then
-				actuFenetre(d.liste[i].fenetre,d.liste[i].aff,colos.white,colors.black)
+				actuFenetre(d.liste[i].fenetre,d.liste[i].aff,colors.white,colors.black)
 				config.set(d.c,d.liste[i].val)
 			else
-				actuFenetre(d.liste[i].fenetre,d.liste[i].aff,colors.black,colos.white)
+				actuFenetre(d.liste[i].fenetre,d.liste[i].aff,colors.black,colors.white)
 				d.liste[i].fenetre.write(d.liste[i].aff)
 			end
 		end
@@ -93,7 +93,7 @@ function attenteLancement()
 										actuFenetre(d.liste[i2].fenetre,d.liste[i2].aff,colors.white,colors.black)
 										config.set(d.c,d.liste[i2].val)
 									else
-										actuFenetre(d.liste[i2].fenetre,d.liste[i2].aff,colors.black,colos.white)
+										actuFenetre(d.liste[i2].fenetre,d.liste[i2].aff,colors.black,colors.white)
 									end
 								end
 							end
