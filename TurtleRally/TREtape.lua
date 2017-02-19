@@ -5,13 +5,13 @@ function tirage()
 		table.insert(etapesTirage,etapesI)
 	end
 	for i=1, #etapes do
-		if i<=config.get("etape") then
-			index=math.random(#etapesTirage)
-			etapes[i].numero=etapesTirage[index]
-			table.remove(etapesTirage,index)
-		else
-			etapes[i].numero=""
+		index=math.random(#etapesTirage)
+		etapes[i].numero=etapesTirage[index]
+		if etapes[i].numero>config.get("etape") then
+			etapes[i].numero=""			
 		end
+		table.remove(etapesTirage,index)
+		
 		etapes[i].ecran.pp.clear()
 		etapes[i].ecran.pp.setTextScale(5)
 		etapes[i].ecran.pp.setCursorPos(1,1)
