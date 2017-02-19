@@ -52,12 +52,12 @@ playWindow.setTextColor(colors.black)
 playWindow.clear()
 
 
-listColumn=window.create(playWindow,1,4,math.floor(xmax/2)-1,math.min(14,ymax-5),true)
+listColumn=window.create(playWindow,1,4,math.floor(xmax/2)-1,math.max(10,ymax-9),true)
 listColumn.setBackgroundColor(colors.lightGray)
 listColumn.setTextColor(colors.black)
 listColumn.clear()
 
-separateColumn=window.create(playWindow,math.floor(xmax/2),4,math.floor(xmax/2)+1,math.min(14,ymax-5),true)
+separateColumn=window.create(playWindow,math.floor(xmax/2),4,1,math.max(10,ymax-9),true)
 separateColumn.setBackgroundColor(color)
 separateColumn.setTextColor(colors.black)
 separateColumn.clear()
@@ -70,13 +70,13 @@ for i=7,math.min(14,ymax-4) do
 	separateColumn.write('|')
 end
 
-choiceColumn=window.create(playWindow,math.floor(xmax/2)+1,4,xmax,math.min(14,ymax-5),true)
+choiceColumn=window.create(playWindow,math.floor(xmax/2)+1,4,math.floor(xmax/2),math.max(10,ymax-9),true)
 choiceColumn.setBackgroundColor(colors.gray)
 choiceColumn.setTextColor(colors.black)
 choiceColumn.clear()
 
 
-countDown=window.create(playWindow,math.floor(xmax/2)-1,ymax-3,math.floor(xmax/2)+2,ymax,true)
+countDown=window.create(playWindow,math.floor(xmax/2)-1,ymax-3,4,4,true)
 countDown.setBackgroundColor(colors.black)
 countDown.setTextColor(colors.white)
 countDown.clear()
