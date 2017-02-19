@@ -59,10 +59,10 @@ function attenteLancement()
 	for c, d in pairs(choix) do
 		for i=1, #d.liste do
 			if d.liste[i].def then
-				actuFenetre(d.liste[i].fenetre,d.liste[i].val,colors.yellow)
+				actuFenetre(d.liste[i].fenetre,d.liste[i].aff,colors.yellow)
 				config.set(d.c,d.liste[i].val)
 			else
-				actuFenetre(d.liste[i].fenetre,d.liste[i].val,colors.black)
+				actuFenetre(d.liste[i].fenetre,d.liste[i].aff,colors.black)
 				d.liste[i].fenetre.write(d.liste[i].aff)
 			end
 		end
@@ -71,6 +71,7 @@ function attenteLancement()
 	while not(config.get("partie")) do
 		event, ecranN, xPos, yPos = os.pullEvent("monitor_touch")
 		print(xPos.." "..yPos)
+		print((ecranW-12).." "..(ecranH-3))
 		if xPos>=ecranW-12 and yPos<=ecranH-3 then
 			print("Bouton")
 			if joueur.actifs()>=2 then
@@ -86,10 +87,10 @@ function attenteLancement()
 								print("Option "..c)
 								for i2=1, #d.liste do
 									if i==i2 then
-										actuFenetre(d.liste[i].fenetre,d.liste[i].val,colors.yellow)
+										actuFenetre(d.liste[i].fenetre,d.liste[i].aff,colors.yellow)
 										config.set(d.c,d.liste[i].val)
 									else
-										actuFenetre(d.liste[i].fenetre,d.liste[i].val,colors.black)
+										actuFenetre(d.liste[i].fenetre,d.liste[i].aff,colors.black)
 									end
 								end
 							end
