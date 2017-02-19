@@ -1,4 +1,4 @@
-print("LOAD mur v0.04")
+print("LOAD mur v0.05")
 local mur={
 	rouge={
 		etat=true,

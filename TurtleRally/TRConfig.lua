@@ -1,4 +1,4 @@
-print("LOAD Config v0.08")
+print("LOAD Config v0.09")
 
 local config=ahb.config("TR",{
 	ecran={typ="side",info="Ecran principal"},
@@ -9,6 +9,14 @@ config.tailleY=18
 config.tailleX=14
 config.tvie=3
 config.tcoeur=10
+config.partie=false
+
+function get(id)
+	return config[id]
+end
+function set(id,val)
+	config[id]=val
+end
 
 local ecranP=ahb.addPeripheral(config.ecran)
 function ecran()
@@ -98,6 +106,3 @@ function mapDef()
 end
 
 
-function get(id)
-	return config[id]
-end

@@ -1,4 +1,4 @@
-print("LOAD bonus v0.02")
+print("LOAD bonus v0.03")
 bonus={}
 items={
 	damageothers={id='minecraft:tnt'},
@@ -8,10 +8,18 @@ items={
 }
 liste={"heal","damageothers","damageself"}
 fc={
-	heal=function() end,
-	damageothers=function() end,
-	damageself=function() end,
-	reroll=function() end
+	heal=function(idJoueur) 
+		joueur.head(idJoueur)
+	end,
+	damageothers=function(idJoueur) 
+		joueur.degatAll(idJoueur)
+	end,
+	damageself=function(idJoueur) 
+		joueur.degat(idJoueur)
+	end,
+	reroll=function(idJoueur)
+		tirageAll()
+	end
 }
 function add(x,y,nom)
 	table.insert(bonus,{
@@ -27,12 +35,25 @@ function change(idBonus,nom)
 	bonus[idBonus].actif=true
 	bonus[idBonus].selector.pp.setSlot(1,items[nom])		
 end
+function tiragePos(x,y)
+	for idBonus=1, #bonus do
+		if bonus[idBonus].x==x and bonus[idBonus].y==y then
+			tirage(idBonus)
+		end
+	end
+end
 function tirage(idBonus)
 	if not(joueur.present(bonus[idBonus].x,bonus[idBonus].y)) then
 		change(idBonus,liste[math.random(#liste)])
 	end
 end
-
+function action(idJoueur,x,y)
+	for idBonus=1, #bonus do
+		if bonus[idBonus].x==x and bonus[idBonus].y==y then
+			fc[bonus[idBonus].bonus](idJoueur)
+		end
+	end
+end
 function tirageAll()
 	local copieBonus={}
 	for idBonus=1, #bonus do

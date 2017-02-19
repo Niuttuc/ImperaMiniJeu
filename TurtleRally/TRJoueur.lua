@@ -1,4 +1,4 @@
-print("LOAD joueur v1.11")
+print("LOAD joueur v1.12")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -62,6 +62,40 @@ function tourne(idJoueur,action,tour)
 	modem.pp.transmit(liste[idJoueur].couleur,84,action)
 	affichage(idJoueur,{action="infoTour",status=true,tour=tour})
 	event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
+	map.posteNoAction(map.get(liste[idJoueur].position.x,liste[idJoueur].position.y),liste[idJoueur].position.x,liste[idJoueur].position.y,idJoueur)
+end
+function deplacement(idJoueur,x,y,tour,tapis)
+	if liste[idJoueur].coeur~=0 then
+		if present(x,y) then
+			local joueurPousser=joueur.trouver(x,y)
+			if tour==-1 then
+				return false
+			else
+				local pousseReussi=deplacement(joueurPousser,x+(x-liste[idJoueur].position.x),y+(y-liste[idJoueur].position.y),-1,false)
+				if pousseReussi then
+					return true
+				else
+					joueur.degat(joueurPousser)					
+					return false
+				end
+			end		
+		else 
+			local case=map.get(x,y)
+			local reussi=true
+			reussi, degat=map.preAction(case,x,y)
+			if not(degat==0) then
+				joueur.degat(idJoueur)
+			end
+			if reussi then
+				modem.pp.transmit(liste[idJoueur].couleur,84,{"bouge",{x=x,y=y}})
+				event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
+				liste[idJoueur].position.x=x
+				liste[idJoueur].position.y=y
+				map.posteAction(case,x,y,idJoueur,tapis)
+			end
+		end
+	end
+	return reussi
 end
 function calculCoord(idJoueur,action)
 	if action=="avance1" then
@@ -88,7 +122,6 @@ function calculCoord(idJoueur,action)
 end
 function actifs()
 	local qte=0
-	-- FONCTION NB JOUEUR ACTIF A CREE
 	for idJoueur=1,#liste do
 		if liste[idJoueur].actif then
 			qte=qte+1
@@ -135,40 +168,53 @@ function demandeChoix()
 	affichage("all",{action="CHOIX"})
 	local total=actifs()
 	local retour={}
+	local idJoueur=-1
 	while total~=0 do
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
-		-- TROUVER ID JOUEUR
-		
-		liste[idJoueur].actions=message.actions -- ?? a confirmer
-		retour[idJoueur]=message.actions
-		total=total-1
+		for idJoueurTemp=1,#liste do
+			if liste[idJoueurTemp].couleur=replyFrequency-1 then
+				idJoueur=idJoueurTemp
+			end
+		end
+		print("Action "..idJoueur)
+		if idJoueur~=-1 then
+			liste[idJoueur].actions=message -- ?? a confirmer
+			retour[idJoueur]=message
+			total=total-1
+		end
 	end
 	return retour
 end
 function attenteInscription()
-	while true do
+	local idJoueur=-1
+	while true do		
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
-		-- TROUVER ID JOUEUR
-		
-		if liste[idJoueur].actif then
-			liste[idJoueur].actif=false	
-			joueur.affichage("all",{action="LOBY"})
-		else
-			liste[idJoueur].actif=true
-			joueur.affichage("all",{action="OPEN"})
-			-- DEMANDE AFFICHAGE ECRAN POUR REJOINDRE
-		end
-		local cursY=2
-		ecran.pp.clear()
-		for idJoueur=1,#liste do
-			if liste[idJoueur].actif then
-				liste[idJoueur].ligne.reposition(1,cursY)
-				liste[idJoueur].ligne.setVisible(true)
-				cursY=cursY+1
-			else
-				liste[idJoueur].ligne.setVisible(false)
+		for idJoueurTemp=1,#liste do
+			if liste[idJoueurTemp].couleur=replyFrequency-1 then
+				idJoueur=idJoueurTemp
 			end
-		end	
+		end
+		print("inscription "..idJoueur)
+		if idJoueur~=-1 then
+			if liste[idJoueur].actif then
+				liste[idJoueur].actif=false	
+				joueur.affichage("all",{action="LOBY"})
+			else
+				liste[idJoueur].actif=true
+				joueur.affichage("all",{action="OPEN"})
+			end
+			local cursY=2
+			ecran.pp.clear()
+			for idJoueur=1,#liste do
+				if liste[idJoueur].actif then
+					liste[idJoueur].ligne.reposition(1,cursY)
+					liste[idJoueur].ligne.setVisible(true)
+					cursY=cursY+1
+				else
+					liste[idJoueur].ligne.setVisible(false)
+				end
+			end	
+		end
 	end
 end
 function present(x,y)
@@ -202,16 +248,83 @@ function envie()
 		return true
 	end
 end
+function retourAlavie()
+	local enAttente=0
+	local x,y=-1
+	for i=1, #ordre do
+		idJoueur=ordre[i]
+		if liste[idJoueur].actif then
+			if liste[idJoueur].coeur==0 then
+				liste[idJoueur].vie=liste[idJoueur].vie-1
+				actuVie(idJoueur)
+				if liste[idJoueur].vie==0 then
+					affichage(idJoueur,{action="PERDU"})					
+				else
+					liste[idJoueur].coeur=config.get("coeur")
+					actuCoeurAff(idJoueur)
+					if liste[idJoueur].checkpoint==0 then
+						x, y=depart.joueur(idJoueur)
+						liste[idJoueur].position.x=x
+						liste[idJoueur].position.y=y					
+					else
+						x, y=etape.coord(liste[idJoueur].checkpoint)
+						if present(x,y) then
+							x, y=depart.joueur(idJoueur)
+						end
+						liste[idJoueur].position.x=x
+						liste[idJoueur].position.y=y
+					end
+					modem.pp.transmit(liste[idJoueur].couleur,84,{"onboard",{x=x,y=y}})
+					enAttente=enAttente+1
+				end				
+			end
+		end
+	end
+	while enAttente~=0 do
+		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
+		enAttente=enAttente-1
+		print("Plus que "..enAttente)
+	end
+end
 function actuCoeurAff(idJoueur)
 	liste[idJoueur].affCoeur.clear()
 	liste[idJoueur].affCoeur.setCursorPos(2,1)
 	liste[idJoueur].affCoeur.write(liste[idJoueur].coeur.." coeur")	
 end
+function heal(idJoueur)
+	liste[idJoueur].coeur=liste[idJoueur].coeur+5
+	if liste[idJoueur].coeur>10 then
+		liste[idJoueur].coeur=10
+		actuCoeurAff(idJoueur)
+		affichage(idJoueur,{action="INFO"})
+	end	
+end
+function degatAll(idJoueurImu)
+	for idJoueur=1,#liste do
+		if liste[idJoueur].actif then
+			if idJoueur~=idJoueurImu then
+				degat(idJoueur)
+			end
+		end
+	end
+end
 function degat(idJoueur)
 	liste[idJoueur].coeur=liste[idJoueur].coeur-1
 	if liste[idJoueur].coeur<0 then liste[idJoueur].coeur=0 end
+	if liste[idJoueur].coeur==0 then
+		mort(idJoueur)
+	else
+		actuCoeurAff(idJoueur)
+		affichage(idJoueur,{action="INFO"})
+	end	
+end
+function mort(idJoueur)
+	liste[idJoueur].coeur=0
 	actuCoeurAff(idJoueur)
+	liste[idJoueur].position.x=-1
+	liste[idJoueur].position.y=-1
 	affichage(idJoueur,{action="INFO"})
+	modem.pp.transmit(liste[idJoueur].couleur,84,{"mort"})
 end
 function tirageOrdre()
 	local joueurTirage={}
@@ -233,6 +346,13 @@ function tirageOrdre()
 		cursY=cursY+1
 	end
 	return retour
+end
+function etape(idJoueur,numero)
+	liste[idJoueur].checkpoint=numero
+	if liste[idJoueur].checkpoint==4 then
+		affichage(idJoueur,{action="GAGNER"})
+		config.set(partie,false)
+	end
 end
 function tirageDepart()
 	-- Tirage depart

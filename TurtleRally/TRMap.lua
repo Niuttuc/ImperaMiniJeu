@@ -1,4 +1,4 @@
-print("LOAD Map v0.05")
+print("LOAD Map v0.06")
 
 -- fonction execute avant deplacement pour verifier deplacement et possible
 -- renvoi bool pour deplacement autorise ou non
@@ -50,47 +50,107 @@ function preAction(case,x,y)
 	return tuilesAvent[case](x,y)
 end
 -- Fonction execute apres deplacement ou rotation du joueur
-tuilesApres={
-	libre=function(joueur) return end,
-	mur2=function(joueur) return end,
-	bout=function(joueur)
+tuilesFixe={
+	libre=function(idJoueur,x,y) return end,
+	mur2=function(idJoueur,x,y) return end,
+	bout=function(idJoueur,x,y) return end,
+	tapiXP=function(idJoueur,x,y)		
+		joueur.deplacement(idJoueur,x+1,y,-1,true)
+		return
+	end,
+	tapiXM=function(idJoueur,x,y)
+		joueur.deplacement(idJoueur,x-1,y,-1,true)
+		return
+	end,
+	tapiYP=function(idJoueur,x,y)
+		joueur.deplacement(idJoueur,x,y+1,-1,true)
+		return
+	end,
+	tapiYM=function(idJoueur,x,y)
+		joueur.deplacement(idJoueur,x,y-1,-1,true)
+		return
+	end,
+	bonus=function(idJoueur,x,y) return end,
+	trou=function(idJoueur,x,y) return end,
+	laser=function(idJoueur,x,y)
+		joueur.degat(idJoueur)
+		return
+	end,
+	etape=function(idJoueur,x,y) return end
+}
+tuilesOver={
+	libre=function(idJoueur,x,y,tapis) return end,
+	mur2=function(idJoueur,x,y,tapis) return end,
+	bout=function(idJoueur,x,y,tapis)
 		mur.test("bleu","rouge")
 		mur.test("rouge","bleu")
 		return
 	end,
-	tapiXP=function(joueur)
-		-- Deplacer le joueur de 1 en X (SAUF SI C'EST UN TAPIS QUI A DEPLACER LE JOUEUR)
+	tapiXP=function(idJoueur,x,y,tapis)
+		if not(tapis) then
+			joueur.deplacement(idJoueur,x+1,y,-1,true)
+		end
 		return
 	end,
-	tapiXM=function(joueur)
-		-- Deplacer le joueur de -1 en X SAUF SI C'EST UN TAPIS QUI A DEPLACER LE JOUEUR)
+	tapiXM=function(idJoueur,x,y,tapis)
+		if not(tapis) then
+			joueur.deplacement(idJoueur,x-1,y,-1,true)
+		end
 		return
 	end,
-	tapiYP=function(joueur)
-		-- Deplace le joueur de 1 en Y SAUF SI C'EST UN TAPIS QUI A DEPLACER LE JOUEUR)
+	tapiYP=function(idJoueur,x,y,tapis)
+		if not(tapis) then
+			joueur.deplacement(idJoueur,x,y+1,-1,true)
+		end
 		return
 	end,
-	tapiYM=function(joueur)
-		-- Deplacer le joueur de -1 en Y SAUF SI C'EST UN TAPIS QUI A DEPLACER LE JOUEUR)
+	tapiYM=function(idJoueur,x,y,tapis)
+		if not(tapis) then
+			joueur.deplacement(idJoueur,x,y-1,-1,true)
+		end
 		return
 	end,
-	bonus=function(joueur)
-		-- Execute le bonus
+	bonus=function(idJoueur,x,y,tapis)
+		bonus.action(idJoueur,x,y)		
 		return
 	end,
-	trou=function(joueur)
-		-- Envoi la turtle dans le troue pret a teleporter, enlever une vie, remet a X coeurs
+	trou=function(idJoueur,x,y,tapis)
+		joueur.mort()
 		return
 	end,
-	laser=function(joueur)
-		-- Enleve un coeur
+	laser=function(idJoueur,x,y,tapis)
+		joueur.degat(idJoueur)
 		return
 	end,
-	etape=function(joueur)
-		-- valide l'etape
+	etape=function(idJoueur,x,y,tapis)
+		etape.passage(idJoueur,x,y)
 		return
 	end
 }
+tuilesOut={
+	libre=function(x,y) return end,
+	mur2=function(x,y) return end,
+	bout=function(x,y)return end,
+	tapiXP=function(x,y)	return end,
+	tapiXM=function(x,y)	return end,
+	tapiYP=function(x,y)	return end,
+	tapiYM=function(x,y)	return end,
+	bonus=function(x,y)
+		bonus.tiragePos(x,y)
+		return
+	end,
+	trou=function(x,y)return	end,
+	laser=function(x,y) return end,
+	etape=function(x,y) return end
+}
+function posteAction(case,x,y,idJoueur,tapis)
+	tuilesOver[map](idJoueur,x,y,tapis)
+	tuilesOut[map](x,y)
+end
+function posteNoAction(case,x,y,idJoueur)
+	tuilesFixe[map](idJoueur,x,y)
+end
+
 
 local maps={}
 for x=1, config.get("tailleX") do

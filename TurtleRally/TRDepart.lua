@@ -16,3 +16,10 @@ function def(idDepart,idJoueur,couleur,actif)
 	departs[idDepart].ecran.pp.clear()
 	return departs[idDepart].x, departs[idDepart].y
 end
+function joueur(idJoueur)
+	for idDepart=1,#departs do 
+		if departs[idDepart].idJoueur==idJoueur then
+			return departs[idDepart].x, departs[idDepart].y
+		end
+	end
+end
