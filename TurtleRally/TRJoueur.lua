@@ -1,4 +1,4 @@
-print("LOAD joueur v1.15")
+print("LOAD joueur v1.16")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -209,7 +209,7 @@ function attenteInscription()
 				joueur.affichage("all",{action="OPEN"})
 			end
 			local cursY=2
-			ecran.pp.clear()
+			fenetre.clear()
 			for idJoueur=1,#liste do
 				if liste[idJoueur].actif then
 					liste[idJoueur].ligne.reposition(1,cursY)
