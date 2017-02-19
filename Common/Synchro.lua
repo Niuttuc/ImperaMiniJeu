@@ -44,9 +44,9 @@ function proxFunc()
 	for i=1,#args do
 		if args[i]==func then
 			doublon=doublon+1
-			if doublon==prec and args[i+1] and type(args[i+1]~=func) then
+			if doublon==prec and args[i+1] and type(args[i+1])~=func then
 				funcArgs=args[i+1]
-			elseif doublon<prec
+			elseif doublon<prec or (doublon==prec and (not(args[i+1]) or type(args[i+1])==func)) then
 				funcArgs={}
 			end
 		end
