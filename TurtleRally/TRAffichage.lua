@@ -1,4 +1,4 @@
-print("LOAD Affichage v0.08")
+print("LOAD Affichage v0.09")
 
 local ecran=config.ecran()
 local ecranW, ecranH = ecran.pp.getSize()
@@ -20,7 +20,7 @@ fenetreConfig.setBackgroundColor(colors.black)
 fenetreConfig.setTextColor(colors.white)
 fenetreConfig.clear()
 
-local listeJoueur=window.create(ecran.pp,1,1,ecranW,6,true)
+local listeJoueur=window.create(ecran.pp,1,1,ecranW,7,true)
 function fenetreJoueurs()
 	return listeJoueur
 end
