@@ -1,4 +1,4 @@
-print("LOAD mur v0.05")
+print("LOAD mur v0.06")
 local mur={
 	rouge={
 		etat=true,
@@ -11,7 +11,7 @@ local mur={
 		position={}
 	}
 }
-local redstoneSide=config.get(redstone)
+local redstoneSide=config.get("redstone")
 
 function add(couleur,x,y)
 	table.insert(mur[couleur].position,{x=x,y=y})

@@ -22,11 +22,11 @@ while true do
 	joueur.affichage("all",{action="JOIN"})
 	parallel.waitForAny(joueur.attenteInscription,affichage.attenteLancement)	
 	
-	joueur.lancementGame()
-	joueur.tirageDepart()
+	joueur.lancementGame()	
 	mur.reset()	
 	bonus.tirageAll()
 	etape.tirage()
+	joueur.tirageDepart()
 	
 	
 	
