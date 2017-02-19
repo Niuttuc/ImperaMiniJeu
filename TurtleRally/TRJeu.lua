@@ -16,6 +16,7 @@ config.mapDef()
 config.joueurDef()
 config.affichageConf()
 
+
 while true do
 	
 	joueur.affichage("all",{action="JOIN"})

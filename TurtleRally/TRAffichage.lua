@@ -1,4 +1,4 @@
-print("LOAD Affichage v0.05")
+print("LOAD Affichage v0.06")
 
 local ecran=config.ecran()
 local ecranW, ecranH = ecran.pp.getSize()
@@ -20,6 +20,11 @@ fenetreConfig.setBackgroundColor(colors.red)
 fenetreConfig.setTextColor(colors.white)
 fenetreConfig.clear()
 
+local listeJoueur=window.create(ecran.pp,1,1,ecranW,6,false)
+function fenetreJoueurs()
+	return listeJoueur
+end
+
 local hauteur=0
 local largeur=0
 local choix={}
@@ -33,8 +38,7 @@ function addConfig(c,y,nom)
 	}
 	hauteur=hauteur+1	
 end
-function addChoix(val,aff,c,def) 
-	print(aff..tostring(largeurConf+(#choix[c].liste*3)))	
+function addChoix(val,aff,c,def)
 	local data={
 		fenetre=window.create(fenetreConfig,largeurConf+(#choix[c].liste*3),choix[c].y,3,1,true),
 		val=val,
@@ -60,7 +64,6 @@ end
 function attenteLancement()
 	config.set("partie",false)
 	ecran.pp.clear()
-	print(largeur+4)
 	fenetreConfig.reposition(1,ecranH-hauteur,largeur+4,hauteur)
 	fenetreConfig.setVisible(true)
 	for c, d in pairs(choix) do

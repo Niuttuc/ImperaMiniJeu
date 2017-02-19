@@ -2,7 +2,11 @@ print("LOAD joueur v1.15")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
-
+local fenetre,taille=0
+function configFenetre(fenetreC,tailleC)
+	fenetre=fenetreC
+	taille=tailleC
+end
 function config(couleur,nom,y)
 	local data={
 		couleur=couleur, -- couleur du joueur
@@ -14,8 +18,9 @@ function config(couleur,nom,y)
 		direction="MY",
 		checkpoint=0, -- 0 a 4 checkepoin en cours 0 pour départ
 		fenetre={} -- stock toutes les fenetres
-	}	
-	data.ligne=window.create(ecran.pp,1,1,82,1,false)
+	}
+	
+	data.ligne=window.create(fenetre,1,1,taille,1,false)
 	data.ligne.setBackgroundColor(couleur)
 	data.ligne.clear()
 	data.ligne.setTextColor(colors.white)
@@ -23,7 +28,7 @@ function config(couleur,nom,y)
 	data.ligne.write(nom)
 	
 	data.affVie=window.create(data.ligne,10,1,8,1,true)
-	data.affCoeur=window.create(data.ligne,18,1,11,1,true)
+	data.affCoeur=window.create(data.ligne,19,1,11,1,true)
 	
 	table.insert(liste,data)
 end
