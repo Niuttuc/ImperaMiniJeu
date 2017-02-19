@@ -11,6 +11,16 @@ addPeripheral=function(id)
 		pp=peripheral.wrap(id)
 	}
 end
+
+function isIn(element,table)						--return key of the element in table, or nil
+  for key,val in pairs(table) do
+    if val==element then
+      return key
+    end
+  end
+  return nil
+end
+
 function center(texte,mon,y)
     x=mon.getSize()
     if #texte>x then
