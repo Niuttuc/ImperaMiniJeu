@@ -89,5 +89,3 @@ function attenteLancement()
 		end
 	end
 end
-
-config.affichageConf()

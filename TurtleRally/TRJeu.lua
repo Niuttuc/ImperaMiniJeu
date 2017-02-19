@@ -14,6 +14,7 @@ modem.pp.open(84)
 
 config.mapDef()
 config.joueurDef()
+config.affichageConf()
 
 while true do
 	
