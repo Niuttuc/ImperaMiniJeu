@@ -1,4 +1,4 @@
-print("LOAD Config v0.09")
+print("LOAD Config v0.10")
 
 local config=ahb.config("TR",{
 	ecran={typ="side",info="Ecran principal"},
@@ -34,12 +34,12 @@ function modem()
 end
 
 function affichageConf()
-	affichage.addConfig("tvie",1,"Nombre de vie")
+	affichage.addConfig("tvie",1,"Nb de vie")
 	affichage.addChoix(1,' 1 ',"tvie",false)
 	affichage.addChoix(3,' 3 ',"tvie",true)
 	affichage.addChoix(9,' 9 ',"tvie",false)
 
-	affichage.addConfig("tetape",2,"Nombre d'etape")
+	affichage.addConfig("tetape",2,"Nb d'etape")
 	affichage.addChoix(1,' 1 ',"tetape",false)
 	affichage.addChoix(2,' 2 ',"tetape",false)
 	affichage.addChoix(3,' 3 ',"tetape",false)

@@ -1,7 +1,8 @@
-print("LOAD Affichage v0.03")
+print("LOAD Affichage v0.04")
 
 local ecran=config.ecran()
 local ecranW, ecranH = ecran.pp.getSize()
+local largeurConf=12
 
 ecran.pp.clear()
 
@@ -11,7 +12,7 @@ boutonLancement.clear()
 boutonLancement.setTextColor(colors.white)
 ahb.center("Lancer",boutonLancement,2)
 
-local fenetreConfig=window.create(ecran.pp,1,ecranH-1,16,3,false)
+local fenetreConfig=window.create(ecran.pp,1,ecranH-1,largeurConf,3,false)
 fenetreConfig.setBackgroundColor(colors.red)
 fenetreConfig.setTextColor(colors.white)
 fenetreConfig.clear()
@@ -31,7 +32,7 @@ function addConfig(c,y,nom)
 end
 function addChoix(val,aff,c,def) 
 	local data={
-		fenetre=window.create(fenetreConfig,16+(#choix[c].liste*3),choix[c].y,3,1,true),
+		fenetre=window.create(fenetreConfig,largeurConf+(#choix[c].liste*3),choix[c].y,3,1,true),
 		val=val,
 		aff=aff,
 		def=def
@@ -42,7 +43,7 @@ function addChoix(val,aff,c,def)
 	for c, d in pairs(choix) do
 		m=math.max(m,#d.liste)
 	end
-	largeur=16+((m-1)*3)	
+	largeur=largeurConf+((m-1)*3)	
 end
 function actuFenetre(fenetre,aff,couleur)
 	fenetre.setBackgroundColor(couleur)
@@ -73,7 +74,7 @@ function attenteLancement()
 		event, ecranN, xPos, yPos = os.pullEvent("monitor_touch")
 		print("Cliquer "..xPos.." "..yPos)
 		print((ecranW-12).." "..(ecranH-3))
-		if xPos>=ecranW-12 and yPos<=ecranH-3 then
+		if xPos>=ecranW-12 and yPos>=ecranH-3 then
 			print("Bouton")
 			if joueur.actifs()>=2 then
 				config.set("partie",true)
@@ -82,9 +83,9 @@ function attenteLancement()
 			for c, d in pairs(choix) do
 				if yPos==ecranH-hauteur+d.y then
 					print("Config "..c)
-					if xPos>=16 then
+					if xPos>=largeurConf then
 						for i=1, #d.liste do
-							if xPos>=16+((i-1)*3) and xPos<16+(i*3) then
+							if xPos>=largeurConf+((i-1)*3) and xPos<largeurConf+(i*3) then
 								print("Option "..c)
 								for i2=1, #d.liste do
 									if i==i2 then
