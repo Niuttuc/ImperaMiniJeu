@@ -29,13 +29,14 @@ function addConfig(c,y,nom)
 	}
 	hauteur=hauteur+1	
 end
-function addChoix(val,c,def) 
+function addChoix(val,aff,c,def) 
 	local data={
 		fenetre=window.create(fenetreConfig,16+(#choix[c].liste*3),choix[c].y,3,1,true),
 		val=val,
+		aff=aff,
 		def=def
 	}
-	ahb.center(tostring(val),data.fenetre,1)
+	data.fenetre.write(aff)
 	table.insert(choix[c].liste,data)
 	local m=0
 	for c, d in pairs(choix) do
@@ -43,7 +44,12 @@ function addChoix(val,c,def)
 	end
 	largeur=16+((m-1)*3)	
 end
-
+function actuFenetre(fenetre,aff,couleur)
+	fenetre.setBackgroundColor(couleur)
+	fenetre.clear()
+	fenetre.setCursorPos(1,1)
+	fenetre.write(aff)
+end
 function attenteLancement()
 	config.set("partie",false)
 	ecran.pp.clear()
@@ -53,14 +59,11 @@ function attenteLancement()
 	for c, d in pairs(choix) do
 		for i=1, #d.liste do
 			if d.liste[i].def then
-				d.liste[i].fenetre.setBackgroundColor(colors.yellow)
-				d.liste[i].fenetre.clear()
-				d.liste[i].fenetre.write()
-				ahb.center(tostring(d.liste[i].val),d.liste[i].fenetre,1)
+				actuFenetre(d.liste[i].fenetre,d.liste[i].val,colors.yellow)
 				config.set(d.c,d.liste[i].val)
 			else
-				d.liste[i].fenetre.setBackgroundColor(colors.black)
-				d.liste[i].fenetre.redraw()
+				actuFenetre(d.liste[i].fenetre,d.liste[i].val,colors.black)
+				d.liste[i].fenetre.write(d.liste[i].aff)
 			end
 		end
 	end
@@ -83,12 +86,10 @@ function attenteLancement()
 								print("Option "..c)
 								for i2=1, #d.liste do
 									if i==i2 then
-										d.liste[i].fenetre.setBackgroundColor(colors.yellow)
-										d.liste[i].fenetre.redraw()
+										actuFenetre(d.liste[i].fenetre,d.liste[i].val,colors.yellow)
 										config.set(d.c,d.liste[i].val)
 									else
-										d.liste[i].fenetre.setBackgroundColor(colors.black)
-										d.liste[i].fenetre.redraw()
+										actuFenetre(d.liste[i].fenetre,d.liste[i].val,colors.black)
 									end
 								end
 							end

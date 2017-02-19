@@ -35,15 +35,15 @@ end
 
 function affichageConf()
 	affichage.addConfig("tvie",1,"Nombre de vie")
-	affichage.addChoix(1,"tvie",false)
-	affichage.addChoix(3,"tvie",true)
-	affichage.addChoix(9,"tvie",false)
+	affichage.addChoix(1,' 1 ',"tvie",false)
+	affichage.addChoix(3,' 3 ',"tvie",true)
+	affichage.addChoix(9,' 9 ',"tvie",false)
 
 	affichage.addConfig("tetape",2,"Nombre d'etape")
-	affichage.addChoix(1,"tetape",false)
-	affichage.addChoix(2,"tetape",false)
-	affichage.addChoix(3,"tetape",false)
-	affichage.addChoix(4,"tetape",true)
+	affichage.addChoix(1,' 1 ',"tetape",false)
+	affichage.addChoix(2,' 2 ',"tetape",false)
+	affichage.addChoix(3,' 3 ',"tetape",false)
+	affichage.addChoix(4,' 4 ',"tetape",true)
 end
 function joueurDef()
 	joueur.config(colors.yellow,"Jaune",2)
