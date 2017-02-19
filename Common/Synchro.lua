@@ -32,7 +32,6 @@ function proxFunc()
 			id=i
 		end
 	end
-	print(id,type(id))
 	local func=functions[id]
 	local prec=0
 	for i=1,id do
