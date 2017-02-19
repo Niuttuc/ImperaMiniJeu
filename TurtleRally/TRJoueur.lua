@@ -1,4 +1,4 @@
-print("LOAD joueur v1.12")
+print("LOAD joueur v1.13")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
