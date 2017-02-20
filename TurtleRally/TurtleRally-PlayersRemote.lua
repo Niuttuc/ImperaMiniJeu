@@ -35,7 +35,7 @@ while true do
 		if message.action=="WAIT" then
 			affWin(windows.waitingScreen)
 			thingsToDo={os.pullEvent,'modem_message'}
-		else message.action=="LOBBY" then
+		elseif message.action=="LOBBY" then
 			affWin(windows.beforeGame)
 			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{xmax-6,1,xmax,3,quit}}
 		end

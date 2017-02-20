@@ -35,10 +35,10 @@ function forward()
 	while not(turtle.forward()) do
 		bool,block=turtle.inspect()
 		while card[compass.getFacing()]>=3 and block.name=='ComputerCraft:CC-TurtleAdvanced' and not(turtle.up())   do
-			sleep(1)
+			sleep(1.5)
 		end
 		while card[compass.getFacing()]>=3 and not(turtle.down())  do
-			sleep(1)
+			sleep(1.5)
 		end
 		sleep(1)
 	end
@@ -157,7 +157,7 @@ function enterTheGame(destination)					--quitte le gararge et va se placer sur l
 	forward()
 	rotateToDirection(garageStartsDirection)
 	while turtle.detectDown() do
-		forward()
+		turtle.forward()
 	end
 	forward()
 	goTo(destination)
@@ -171,7 +171,11 @@ end
 function seGarer()									--la turtle se gare depuis le teleporter du garage
 	forward()
 	turtle.turnLeft()
-	forward()
+	bool,blockInfo=turtle.inspectDown()
+	while blockInfo.name~='minecraft:wool' do
+		turtle.forward()
+		bool,blockInfo=turtle.inspectDown()
+	end
 	turtle.turnRight()
 	while true do
 		for i=1,3 do
