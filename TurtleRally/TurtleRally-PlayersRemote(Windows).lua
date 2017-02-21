@@ -21,14 +21,14 @@ beforeGame.blit(' partie','fffffff','eeeeeee')
 
 
 
-WaitingScreen=window.create(term.current(),1,1,xmax,ymax,false)
+waitingScreen=window.create(term.current(),1,1,xmax,ymax,false)
 
-WaitingScreen.setBackgroundColor(color)
-WaitingScreen.setTextColor(colors.black)
-WaitingScreen.clear()
-ahb.center('Veuillez patienter',WaitingScreen,math.floor(ymax/2)-1)
-ahb.center("Une opération",WaitingScreen,math.floor(ymax/2))
-ahb.center(" est en cours.",WaitingScreen,math.floor(ymax/2)+1)
+waitingScreen.setBackgroundColor(color)
+waitingScreen.setTextColor(colors.black)
+waitingScreen.clear()
+ahb.center('Veuillez patienter',waitingScreen,math.floor(ymax/2)-1)
+ahb.center("Une opération",waitingScreen,math.floor(ymax/2))
+ahb.center(" est en cours.",waitingScreen,math.floor(ymax/2)+1)
 
 
 
