@@ -143,8 +143,10 @@ tuilesOut={
 	laser=function(x,y) return end,
 	etape=function(x,y) return end
 }
-function posteAction(case,x,y,idJoueur,tapis)
-	tuilesOver[map](idJoueur,x,y,tapis)
+function posteAction(case,x,y,idJoueur,tapis,dernier)
+	if dernier then
+		tuilesOver[map](idJoueur,x,y,tapis)
+	end
 	tuilesOut[map](x,y)
 end
 function posteNoAction(case,x,y,idJoueur)

@@ -29,6 +29,7 @@ function configJ(couleur,nom,y)
 	
 	data.affVie=window.create(data.ligne,10,1,8,1,true)
 	data.affCoeur=window.create(data.ligne,19,1,11,1,true)
+	data.affInfo=window.create(data.ligne,31,1,30,1,true)
 	
 	modem.pp.transmit(couleur,84,"home")
 	
@@ -71,14 +72,14 @@ function tourne(idJoueur,action,tour)
 	event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
 	map.posteNoAction(map.get(liste[idJoueur].position.x,liste[idJoueur].position.y),liste[idJoueur].position.x,liste[idJoueur].position.y,idJoueur)
 end
-function deplacement(idJoueur,x,y,tour,tapis)
+function deplacement(idJoueur,x,y,tour,tapis,dernier)
 	if liste[idJoueur].coeur~=0 then
 		if present(x,y) then
 			local joueurPousser=joueur.trouver(x,y)
 			if tour==-1 then
 				return false
 			else
-				local pousseReussi=deplacement(joueurPousser,x+(x-liste[idJoueur].position.x),y+(y-liste[idJoueur].position.y),-1,false)
+				local pousseReussi=deplacement(joueurPousser,x+(x-liste[idJoueur].position.x),y+(y-liste[idJoueur].position.y),-1,false,true)
 				if pousseReussi then
 					return true
 				else
@@ -98,7 +99,7 @@ function deplacement(idJoueur,x,y,tour,tapis)
 				event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
 				liste[idJoueur].position.x=x
 				liste[idJoueur].position.y=y
-				map.posteAction(case,x,y,idJoueur,tapis)
+				map.posteAction(case,x,y,idJoueur,tapis,dernier)
 			end
 		end
 	end
@@ -171,8 +172,17 @@ function trouver(x,y)
 		end
 	end
 end
+function afficherInfo(idJoueur,info,couleur)
+	liste[idJoueur].affInfo.clear()
+	liste[idJoueur].affInfo.setTextColor(couleur)
+	liste[idJoueur].affInfo.setCursorPos(2,1)
+	liste[idJoueur].affInfo.write(info)
+end
 function demandeChoix()
 	affichage("all",{action="CHOIX"})
+	for idJoueur=1, #liste do
+		afficherInfo(idJoueur,"Choix en cours",colors.white)
+	end
 	local total=actifs()
 	local retour={}
 	local idJoueur=-1
@@ -187,6 +197,7 @@ function demandeChoix()
 		if idJoueur~=-1 then
 			liste[idJoueur].actions=message -- ?? a confirmer
 			retour[idJoueur]=message
+			afficherInfo(idJoueur,"PRET",colors.white)
 			total=total-1
 		end
 	end
