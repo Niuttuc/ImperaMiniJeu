@@ -31,6 +31,7 @@ currentWin=windows.waitingScreen
 modem.transmit(84,color+1,'JOIN')
 while true do
 	idArret,ret1,ret2,ret3,ret4,ret5=sync.waitForAny(sync.listArgs(thingsToDo))
+	print('things done')
 	if idArret==1 then
 		ev,side,freq,repFreq,message=ret1,ret2,ret3,ret4,ret5
 		if message.action=="WAIT" then
