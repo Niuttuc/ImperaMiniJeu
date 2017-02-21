@@ -28,6 +28,7 @@ function quit()
 end
 thingsToDo={os.pullEvent,'modem_message'}
 currentWin=windows.waitingScreen
+modem.transmit(84,color+1,'JOIN')
 while true do
 	idArret,ret1,ret2,ret3,ret4,ret5=sync.waitForAny(sync.listArgs(thingsToDo))
 	if idArret==1 then
