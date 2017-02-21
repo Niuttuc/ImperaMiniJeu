@@ -119,4 +119,19 @@ function mapDef()
 	map.add(10,17,"depart","monitor_20",5)
 end
 
-
+local ordiReboot={
+	"computer_15", -- GPS
+	"computer_16", -- GPS
+	"computer_17", -- GPS
+	"computer_18", -- GPS
+	"computer_27", -- Lanceur de turtle
+	"computer_28", -- Lanceur de turtle
+	"computer_29", -- Lanceur de turtle
+	"computer_30", -- Lanceur de turtle
+	"computer_31", -- Lanceur de turtle
+	"computer_32", -- Lanceur de turtle
+}
+for ior=1,#ordiReboot do
+	local test=ahb.addPeripheral(ordiReboot[ior])
+	test.pp.reboot()
+end
