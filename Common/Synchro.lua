@@ -8,10 +8,11 @@ function keepFunc(first,...)
 	end
 end
 function listArgs(list)
-	if type(list)=='table' and #list>0 then
-		return table.remove(list,1),listArgs(list)
-	elseif type(list)~=nil then
-		return list
+	local list2=list
+	if type(list2)=='table' and #list2>0 then
+		return table.remove(list2,1),listArgs(list2)
+	elseif type(list2)~=nil then
+		return list2
 	end
 	return nil
 end
