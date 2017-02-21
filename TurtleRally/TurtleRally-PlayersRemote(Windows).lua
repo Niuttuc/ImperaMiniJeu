@@ -27,7 +27,7 @@ waitingScreen.setBackgroundColor(color)
 waitingScreen.setTextColor(colors.black)
 waitingScreen.clear()
 ahb.center('Veuillez patienter',waitingScreen,math.floor(ymax/2)-1)
-ahb.center("Une opération",waitingScreen,math.floor(ymax/2))
+ahb.center("Une operation",waitingScreen,math.floor(ymax/2))
 ahb.center(" est en cours.",waitingScreen,math.floor(ymax/2)+1)
 
 
