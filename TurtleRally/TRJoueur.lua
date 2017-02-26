@@ -1,4 +1,4 @@
-print("LOAD joueur v1.22")
+print("LOAD joueur v1.24")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -204,8 +204,8 @@ function demandeChoix()
 		end
 		nbPret=0
 		for idJoueurTemp=1,#liste do
-			if liste[idJoueur].actions==5 then
-				nbPret=nbPret
+			if #liste[idJoueurTemp].actions==5 then
+				nbPret=nbPret+1
 			end
 		end
 		print("Joueur actif "..total.." Nombre de joueur pret "..nbPret)
@@ -385,6 +385,9 @@ function tirageOrdre()
 	return retour
 end
 function etape(idJoueur,numero)
+	print("etape")
+	print(idJoueur)
+	print(numero)
 	if liste[idJoueur].checkpoint==numero-1 then
 		liste[idJoueur].checkpoint=numero
 	end

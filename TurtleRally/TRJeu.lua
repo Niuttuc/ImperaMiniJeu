@@ -73,8 +73,12 @@ while true do
 					end
 				end
 			end
-			map.actionTapis()
+			if config.get("partie") then
+				map.actionTapis()
+			end
 		end
-		joueur.retourAlavie(ordre)
+		if config.get("partie") then
+			joueur.retourAlavie(ordre)
+		end
 	end
 end
