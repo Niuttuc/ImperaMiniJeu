@@ -45,7 +45,7 @@ while true do
 							or  actions[idJoueur][tour]=="trigoTurn" 
 							or  actions[idJoueur][tour]=="turnBack"  
 						then -- Tourne droite
-							joueur.tourne(idJoueur,actions[idJoueur][tour],tour)						
+							joueur.tourne(idJoueur,actions[idJoueur][tour])						
 						else
 							if actions[idJoueur][tour]=="avance2" then
 								local enXfois=2
@@ -54,13 +54,8 @@ while true do
 								local enXfois=1
 							end
 							for minTour=1, enXfois do
-								if enXfois==minTour then
-									local dernier=true
-								else
-									local dernier=false
-								end
 								x,y=joueur.calculCoord(idJoueur,actions[idJoueur][tour])
-								reussi=joueur.deplacement(idJoueur,x,y,tour,false,dernier)							
+								reussi=joueur.deplacement(idJoueur,x,y,true)							
 							end
 							if reussi then
 								joueur.afficherInfo(idJoueur,"T"..tour.." "..choices[actions[idJoueur][tour]].nomListe,colors.green)
@@ -75,6 +70,7 @@ while true do
 					end
 				end
 			end
+			map.actionTapis()
 		end
 		joueur.retourAlavie(ordre)
 	end

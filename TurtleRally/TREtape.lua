@@ -22,19 +22,18 @@ etapes={}
 function add(x,y,id)
 	table.insert(etapes,{x=x,y=y,numero=0,ecran=ahb.addPeripheral(id)})
 end
-function passage(idJoueur,x,y)
-	for iEt=1,#etapes do
-		if etapes[iEt].x==x and etapes[iEt].y==y then
-			if etapes[iEt].numero~="" then
-				joueur.etape(idJoueur,etapes[iEt].numero)
-			end
-		end
-	end
-end
 function coord(numero)
 	for iEt=1,#etapes do
 		if etapes[iEt].numero==numero then
 			return etapes[iEt].x, etapes[iEt].y
+		end
+	end
+end
+function verif()
+	for iEt=1,#etapes do
+		local idJoueur=joueur.presentGetId(etapes[iEt].x,etapes[iEt].y)
+		if etapes[iEt].numero~="" then
+			joueur.etape(idJoueur,etapes[iEt].numero)
 		end
 	end
 end

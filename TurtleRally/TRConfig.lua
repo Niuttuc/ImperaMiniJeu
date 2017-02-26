@@ -53,6 +53,15 @@ function joueurDef()
 	joueur.configJ(colors.green,"Vert",7)
 end
 function mapDef()
+	-- Liste et config X Y TYPE PARAM
+	-- bonus selector_id_periph
+	-- etape monitor_id_periph
+	-- mur
+	-- laser
+	-- pique
+	-- depart monitor_id_periph idDepart
+	-- mur2 couleur
+	-- bout couleur
 	map.add(5,2,"bonus","openperipheral_selector_84")
 	map.add(9,2,"etape","monitor_27")
 	map.add(10,2,"mur")
@@ -64,8 +73,6 @@ function mapDef()
 	map.add(12,3,"bonus","openperipheral_selector_83")
 	map.add(3,4,"etape","monitor_18")
 	map.add(4,4,"mur")
-	map.add(8,4,"tapiYM")
-	map.add(8,5,"tapiYM")
 	map.add(2,5,"trou")
 	map.add(3,5,"trou")
 	map.add(2,6,"trou")
@@ -97,11 +104,6 @@ function mapDef()
 	map.add(3,12,"trou")
 	map.add(2,13,"trou")
 	map.add(3,13,"trou")
-	map.add(7,12,"tapiXP")
-	map.add(8,12,"tapiXP")
-	map.add(9,12,"tapiXP")
-	map.add(10,12,"tapiXP")
-	map.add(11,12,"tapiXP")
 	map.add(12,12,"pique")
 	map.add(6,13,"bonus","openperipheral_selector_79")
 	map.add(6,14,"pique")
@@ -117,6 +119,20 @@ function mapDef()
 	map.add(6,17,"depart","monitor_22",3)
 	map.add(10,18,"mur")
 	map.add(10,17,"depart","monitor_20",5)
+	
+	-- FINIR PAR LES TAPIS, LES ENREGISTRER DANS L'ORDRE D'ACTIVATION
+	-- X Y TAPIS {mx=Mouvement en x,my=Mouvement en y,rot="NON" ou "clockTurn" ou "trigoTurn"}
+	map.add(11,12,"tapis",{mx=1,my=0,rot="non"})
+	map.add(10,12,"tapis",{mx=1,my=0,rot="non"})
+	map.add(9,12,"tapis",{mx=1,my=0,rot="non"})
+	map.add(8,12,"tapis",{mx=1,my=0,rot="non"})
+	map.add(7,12,"tapis",{mx=1,my=0,rot="non"})
+	
+	map.add(8,4,"tapis",{mx=0,my=-1,rot="non"})
+	map.add(8,5,"tapis",{mx=0,my=-1,rot="non"})
+	
+	-- FINIR PAR LES PLAQUES TOURNANTE
+	-- X Y pt "clockTurn" ou "trigoTurn"
 end
 
 local ordiReboot={

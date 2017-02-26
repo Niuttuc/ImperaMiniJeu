@@ -35,7 +35,7 @@ function configJ(couleur,nom,y)
 	
 	table.insert(liste,data)
 end
-function tourne(idJoueur,action,tour)
+function tourne(idJoueur,action)
 	if action=="clockTurn" then
 		if liste[idJoueur].direction=="MY" then
 			liste[idJoueur].direction="PX"
@@ -68,25 +68,23 @@ function tourne(idJoueur,action,tour)
 		end
 	end
 	modem.pp.transmit(liste[idJoueur].couleur,84,action)
-	affichage(idJoueur,{action="infoTour",status=true,tour=tour})
 	event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
-	map.posteNoAction(map.get(liste[idJoueur].position.x,liste[idJoueur].position.y),liste[idJoueur].position.x,liste[idJoueur].position.y,idJoueur)
 end
-function deplacement(idJoueur,x,y,tour,tapis,dernier)
+function deplacement(idJoueur,x,y,pousseJoueur)
 	if liste[idJoueur].coeur~=0 then
 		if present(x,y) then
-			local joueurPousser=joueur.trouver(x,y)
-			if tour==-1 then
-				return false
-			else
-				local pousseReussi=deplacement(joueurPousser,x+(x-liste[idJoueur].position.x),y+(y-liste[idJoueur].position.y),-1,false,true)
+			if pousseJoueur then
+				local joueurPousser=joueur.trouver(x,y)
+				local pousseReussi=deplacement(joueurPousser,x+(x-liste[idJoueur].position.x),y+(y-liste[idJoueur].position.y),false)
 				if pousseReussi then
 					return true
 				else
 					joueur.degat(joueurPousser)					
 					return false
 				end
-			end		
+			else
+				return false
+			end
 		else 
 			local case=map.get(x,y)
 			local reussi=true
@@ -99,9 +97,11 @@ function deplacement(idJoueur,x,y,tour,tapis,dernier)
 				event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
 				liste[idJoueur].position.x=x
 				liste[idJoueur].position.y=y
-				map.posteAction(case,x,y,idJoueur,tapis,dernier)
+				map.posteAction(case,x,y,idJoueur,tapis)
 			end
 		end
+	else
+		return false
 	end
 	return reussi
 end
@@ -244,6 +244,16 @@ function present(x,y)
 		end
 	end
 	return false
+end
+function presentGetId(x,y)
+	for idJoueur=1,#liste do
+		if liste[idJoueur].actif then
+			if	x==liste[idJoueur].position.x and y==liste[idJoueur].position.y then
+				return idJoueur
+			end
+		end
+	end
+	return -1
 end
 function actuVie(i)
 	if liste[i].vie==0 then liste[i].affVie.setBackgroundColor(colors.black)
