@@ -278,8 +278,8 @@ function actuVie(i)
 		liste[i].affVie.write(liste[i].vie.." vies")
 	end	
 end
-function envie()
-	if liste[i].coeur==0 then
+function envie(idJoueur)
+	if liste[idJoueur].coeur==0 then
 		return false
 	else
 		return true

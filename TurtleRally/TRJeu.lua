@@ -42,7 +42,7 @@ while true do
 					idJoueur=ordre[i]
 					print("JOUEUR "..idJoueur.." "..actions[idJoueur][tour])
 					joueur.afficherInfo(idJoueur,"T"..tour.." "..choices[actions[idJoueur][tour]].nomListe,colors.white)
-					if joueur.envie() then
+					if joueur.envie(idJoueur) then
 						if 
 								actions[idJoueur][tour]=="clockTurn" 
 							or  actions[idJoueur][tour]=="trigoTurn" 
