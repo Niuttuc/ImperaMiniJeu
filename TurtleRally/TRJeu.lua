@@ -34,10 +34,13 @@ while true do
 	while config.get("partie") do
 		local ordre=joueur.tirageOrdre()
 		local actions=joueur.demandeChoix()
+		print("Action TOUTES RECU")
 		for tour=1, 5 do
+			print("Tour "..tour)
 			for i=1, #ordre do
 				if config.get("partie") then
 					idJoueur=ordre[i]
+					print("JOUEUR "..idJoueur.." "..actions[idJoueur][tour])
 					joueur.afficherInfo(idJoueur,"T"..tour.." "..choices[actions[idJoueur][tour]].nomListe,colors.white)
 					if joueur.envie() then
 						if 

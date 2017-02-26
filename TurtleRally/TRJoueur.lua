@@ -1,4 +1,4 @@
-print("LOAD joueur v1.19")
+print("LOAD joueur v1.20")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -182,11 +182,12 @@ function demandeChoix()
 	affichage("all",{action="CHOIX"})
 	for idJoueur=1, #liste do
 		afficherInfo(idJoueur,"Choix en cours",colors.white)
+		liste[idJoueur].actions={}
 	end
 	local total=actifs()
 	local retour={}
 	local idJoueur=-1
-	while total~=0 do
+	while total~=#retour do
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
 		for idJoueurTemp=1,#liste do
 			if liste[idJoueurTemp].couleur==replyFrequency-1 then
@@ -198,7 +199,6 @@ function demandeChoix()
 			liste[idJoueur].actions=message -- ?? a confirmer
 			retour[idJoueur]=message
 			afficherInfo(idJoueur,"PRET",colors.white)
-			total=total-1
 		end
 	end
 	return retour
@@ -400,6 +400,7 @@ function tirageDepart()
 		liste[idJoueur].position.x=x
 		liste[idJoueur].position.y=y
 		liste[idJoueur].idDepart=idDepart
+		liste[idJoueur].checkpoint=0
 		table.remove(joueurTirage,index)
 		if liste[idJoueur].actif then
 			modem.pp.transmit(liste[idJoueur].couleur,84,{"onboard",{x=x,y=y}})

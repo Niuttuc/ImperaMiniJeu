@@ -1,4 +1,4 @@
-print("LOAD Map v0.06")
+print("LOAD Map v0.07")
 
 -- fonction execute avant deplacement pour verifier deplacement et possible
 -- renvoi bool pour deplacement autorise ou non
@@ -49,6 +49,11 @@ tuilesOver={
 	end,
 	etape=function(idJoueur,x,y,tapis) return end
 }
+tuilesFinTour={
+	etape=function(idJoueur,x,y,tapis)
+		return
+	end
+}
 tuilesOut={
 	libre=function(x,y) return end,
 	mur2=function(x,y) return end,
@@ -90,7 +95,6 @@ function add(x,y,ttype,info,info2)
 		info2.y=y
 		info2.rot=info
 		table.insert(plaques,info2)
-	end
 	elseif ttype=="depart" then
 		depart.add(x,y,info,info2)
 	elseif ttype=="bonus" then
@@ -110,13 +114,14 @@ function actionTapis()
 			if not(tapis[iTapis].rot=="NON") then
 				tourne(idJoueur,tapis[iTapis].rot)
 			end
-		then
+		end
 	end
 	for iPlaque=1, #plaques do
 		local idJoueur=joueur.presentGetId(plaques[iPlaque].x,plaques[iPlaque].y)
 		if not(idJoueur==-1) then			
 			tourne(idJoueur,plaques[iPlaque].rot)
-		then
+		end
 	end
-	etape.verif()	
+	etape.verif()
+	
 end
