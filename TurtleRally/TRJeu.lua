@@ -1,4 +1,4 @@
-print("LOAD jeu v0.12")
+print("LOAD jeu v0.13")
 os.loadAPI("ahb")
 os.loadAPI("config")
 os.loadAPI("joueur")

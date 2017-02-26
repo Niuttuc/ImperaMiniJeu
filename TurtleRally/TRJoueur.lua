@@ -1,4 +1,4 @@
-print("LOAD joueur v1.20")
+print("LOAD joueur v1.21")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -187,19 +187,21 @@ function demandeChoix()
 	local total=actifs()
 	local retour={}
 	local idJoueur=-1
-	while total~=#retour do
+	while not(total==#retour) do
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
+		idJoueur=-1
 		for idJoueurTemp=1,#liste do
 			if liste[idJoueurTemp].couleur==replyFrequency-1 then
 				idJoueur=idJoueurTemp
 			end
 		end
 		print("Action "..idJoueur)
-		if idJoueur~=-1 then
+		if not(idJoueur==-1) then
 			liste[idJoueur].actions=message -- ?? a confirmer
 			retour[idJoueur]=message
 			afficherInfo(idJoueur,"PRET",colors.white)
 		end
+		print("Joueur actif "..total.." Nombre de joueur pret "..#retour)
 	end
 	return retour
 end
