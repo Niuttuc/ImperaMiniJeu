@@ -51,14 +51,14 @@ while true do
 							joueur.tourne(idJoueur,actions[idJoueur][tour])						
 						else
 							if actions[idJoueur][tour]=="avance2" then
-								local enXfois=2
 								actions[idJoueur][tour]="avance1"
-							else 
-								local enXfois=1
-							end
-							for minTour=1, enXfois do
 								x,y=joueur.calculCoord(idJoueur,actions[idJoueur][tour])
-								reussi=joueur.deplacement(idJoueur,x,y,true)							
+								reussi=joueur.deplacement(idJoueur,x,y,true)
+								x,y=joueur.calculCoord(idJoueur,actions[idJoueur][tour])
+								reussi=joueur.deplacement(idJoueur,x,y,true)
+							else 
+								x,y=joueur.calculCoord(idJoueur,actions[idJoueur][tour])
+								reussi=joueur.deplacement(idJoueur,x,y,true)
 							end
 							if reussi then
 								joueur.afficherInfo(idJoueur,"T"..tour.." "..choices[actions[idJoueur][tour]].nomListe,colors.green)
