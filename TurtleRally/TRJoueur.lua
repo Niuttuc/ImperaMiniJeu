@@ -367,7 +367,7 @@ end
 function tirageOrdre()
 	local joueurTirage={}
 	local cursY=2
-	
+	local retour={}
 	for idJoueur=1,#liste do
 		if liste[idJoueur].actif then
 			table.insert(joueurTirage,idJoueur)
@@ -376,12 +376,13 @@ function tirageOrdre()
 	
 	for i=1, #joueurTirage do
 		index=math.random(#joueurTirage)
-		idJoueur=joueurTirage[index]		
+		idJoueur=joueurTirage[index]
+		table.insert(retour,idJoueur)
 		table.remove(joueurTirage,index)		
 		liste[idJoueur].ligne.reposition(1,cursY)
 		cursY=cursY+1
 	end
-	return joueurTirage
+	return retour
 end
 function passageEtape(idJoueur,numero)
 	print("etape")
