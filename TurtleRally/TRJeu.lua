@@ -36,7 +36,7 @@ while true do
 		local actions=joueur.demandeChoix()
 		print("Action TOUTES RECU")
 		for tour=1, 5 do
-			print("Tour "..tour.." "..config.get("partie"))
+			print("Tour "..tour.." "..tostring(config.get("partie")))
 			for i=1, #ordre do
 				if config.get("partie") then
 					idJoueur=ordre[i]

@@ -285,7 +285,7 @@ function envie()
 		return true
 	end
 end
-function retourAlavie()
+function retourAlavie(ordre)
 	local enAttente=0
 	local x,y=-1
 	for i=1, #ordre do
@@ -366,7 +366,6 @@ function mort(idJoueur)
 end
 function tirageOrdre()
 	local joueurTirage={}
-	local retour={}
 	local cursY=2
 	
 	for idJoueur=1,#liste do
@@ -382,7 +381,7 @@ function tirageOrdre()
 		liste[idJoueur].ligne.reposition(1,cursY)
 		cursY=cursY+1
 	end
-	return retour
+	return joueurTirage
 end
 function passageEtape(idJoueur,numero)
 	print("etape")
