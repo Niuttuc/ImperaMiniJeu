@@ -1,4 +1,4 @@
-print("LOAD jeu v0.13")
+print("LOAD jeu v0.14")
 os.loadAPI("ahb")
 os.loadAPI("config")
 os.loadAPI("joueur")
@@ -36,7 +36,7 @@ while true do
 		local actions=joueur.demandeChoix()
 		print("Action TOUTES RECU")
 		for tour=1, 5 do
-			print("Tour "..tour)
+			print("Tour "..tour.." "..config.get("partie"))
 			for i=1, #ordre do
 				if config.get("partie") then
 					idJoueur=ordre[i]

@@ -384,7 +384,7 @@ function tirageOrdre()
 	end
 	return retour
 end
-function etape(idJoueur,numero)
+function passageEtape(idJoueur,numero)
 	print("etape")
 	print(idJoueur)
 	print(numero)

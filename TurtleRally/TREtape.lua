@@ -33,7 +33,7 @@ function verif()
 	for iEt=1,#etapes do
 		local idJoueur=joueur.presentGetId(etapes[iEt].x,etapes[iEt].y)
 		if etapes[iEt].numero~="" then
-			joueur.etape(idJoueur,etapes[iEt].numero)
+			joueur.passageEtape(idJoueur,etapes[iEt].numero)
 		end
 	end
 end
