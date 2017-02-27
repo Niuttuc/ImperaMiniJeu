@@ -77,14 +77,14 @@ function deplacement(idJoueur,x,y,pousseJoueur)
 				local joueurPousser=joueur.trouver(x,y)
 				local pousseReussi=deplacement(joueurPousser,x+(x-liste[idJoueur].position.x),y+(y-liste[idJoueur].position.y),false)
 				if pousseReussi then
-					print("Joueur"..liste[idJoueur].nom.." pousser en "..x.." "..y)
-					return true
+					print("Joueur"..liste[joueurPousser].nom.." pousser")
+					return true, liste[idJoueur].coeur
 				else
 					joueur.degat(joueurPousser)					
-					return false
+					return false, liste[idJoueur].coeur
 				end
 			else
-				return false
+				return false, liste[idJoueur].coeur
 			end
 		else 
 			local case=map.get(x,y)
@@ -103,9 +103,9 @@ function deplacement(idJoueur,x,y,pousseJoueur)
 			end
 		end
 	else
-		return false
+		return false, liste[idJoueur].coeur
 	end
-	return reussi
+	return reussi, liste[idJoueur].coeur
 end
 function calculCoord(idJoueur,action)
 	if action=="avance1" then

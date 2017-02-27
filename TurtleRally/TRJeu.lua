@@ -40,9 +40,9 @@ while true do
 			for i=1, #ordre do
 				if config.get("partie") then
 					idJoueur=ordre[i]
-					print("JOUEUR "..idJoueur.." "..actions[idJoueur][tour])
-					joueur.afficherInfo(idJoueur,"T"..tour.." "..choices[actions[idJoueur][tour]].nomListe,colors.white)
 					if joueur.envie(idJoueur) then
+						print("JOUEUR "..idJoueur.." "..actions[idJoueur][tour])
+						joueur.afficherInfo(idJoueur,"T"..tour.." "..choices[actions[idJoueur][tour]].nomListe,colors.white)
 						if 
 								actions[idJoueur][tour]=="clockTurn" 
 							or  actions[idJoueur][tour]=="trigoTurn" 
@@ -52,19 +52,24 @@ while true do
 						else
 							if actions[idJoueur][tour]=="avance2" then
 								x,y=joueur.calculCoord(idJoueur,"avance1")
-								reussi=joueur.deplacement(idJoueur,x,y,true)
+								reussi, coeurs=joueur.deplacement(idJoueur,x,y,true)
 								x,y=joueur.calculCoord(idJoueur,"avance1")
-								reussi=joueur.deplacement(idJoueur,x,y,true)
+								reussi, coeurs=joueur.deplacement(idJoueur,x,y,true)
 							else 
 								x,y=joueur.calculCoord(idJoueur,actions[idJoueur][tour])
-								reussi=joueur.deplacement(idJoueur,x,y,true)
+								reussi, coeurs=joueur.deplacement(idJoueur,x,y,true)
+							end
+							local infoEnPlus=""
+							if coeurs==0 then
+								infoEnPlus=" MORT"
 							end
 							if reussi then
-								joueur.afficherInfo(idJoueur,"T"..tour.." "..choices[actions[idJoueur][tour]].nomListe,colors.green)
+								joueur.afficherInfo(idJoueur,"Tour "..tour.." "..choices[actions[idJoueur][tour]].nomListe..infoEnPlus,colors.green)
 								joueur.affichage(idJoueur,{action="infoTour",tour=tour,status=true})
 							else
-								joueur.afficherInfo(idJoueur,"T"..tour.." "..choices[actions[idJoueur][tour]].nomListe,colors.red)
+								joueur.afficherInfo(idJoueur,"Tour "..tour.." "..choices[actions[idJoueur][tour]].nomListe..infoEnPlus,colors.red)
 								joueur.affichage(idJoueur,{action="infoTour",tour=tour,status=false})
+								os.sleep(0.5)
 							end
 						end
 					else
