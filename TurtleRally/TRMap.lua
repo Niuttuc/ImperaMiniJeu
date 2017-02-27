@@ -1,4 +1,4 @@
-print("LOAD Map v0.08")
+print("LOAD Map v0.09")
 
 -- fonction execute avant deplacement pour verifier deplacement et possible
 -- renvoi bool pour deplacement autorise ou non
@@ -40,7 +40,7 @@ tuilesOver={
 		return
 	end,
 	trou=function(idJoueur,x,y,tapis)
-		joueur.mort()
+		joueur.mort(idJoueur)
 		return
 	end,
 	laser=function(idJoueur,x,y,tapis)
@@ -68,6 +68,7 @@ tuilesOut={
 	etape=function(x,y) return end
 }
 function posteAction(case,x,y,idJoueur,tapis)
+	print("map.posteAction("..case)
 	tuilesOver[case](idJoueur,x,y,tapis)
 	tuilesOut[case](x,y)
 end
@@ -109,7 +110,8 @@ end
 function actionTapis()
 	for iTapis=1, #tapis do
 		local idJoueur=joueur.presentGetId(tapis[iTapis].x,tapis[iTapis].y)
-		if not(idJoueur==-1) then			
+		if not(idJoueur==-1) then	
+			print("TAPIS")
 			joueur.deplacement(idJoueur,tapis[iTapis].x+tapis[iTapis].mx,tapis[iTapis].y+tapis[iTapis].my,false)
 			if not(tapis[iTapis].rot=="NON") then
 				tourne(idJoueur,tapis[iTapis].rot)

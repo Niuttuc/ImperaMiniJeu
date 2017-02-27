@@ -1,4 +1,4 @@
-print("LOAD joueur v1.24")
+print("LOAD joueur v1.25")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -77,6 +77,7 @@ function deplacement(idJoueur,x,y,pousseJoueur)
 				local joueurPousser=joueur.trouver(x,y)
 				local pousseReussi=deplacement(joueurPousser,x+(x-liste[idJoueur].position.x),y+(y-liste[idJoueur].position.y),false)
 				if pousseReussi then
+					print("Joueur"..liste[idJoueur].nom.." pousser en "..x.." "..y)
 					return true
 				else
 					joueur.degat(joueurPousser)					
@@ -93,6 +94,7 @@ function deplacement(idJoueur,x,y,pousseJoueur)
 				joueur.degat(idJoueur)
 			end
 			if reussi then
+				print("Joueur"..liste[idJoueur].nom.." avance en "..x.." "..y)
 				modem.pp.transmit(liste[idJoueur].couleur,84,{"bouge",{x=x,y=y}})
 				event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
 				liste[idJoueur].position.x=x
