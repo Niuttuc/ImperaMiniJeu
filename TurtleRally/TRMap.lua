@@ -1,4 +1,4 @@
-print("LOAD Map v0.09")
+print("LOAD Map v0.10")
 
 -- fonction execute avant deplacement pour verifier deplacement et possible
 -- renvoi bool pour deplacement autorise ou non
@@ -12,6 +12,7 @@ local tuilesAvent={
 		else return true,0 end
 	end,
 	bout=function(x,y) return true,0 end,
+	map=function(x,y) return true,0 end,
 	pique=function(x,y)
 		return false,1
 	end,
@@ -34,7 +35,7 @@ tuilesOver={
 		mur.test("rouge","bleu")
 		return
 	end,
-	tapiXP=function(idJoueur,x,y,tapis) return end,
+	tapis=function(idJoueur,x,y,tapis) return end,
 	bonus=function(idJoueur,x,y,tapis)
 		bonus.action(idJoueur,x,y)		
 		return
@@ -49,11 +50,6 @@ tuilesOver={
 	end,
 	etape=function(idJoueur,x,y,tapis) return end
 }
-tuilesFinTour={
-	etape=function(idJoueur,x,y,tapis)
-		return
-	end
-}
 tuilesOut={
 	libre=function(x,y) return end,
 	mur2=function(x,y) return end,
@@ -63,7 +59,8 @@ tuilesOut={
 		bonus.tiragePos(x,y)
 		return
 	end,
-	trou=function(x,y)return	end,
+	tapis=function(x,y) return end,
+	trou=function(x,y)	return end,
 	laser=function(x,y) return end,
 	etape=function(x,y) return end
 }

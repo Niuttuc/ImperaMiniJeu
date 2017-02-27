@@ -51,10 +51,9 @@ while true do
 							joueur.tourne(idJoueur,actions[idJoueur][tour])						
 						else
 							if actions[idJoueur][tour]=="avance2" then
-								actions[idJoueur][tour]="avance1"
-								x,y=joueur.calculCoord(idJoueur,actions[idJoueur][tour])
+								x,y=joueur.calculCoord(idJoueur,"avance1")
 								reussi=joueur.deplacement(idJoueur,x,y,true)
-								x,y=joueur.calculCoord(idJoueur,actions[idJoueur][tour])
+								x,y=joueur.calculCoord(idJoueur,"avance1")
 								reussi=joueur.deplacement(idJoueur,x,y,true)
 							else 
 								x,y=joueur.calculCoord(idJoueur,actions[idJoueur][tour])
