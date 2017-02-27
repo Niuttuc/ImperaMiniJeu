@@ -71,6 +71,7 @@ function tourne(idJoueur,action)
 	event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
 end
 function deplacement(idJoueur,x,y,pousseJoueur)
+	local reussi=true
 	if liste[idJoueur].coeur~=0 then
 		if present(x,y) then
 			if pousseJoueur then
@@ -88,7 +89,7 @@ function deplacement(idJoueur,x,y,pousseJoueur)
 			end
 		else 
 			local case=map.get(x,y)
-			local reussi=true
+			reussi=true
 			reussi, degat=map.preAction(case,x,y)
 			if not(degat==0) then
 				joueur.degat(idJoueur)
@@ -105,6 +106,7 @@ function deplacement(idJoueur,x,y,pousseJoueur)
 	else
 		return false, liste[idJoueur].coeur
 	end
+	print("Envoi de "..reussi)
 	return reussi, liste[idJoueur].coeur
 end
 function calculCoord(idJoueur,action)

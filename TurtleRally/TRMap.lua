@@ -110,15 +110,16 @@ function actionTapis()
 		if not(idJoueur==-1) then	
 			print("TAPIS")
 			joueur.deplacement(idJoueur,tapis[iTapis].x+tapis[iTapis].mx,tapis[iTapis].y+tapis[iTapis].my,false)
+			print("ROT "..tapis[iTapis].rot)
 			if not(tapis[iTapis].rot=="NON") then
-				tourne(idJoueur,tapis[iTapis].rot)
+				joueur.tourne(idJoueur,tapis[iTapis].rot)
 			end
 		end
 	end
 	for iPlaque=1, #plaques do
 		local idJoueur=joueur.presentGetId(plaques[iPlaque].x,plaques[iPlaque].y)
 		if not(idJoueur==-1) then			
-			tourne(idJoueur,plaques[iPlaque].rot)
+			joueur.tourne(idJoueur,plaques[iPlaque].rot)
 		end
 	end
 	etape.verif()

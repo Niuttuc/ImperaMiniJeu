@@ -107,5 +107,7 @@ function attenteLancement()
 		end
 	end
 	fenetreConfig.setVisible(false)
+	fenetreConfig.redraw()
 	boutonLancement.setVisible(false)
+	boutonLancement.redraw()
 end
