@@ -1,4 +1,4 @@
-print("LOAD Map v0.07")
+print("LOAD Map v0.08")
 
 -- fonction execute avant deplacement pour verifier deplacement et possible
 -- renvoi bool pour deplacement autorise ou non
@@ -67,9 +67,9 @@ tuilesOut={
 	laser=function(x,y) return end,
 	etape=function(x,y) return end
 }
-function posteAction(case,x,y,idJoueur,tapis,dernier)
-	tuilesOver[map](idJoueur,x,y,tapis)
-	tuilesOut[map](x,y)
+function posteAction(case,x,y,idJoueur,tapis)
+	tuilesOver[case](idJoueur,x,y,tapis)
+	tuilesOut[case](x,y)
 end
 local maps={}
 for x=1, config.get("tailleX") do
