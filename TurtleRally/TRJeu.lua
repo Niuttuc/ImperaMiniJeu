@@ -32,16 +32,17 @@ while true do
 	
 	
 	while config.get("partie") do
+		print("===============================")
 		local ordre=joueur.tirageOrdre()
 		local actions=joueur.demandeChoix()
 		print("Action TOUTES RECU")
 		for tour=1, 5 do
-			print("Tour "..tour.." "..tostring(config.get("partie")))
+			print("==== Tour "..tour.." "..tostring(config.get("partie")))
 			for i=1, #ordre do
 				if config.get("partie") then
 					idJoueur=ordre[i]
 					if joueur.envie(idJoueur) then
-						print("JOUEUR "..idJoueur.." "..actions[idJoueur][tour])
+						print("  JOUEUR "..idJoueur.." "..actions[idJoueur][tour])
 						joueur.afficherInfo(idJoueur,"T"..tour.." "..choices[actions[idJoueur][tour]].nomListe,colors.white)
 						if 
 								actions[idJoueur][tour]=="clockTurn" 
@@ -63,6 +64,7 @@ while true do
 							if coeurs==0 then
 								infoEnPlus=" MORT"
 							end
+							print(reussi)
 							if reussi then
 								joueur.afficherInfo(idJoueur,"Tour "..tour.." "..choices[actions[idJoueur][tour]].nomListe..infoEnPlus,colors.green)
 								joueur.affichage(idJoueur,{action="infoTour",tour=tour,status=true})
@@ -78,10 +80,12 @@ while true do
 				end
 			end
 			if config.get("partie") then
+				print("  ACTION TAPIS, PLAQUE, TIR ;)")
 				map.actionTapis()
 			end
 		end
 		if config.get("partie") then
+			print("  RETOUR A LA VIE")
 			joueur.retourAlavie(ordre)
 		end
 	end
