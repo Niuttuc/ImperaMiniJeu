@@ -149,5 +149,9 @@ local ordiReboot={
 }
 for ior=1,#ordiReboot do
 	local test=ahb.addPeripheral(ordiReboot[ior])
-	test.pp.reboot()
+	if test.isOn() then
+		test.pp.turnOn()
+	else
+		test.pp.reboot()
+	end
 end
