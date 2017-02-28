@@ -106,7 +106,7 @@ function deplacement(idJoueur,x,y,pousseJoueur)
 	else
 		return false, liste[idJoueur].coeur
 	end
-	print("Envoi de "..reussi)
+	print("Envoi de "..tostring(reussi))
 	return reussi, liste[idJoueur].coeur
 end
 function calculCoord(idJoueur,action)
