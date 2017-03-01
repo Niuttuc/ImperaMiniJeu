@@ -17,18 +17,20 @@ config.mapDef()
 config.joueurDef()
 config.affichageConf()
 function ecoute()
-	event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
-	print(replyFrequency.." "..tostring(message))
-	if message=="JEFAITQUOI" then
-		if config.get("etapeTelecommande")=="JOIN" then
-			joueur.renvoiJoin(replyFrequency-1)
-			--joueur.affichageCouleur(replyFrequency-1,{action="JOIN"})
-		elseif config.get("etapeTelecommande")=="WAIT" then
-			joueur.renvoiLancementGame(replyFrequency-1)
-		elseif config.get("etapeTelecommande")=="CHOIX" then
-			joueur.renvoiDemandeChoix(replyFrequency-1)
-		elseif config.get("etapeTelecommande")=="TOUR" then
-			joueur.renvoiDemandeChoix(replyFrequency-1)
+	while true do
+		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
+		print(replyFrequency.." "..tostring(message))
+		if message=="JEFAITQUOI" then
+			if config.get("etapeTelecommande")=="JOIN" then
+				joueur.renvoiJoin(replyFrequency-1)
+				--joueur.affichageCouleur(replyFrequency-1,{action="JOIN"})
+			elseif config.get("etapeTelecommande")=="WAIT" then
+				joueur.renvoiLancementGame(replyFrequency-1)
+			elseif config.get("etapeTelecommande")=="CHOIX" then
+				joueur.renvoiDemandeChoix(replyFrequency-1)
+			elseif config.get("etapeTelecommande")=="TOUR" then
+				joueur.renvoiDemandeChoix(replyFrequency-1)
+			end
 		end
 	end
 end
@@ -107,4 +109,4 @@ function jeu()
 		end
 	end
 end
-parallel.waitForAny(jeu,ecoute)
+parallel.waitForAll(jeu,ecoute)

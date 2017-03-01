@@ -35,7 +35,7 @@ while true do
 		print(message.action)
 		if message.action=="JOIN" then
 			if premierLancement then
-				modem.transmit(84,color+1,'JEFAITQUOI')
+				modem.transmit(84,color+1,'JOIN')
 			else
 				-- FENETRE CLIQUER POUR JOINDRE
 				thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{xmax-6,1,xmax,3,quit}}
@@ -48,7 +48,11 @@ while true do
 			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{xmax-6,1,xmax,3,quit}}
 		end
 	elseif idArret==2 then
-		
+		if ret1==true then
+			modem.transmit(84,color+1,'QUIT')			
+			-- FENETRE CLIQUER POUR JOINDRE
+			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{xmax-6,1,xmax,3,quit}}
+		end
 	end
 	premierLancement=false
 end
