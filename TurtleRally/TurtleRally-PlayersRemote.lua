@@ -39,9 +39,9 @@ while true do
 			if premierLancement then
 				modem.transmit(84,color+1,'JOIN')
 			else
-				affWin(windows.leaveGame)
-				thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,1,xmax,ymax,join}}
+				affWin(windows.leaveGame)				
 			end
+			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,1,xmax,ymax,join}}
 		elseif message.action=="WAIT" then
 			affWin(windows.waitingScreen)
 			thingsToDo={os.pullEvent,'modem_message'}
