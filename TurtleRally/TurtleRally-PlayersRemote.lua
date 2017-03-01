@@ -12,15 +12,11 @@ totalWeight=0
 for k,v in pairs(choices) do
 	totalWeight=totalWeight+v.weight
 end
-
-
-
 function affWin(win)
 	currentWin.setVisible(false)
 	currentWin=win
 	currentWin.setVisible(true)
 end
-
 function quit()
 	affWin(windows.leaveGame)
 	sleep(2)
@@ -28,18 +24,31 @@ function quit()
 end
 thingsToDo={os.pullEvent,'modem_message'}
 currentWin=windows.waitingScreen
-modem.transmit(84,color+1,'JOIN')
+premierLancement=true
+modem.transmit(84,color+1,'JEFAITQUOI')
+
 while true do
 	idArret,ret1,ret2,ret3,ret4,ret5=sync.waitForAny(sync.listArgs(thingsToDo))
-	print('things done')
+	print("idArret "..idArret)
 	if idArret==1 then
 		ev,side,freq,repFreq,message=ret1,ret2,ret3,ret4,ret5
-		if message.action=="WAIT" then
+		print(message.action)
+		if message.action=="JOIN" then
+			if premierLancement then
+				modem.transmit(84,color+1,'JEFAITQUOI')
+			else
+				-- FENETRE CLIQUER POUR JOINDRE
+				thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{xmax-6,1,xmax,3,quit}}
+			end
+		elseif message.action=="WAIT" then
 			affWin(windows.waitingScreen)
 			thingsToDo={os.pullEvent,'modem_message'}
 		elseif message.action=="LOBBY" then
 			affWin(windows.beforeGame)
 			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{xmax-6,1,xmax,3,quit}}
 		end
+	elseif idArret==2 then
+		
 	end
+	premierLancement=false
 end

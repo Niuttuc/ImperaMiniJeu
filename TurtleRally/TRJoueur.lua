@@ -148,9 +148,27 @@ function lancementGame()
 			actuVie(idJoueur)		
 			liste[idJoueur].coeur=config.get("coeur")
 			actuCoeurAff(idJoueur)
-			joueur.affichage("all",{action="WAIT"})
+			joueur.affichage(idJoueur,{action="WAIT"})
 		else
-			joueur.affichage("all",{action="TOOLATE"})
+			joueur.affichage(idJoueur,{action="TOOLATE"})
+		end
+	end
+end
+function renvoiLancementGame(couleur)
+	for idJoueur=1,#liste do
+		if liste[idJoueur].couleur==couleur then
+			if liste[idJoueur].actif then
+				joueur.affichage(idJoueur,{action="WAIT"})
+			else
+				joueur.affichage(idJoueur,{action="TOOLATE"})
+			end
+		end
+	end
+end
+function affichageCouleur(couleur,quoi)
+	for idJoueur=1,#liste do
+		if liste[idJoueur].couleur==couleur then
+			affichageJ(idJoueur,quoi)
 		end
 	end
 end
@@ -182,11 +200,26 @@ function afficherInfo(idJoueur,info,couleur)
 	liste[idJoueur].affInfo.setCursorPos(2,1)
 	liste[idJoueur].affInfo.write(info)
 end
-function demandeChoix()
-	affichage("all",{action="CHOIX"})
+function renvoiDemandeChoix(couleur)
 	for idJoueur=1, #liste do
-		afficherInfo(idJoueur,"Choix en cours",colors.white)
-		liste[idJoueur].actions={}
+		if liste[idJoueur].actif then
+			if #liste[idJoueurTemp].actions==5 then
+				affichage(idJoueur,{action="WAITPLAYER",actions=liste[idJoueurTemp].actions})
+			else
+				affichage(idJoueur,{action="CHOIX"})
+			end
+		else
+			joueur.affichage(idJoueur,{action="TOOLATE"})
+		end
+	end
+end
+function demandeChoix()
+	for idJoueur=1, #liste do
+		if liste[idJoueur].actif then
+			affichage(idJoueur,{action="CHOIX"})
+			afficherInfo(idJoueur,"Choix en cours",colors.white)
+			liste[idJoueur].actions={}
+		end
 	end
 	local total=actifs()
 	local retour={}
@@ -205,16 +238,30 @@ function demandeChoix()
 			liste[idJoueur].actions=message -- ?? a confirmer
 			retour[idJoueur]=message
 			afficherInfo(idJoueur,"PRET",colors.white)
+			affichage(idJoueur,{action="WAITPLAYER",actions=liste[idJoueurTemp].actions})
 		end
 		nbPret=0
 		for idJoueurTemp=1,#liste do
-			if #liste[idJoueurTemp].actions==5 then
-				nbPret=nbPret+1
+			if liste[idJoueur].actif then
+				if #liste[idJoueurTemp].actions==5 then
+					nbPret=nbPret+1
+				end
 			end
 		end
 		print("Joueur actif "..total.." Nombre de joueur pret "..nbPret)
 	end
 	return retour
+end
+function renvoiJoin(couleur)
+	for idJoueur=1,#liste do
+		if liste[idJoueur].couleur==couleur then
+			if liste[idJoueur].actif then
+				joueur.affichage(idJoueur,{action="LOBBY"})
+			else 
+				joueur.affichage(idJoueur,{action="JOIN"})
+			end
+		end
+	end
 end
 function attenteInscription()
 	local idJoueur=-1
@@ -229,10 +276,10 @@ function attenteInscription()
 		if idJoueur~=-1 then
 			if liste[idJoueur].actif then
 				liste[idJoueur].actif=false	
-				joueur.affichage("all",{action="LOBBY"})
+				joueur.affichage(idJoueur,{action="JOIN"})
 			else
 				liste[idJoueur].actif=true
-				joueur.affichage("all",{action="OPEN"})
+				joueur.affichage(idJoueur,{action="LOBBY"})
 			end
 			local cursY=2
 			fenetre.clear()

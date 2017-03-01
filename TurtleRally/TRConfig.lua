@@ -11,6 +11,7 @@ config.vie=3
 config.etape=4
 config.coeur=10
 config.partie=false
+config.etapeTelecommande="NONLANCER"
 
 function get(id)
 	return config[id]
