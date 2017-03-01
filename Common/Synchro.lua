@@ -7,6 +7,7 @@ function keepFunc(first,...)
 		return keepFunc(...)
 	end
 end
+
 function listArgs(list)
 	local list2=list
 	if type(list2)=='table' and #list2>0 then
@@ -25,46 +26,29 @@ function argRep(n,arg)
 end
 
 function proxFunc()
+	print("OH")
 	actual[#actual+1]=coroutine.running()
 	local id=0
-	local funcArgs={}
 	for i=1,#actual do
 		if actual[i]==coroutine.running() then
 			id=i
 		end
 	end
 	local func=functions[id]
-	local prec=0
-	for i=1,id do
-		if functions[i]==func then
-			prec=prec+1
-		end
-	end
-	local doublon=0
-	for i=1,#args do
-		if args[i]==func then
-			doublon=doublon+1
-			if doublon==prec and args[i+1] and type(args[i+1])~=func then
-				funcArgs=args[i+1]
-			elseif doublon<prec or (doublon==prec and (not(args[i+1]) or type(args[i+1])==func)) then
-				funcArgs={}
-			end
-		end
-	end
-	ret={func(listArgs(funcArgs))}
+	ret={func(listArgs(args[id]))}
 end
-
-function waitForAny(...)
-	args={...}
-	functions={keepFunc(...)}
+-- waitForAny({function1,function2},{args1,args2})
+function waitForAny(f,a)
+	functions=f
+	args=a
 	actual={}
 	local endFunc=parallel.waitForAny(argRep(#functions,proxFunc))
 	return endFunc,listArgs(ret)
 end
 
-function waitForAll(...)
-	args={...}
-	functions={keepFunc(...)}
+function waitForAll(f,a)
+	args=a
+	functions=f
 	actual={}
 	parallel.waitForAll(argRep(#functions,proxFunc))
 	return listArgs(ret)
