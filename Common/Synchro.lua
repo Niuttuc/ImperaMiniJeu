@@ -37,16 +37,19 @@ function proxFunc()
 	local func=functions[id]
 	ret={func(listArgs(args[id]))}
 end
--- waitForAny({function1,function2},{args1,args2})
-function waitForAny(f,a)
+-- waitForAny({function1,function2},{args1,args2},nb)
+function waitForAny(f,a,nb)
+	if nb==nil then
+		nb=#f 
+	end
 	functions=f
 	args=a
 	actual={}
-	local endFunc=parallel.waitForAny(argRep(#functions,proxFunc))
+	local endFunc=parallel.waitForAny(argRep(nb,proxFunc))
 	return endFunc,listArgs(ret)
 end
 
-function waitForAll(f,a)
+function waitForAll(f,a,nb)
 	args=a
 	functions=f
 	actual={}
