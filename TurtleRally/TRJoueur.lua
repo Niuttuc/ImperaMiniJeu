@@ -281,9 +281,11 @@ function attenteInscription()
 				if liste[idJoueur].actif then
 					liste[idJoueur].actif=false	
 					joueur.affichage(idJoueur,{action="JOIN"})
+					print("Envoi JOIN")
 				else
 					liste[idJoueur].actif=true
 					joueur.affichage(idJoueur,{action="LOBBY"})
+					print("Envoi LOBBY")
 				end
 				local cursY=2
 				fenetre.clear()

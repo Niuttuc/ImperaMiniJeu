@@ -37,9 +37,9 @@ leaveGame=window.create(term.current(),1,1,xmax,ymax,false)
 leaveGame.setBackgroundColor(colors.black)
 leaveGame.setTextColor(colors.white)
 leaveGame.clear()
-ahb.center('Vous avez quitte',leaveGame,math.floor(ymax/2)-1)
-ahb.center("le jeu.",leaveGame,math.floor(ymax/2))
-ahb.center(" Au revoir!",leaveGame,math.floor(ymax/2)+1)
+ahb.center('Cliquer',leaveGame,math.floor(ymax/2)-1)
+ahb.center("pour rejoindre",leaveGame,math.floor(ymax/2))
+ahb.center("le jeu",leaveGame,math.floor(ymax/2)+1)
 
 gameInProgress=window.create(term.current(),1,1,xmax,ymax,false)
 

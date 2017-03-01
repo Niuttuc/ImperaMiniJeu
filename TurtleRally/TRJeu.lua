@@ -18,8 +18,7 @@ config.joueurDef()
 config.affichageConf()
 function ecoute()
 	while true do
-		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
-		print(replyFrequency.." "..tostring(message))
+		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")		
 		if message=="JEFAITQUOI" then
 			if config.get("etapeTelecommande")=="JOIN" then
 				joueur.renvoiJoin(replyFrequency-1)
