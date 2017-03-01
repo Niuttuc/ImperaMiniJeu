@@ -69,6 +69,7 @@ function tourne(idJoueur,action)
 	end
 	modem.pp.transmit(liste[idJoueur].couleur,84,action)
 	event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
+	print("Fin tourne")
 end
 function deplacement(idJoueur,x,y,pousseJoueur)
 	local reussi=true
@@ -227,28 +228,30 @@ function demandeChoix()
 	local nbPret=0
 	while not(total==nbPret) do
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
-		idJoueur=-1
-		for idJoueurTemp=1,#liste do
-			if liste[idJoueurTemp].couleur==replyFrequency-1 then
-				idJoueur=idJoueurTemp
-			end
-		end
-		print("Action "..idJoueur)
-		if not(idJoueur==-1) then
-			liste[idJoueur].actions=message -- ?? a confirmer
-			retour[idJoueur]=message
-			afficherInfo(idJoueur,"PRET",colors.white)
-			affichage(idJoueur,{action="WAITPLAYER",actions=liste[idJoueurTemp].actions})
-		end
-		nbPret=0
-		for idJoueurTemp=1,#liste do
-			if liste[idJoueur].actif then
-				if #liste[idJoueurTemp].actions==5 then
-					nbPret=nbPret+1
+		if message~="JEFAITQUOI" then
+			idJoueur=-1
+			for idJoueurTemp=1,#liste do
+				if liste[idJoueurTemp].couleur==replyFrequency-1 then
+					idJoueur=idJoueurTemp
 				end
 			end
+			print("Action "..idJoueur)
+			if not(idJoueur==-1) then
+				liste[idJoueur].actions=message -- ?? a confirmer
+				retour[idJoueur]=message
+				afficherInfo(idJoueur,"PRET",colors.white)
+				affichage(idJoueur,{action="WAITPLAYER",actions=liste[idJoueurTemp].actions})
+			end
+			nbPret=0
+			for idJoueurTemp=1,#liste do
+				if liste[idJoueur].actif then
+					if #liste[idJoueurTemp].actions==5 then
+						nbPret=nbPret+1
+					end
+				end
+			end
+			print("Joueur actif "..total.." Nombre de joueur pret "..nbPret)
 		end
-		print("Joueur actif "..total.." Nombre de joueur pret "..nbPret)
 	end
 	return retour
 end
@@ -267,31 +270,33 @@ function attenteInscription()
 	local idJoueur=-1
 	while true do		
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
-		for idJoueurTemp=1,#liste do
-			if liste[idJoueurTemp].couleur==replyFrequency-1 then
-				idJoueur=idJoueurTemp
-			end
-		end
-		print("inscription "..idJoueur)
-		if idJoueur~=-1 then
-			if liste[idJoueur].actif then
-				liste[idJoueur].actif=false	
-				joueur.affichage(idJoueur,{action="JOIN"})
-			else
-				liste[idJoueur].actif=true
-				joueur.affichage(idJoueur,{action="LOBBY"})
-			end
-			local cursY=2
-			fenetre.clear()
-			for idJoueur=1,#liste do
-				if liste[idJoueur].actif then
-					liste[idJoueur].ligne.reposition(1,cursY)
-					liste[idJoueur].ligne.setVisible(true)
-					cursY=cursY+1
-				else
-					liste[idJoueur].ligne.setVisible(false)
+		if message~="JEFAITQUOI" then
+			for idJoueurTemp=1,#liste do
+				if liste[idJoueurTemp].couleur==replyFrequency-1 then
+					idJoueur=idJoueurTemp
 				end
-			end	
+			end
+			print("inscription "..idJoueur)
+			if idJoueur~=-1 then
+				if liste[idJoueur].actif then
+					liste[idJoueur].actif=false	
+					joueur.affichage(idJoueur,{action="JOIN"})
+				else
+					liste[idJoueur].actif=true
+					joueur.affichage(idJoueur,{action="LOBBY"})
+				end
+				local cursY=2
+				fenetre.clear()
+				for idJoueur=1,#liste do
+					if liste[idJoueur].actif then
+						liste[idJoueur].ligne.reposition(1,cursY)
+						liste[idJoueur].ligne.setVisible(true)
+						cursY=cursY+1
+					else
+						liste[idJoueur].ligne.setVisible(false)
+					end
+				end	
+			end
 		end
 	end
 end
@@ -371,7 +376,9 @@ function retourAlavie(ordre)
 	end
 	while enAttente~=0 do
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
-		enAttente=enAttente-1
+		if message~="JEFAITQUOI" then
+			enAttente=enAttente-1
+		end
 		print("Plus que "..enAttente)
 	end
 end
@@ -475,7 +482,9 @@ function tirageDepart()
 	print("Attente de "..enAttente.." turtle")
 	while enAttente~=0 do
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
-		enAttente=enAttente-1
+		if message~="JEFAITQUOI" then
+			enAttente=enAttente-1
+		end
 		print("Plus que "..enAttente)
 	end
 end
