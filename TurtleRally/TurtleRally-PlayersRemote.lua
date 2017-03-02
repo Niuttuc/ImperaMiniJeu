@@ -15,13 +15,15 @@ end
 function affWin(win)
 	currentWin.setVisible(false)
 	currentWin=win
-	--currentWin.setVisible(true)
+	currentWin.setVisible(true)
 end
 function quit()
 	modem.transmit(84,color+1,'LEAVE')
+	thingsToDo={os.pullEvent,'modem_message'}
 end
 function join()
   	modem.transmit(84,color+1,'JOIN')
+	thingsToDo={os.pullEvent,'modem_message'}
 end
 thingsToDo={os.pullEvent,'modem_message'}
 currentWin=windows.waitingScreen

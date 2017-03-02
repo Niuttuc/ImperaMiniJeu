@@ -186,6 +186,7 @@ function affichageJ(idJoueur,quoi)
 	quoi.vie=liste[idJoueur].vie
 	quoi.coeur=liste[idJoueur].coeur
 	quoi.checkpoint=liste[idJoueur].checkpoint
+	print("ENVOI "..(liste[idJoueur].couleur+1)..' '..quoi)
 	modem.pp.transmit(liste[idJoueur].couleur+1,84,quoi)
 end
 function trouver(x,y)
