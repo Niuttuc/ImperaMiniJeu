@@ -56,15 +56,15 @@ function proxFunc()
  	ret={func(listArgs(funcArgs))}
 end
 -- waitForAny({function1,function2},{args1,args2},nb)
--function waitForAny(...)
+function waitForAny(...)
  	args={...}
 	functions={keepFunc(...)}
 	actual={}
-	local endFunc=parallel.waitForAny(argRep(nb,proxFunc))
+	local endFunc=parallel.waitForAny(argRep(#functions,proxFunc))
 	return endFunc,listArgs(ret)
 end
 
--function waitForAll(...)
+function waitForAll(...)
  	args={...}
  	functions={keepFunc(...)}
 	actual={}
