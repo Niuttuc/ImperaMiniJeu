@@ -31,13 +31,9 @@ premierLancement=true
 modem.transmit(84,color+1,'JEFAITQUOI')
 
 while true do
-	
 	idArret,ret1,ret2,ret3,ret4,ret5=sync.waitForAny(sync.listArgs(thingsToDo))
-	
-	print("idArret "..idArret)
 	if idArret==1 then
 		ev,side,freq,repFreq,message=ret1,ret2,ret3,ret4,ret5
-		print(message.action)
 		if message.action=="JOIN" then
 			if premierLancement then
 				modem.transmit(84,color+1,'JOIN')

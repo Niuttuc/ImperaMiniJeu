@@ -26,7 +26,6 @@ function argRep(n,arg)
 end
 
 function proxFunc()
-	print("OH")
 	actual[#actual+1]=coroutine.running()
 	local id=0
 	local funcArgs={}
