@@ -17,7 +17,8 @@ function configJ(couleur,nom,y)
 		position={x=x,y=y}, -- position actuel de la trutleq
 		direction="MY",
 		checkpoint=0, -- 0 a 4 checkepoin en cours 0 pour départ
-		fenetre={} -- stock toutes les fenetres
+		fenetre={}, -- stock toutes les fenetres
+		actions={}
 	}
 	
 	data.ligne=window.create(fenetre,1,1,taille,1,false)
@@ -204,8 +205,8 @@ end
 function renvoiDemandeChoix(couleur)
 	for idJoueur=1, #liste do
 		if liste[idJoueur].actif then
-			if #liste[idJoueurTemp].actions==5 then
-				affichage(idJoueur,{action="WAITPLAYER",actions=liste[idJoueurTemp].actions})
+			if #liste[idJoueur].actions==5 then
+				affichage(idJoueur,{action="WAITPLAYER",actions=liste[idJoueur].actions})
 			else
 				affichage(idJoueur,{action="CHOIX"})
 			end
@@ -240,11 +241,11 @@ function demandeChoix()
 				liste[idJoueur].actions=message -- ?? a confirmer
 				retour[idJoueur]=message
 				afficherInfo(idJoueur,"PRET",colors.white)
-				affichage(idJoueur,{action="WAITPLAYER",actions=liste[idJoueurTemp].actions})
+				affichage(idJoueur,{action="WAITPLAYER",actions=liste[idJoueur].actions})
 			end
 			nbPret=0
 			for idJoueurTemp=1,#liste do
-				if liste[idJoueur].actif then
+				if liste[idJoueurTemp].actif then
 					if #liste[idJoueurTemp].actions==5 then
 						nbPret=nbPret+1
 					end
