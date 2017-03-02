@@ -15,22 +15,25 @@ end
 function affWin(win)
 	currentWin.setVisible(false)
 	currentWin=win
-	currentWin.setVisible(true)
+	--currentWin.setVisible(true)
 end
 function quit()
 	modem.transmit(84,color+1,'LEAVE')
-
-	modem.transmit(84,color+1,'JOIN')
 end
-thingsToDoFc={os.pullEvent}
-thingsToDoArg={'modem_message'}
+function join()
+  	modem.transmit(84,color+1,'JOIN')
+end
+function preClickAPI(xstart,ystart,xend,yend,func)
+	clicAPI.waitClic(xstart,ystart,xend,yend,func)
+end
+thingsToDo={os.pullEvent,'modem_message'}
 currentWin=windows.waitingScreen
 premierLancement=true
 modem.transmit(84,color+1,'JEFAITQUOI')
 
 while true do
 	
-	idArret,ret1,ret2,ret3,ret4,ret5=sync.waitForAny(thingsToDoFc,thingsToDoArg)
+	idArret,ret1,ret2,ret3,ret4,ret5=sync.waitForAny(sync.listArgs(thingsToDo))
 	
 	print("idArret "..idArret)
 	if idArret==1 then
@@ -42,16 +45,13 @@ while true do
 			else
 				affWin(windows.leaveGame)				
 			end
-			thingsToDoFc={os.pullEvent,clicAPI.waitClic}
-			thingsToDoArg={'modem_message',{1,1,xmax,ymax,join}}
+			thingsToDo={os.pullEvent,'modem_message',preClickAPI,{1,1,xmax,ymax,join}}
 		elseif message.action=="WAIT" then
 			affWin(windows.waitingScreen)
-			thingsToDoFc={os.pullEvent}
-			thingsToDoArg={'modem_message'}
+			thingsToDo={os.pullEvent,'modem_message'}
 		elseif message.action=="LOBBY" then
 			affWin(windows.beforeGame)
-			thingsToDoFc={os.pullEvent,clicAPI.waitClic}
-			thingsToDoArg={'modem_message',{xmax-6,1,xmax,3,quit}}
+			thingsToDo={os.pullEvent,'modem_message',preClickAPI,{xmax-6,1,xmax,3,quit}}
 		end
 	end
 	premierLancement=false

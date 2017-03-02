@@ -29,29 +29,44 @@ function proxFunc()
 	print("OH")
 	actual[#actual+1]=coroutine.running()
 	local id=0
+	local funcArgs={}
 	for i=1,#actual do
 		if actual[i]==coroutine.running() then
 			id=i
 		end
 	end
 	local func=functions[id]
-	ret={func(listArgs(args[id]))}
+	local prec=0
+ 	for i=1,id do
+ 		if functions[i]==func then
+ 			prec=prec+1
+ 		end
+ 	end
+ 	local doublon=0
+ 	for i=1,#args do
+ 		if args[i]==func then
+ 			doublon=doublon+1
+ 			if doublon==prec and args[i+1] and type(args[i+1])~=func then
+ 				funcArgs=args[i+1]
+ 			elseif doublon<prec or (doublon==prec and (not(args[i+1]) or type(args[i+1])==func)) then
+ 				funcArgs={}
+ 			end
+ 		end
+ 	end
+ 	ret={func(listArgs(funcArgs))}
 end
 -- waitForAny({function1,function2},{args1,args2},nb)
-function waitForAny(f,a,nb)
-	if nb==nil then
-		nb=#f 
-	end
-	functions=f
-	args=a
+-function waitForAny(...)
+ 	args={...}
+	functions={keepFunc(...)}
 	actual={}
 	local endFunc=parallel.waitForAny(argRep(nb,proxFunc))
 	return endFunc,listArgs(ret)
 end
 
-function waitForAll(f,a,nb)
-	args=a
-	functions=f
+-function waitForAll(...)
+ 	args={...}
+ 	functions={keepFunc(...)}
 	actual={}
 	parallel.waitForAll(argRep(#functions,proxFunc))
 	return listArgs(ret)
