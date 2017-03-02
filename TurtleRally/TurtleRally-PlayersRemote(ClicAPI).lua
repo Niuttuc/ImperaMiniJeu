@@ -1,6 +1,6 @@
 function waitClic(xstart,ystart,xend,yend,func,...)
 	monitor_side=...
-	if monitor_side and peripheral.isPresent(monitor_side) then
+	if monitor_side and peripheral.isPresent(tostring(monitor_side)) then
 		while true do
 			ev,side,x,y=os.pullEvent('monitor_touch')
 			if x>=xstart and x<=xend and y>=ystart and y<=yend and side==monitor_side then
