@@ -1,5 +1,4 @@
-
-function waitCLic(xstart,ystart,xend,yend,func,...)
+function waitClic(xstart,ystart,xend,yend,func,...)
 	monitor_side=...
 	if monitor_side and peripheral.isPresent(monitor_side) then
 		while true do

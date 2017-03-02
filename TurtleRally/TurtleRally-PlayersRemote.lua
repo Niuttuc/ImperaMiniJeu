@@ -23,9 +23,6 @@ end
 function join()
   	modem.transmit(84,color+1,'JOIN')
 end
-function preClickAPI(xstart,ystart,xend,yend,func)
-	clicAPI.waitClic(xstart,ystart,xend,yend,func)
-end
 thingsToDo={os.pullEvent,'modem_message'}
 currentWin=windows.waitingScreen
 premierLancement=true
@@ -45,13 +42,13 @@ while true do
 			else
 				affWin(windows.leaveGame)				
 			end
-			thingsToDo={os.pullEvent,'modem_message',preClickAPI,{1,1,xmax,ymax,join}}
+			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,1,xmax,ymax,join}}
 		elseif message.action=="WAIT" then
 			affWin(windows.waitingScreen)
 			thingsToDo={os.pullEvent,'modem_message'}
 		elseif message.action=="LOBBY" then
 			affWin(windows.beforeGame)
-			thingsToDo={os.pullEvent,'modem_message',preClickAPI,{xmax-6,1,xmax,3,quit}}
+			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{xmax-6,1,xmax,3,quit}}
 		end
 	end
 	premierLancement=false
