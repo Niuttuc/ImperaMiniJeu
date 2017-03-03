@@ -238,10 +238,14 @@ function demandeChoix()
 			end
 			print("Action "..idJoueur)
 			if not(idJoueur==-1) then
-				liste[idJoueur].actions=message -- ?? a confirmer
-				retour[idJoueur]=message
-				afficherInfo(idJoueur,"PRET",colors.white)
-				affichageTC(idJoueur,{action="WAITPLAYER",actions=liste[idJoueur].actions})
+				if type(message)=='table' then
+					if #message==5 then
+						liste[idJoueur].actions=message -- ?? a confirmer
+						retour[idJoueur]=message
+						afficherInfo(idJoueur,"PRET",colors.white)
+						affichageTC(idJoueur,{action="WAITPLAYER",actions=liste[idJoueur].actions})
+					end
+				end
 			end
 			nbPret=0
 			for idJoueurTemp=1,#liste do
@@ -388,7 +392,11 @@ end
 function actuCoeurAff(idJoueur)
 	liste[idJoueur].affCoeur.clear()
 	liste[idJoueur].affCoeur.setCursorPos(2,1)
-	liste[idJoueur].affCoeur.write(liste[idJoueur].coeur.." coeur")	
+	texte=liste[idJoueur].coeur.." coeur"
+	if liste[idJoueur].coeur>1 then
+		texte=texte+"s"
+	end
+	liste[idJoueur].affCoeur.write(texte)	
 end
 function heal(idJoueur)
 	liste[idJoueur].coeur=liste[idJoueur].coeur+5

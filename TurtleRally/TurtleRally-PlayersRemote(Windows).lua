@@ -60,6 +60,9 @@ playWindow.setBackgroundColor(color)
 playWindow.setTextColor(colors.black)
 playWindow.clear()
 
+vie=indow.create(term.current(),math.floor((xmax-11)/2),1,11,1,false)
+coeur=indow.create(term.current(),math.floor((xmax-11)/2),1,11,1,false)
+etape=indow.create(term.current(),math.floor((xmax-11)/2),1,11,1,false)
 
 listColumn=window.create(playWindow,1,4,math.floor(xmax/2)-1,math.max(10,ymax-9),true)
 listColumn.setBackgroundColor(colors.lightGray)
@@ -70,11 +73,11 @@ separateColumn=window.create(playWindow,math.floor(xmax/2),4,1,math.max(10,ymax-
 separateColumn.setBackgroundColor(color)
 separateColumn.setTextColor(colors.black)
 separateColumn.clear()
-for i=1,6 do
+for i=1,5 do
 	separateColumn.setCursorPos(1,i)
 	separateColumn.write(i)
 end
-for i=7,math.min(14,ymax-4) do
+for i=6,math.min(14,ymax-4) do
 	separateColumn.setCursorPos(1,i)
 	separateColumn.write('|')
 end

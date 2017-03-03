@@ -25,24 +25,45 @@ function join()
 	thingsToDo={os.pullEvent,'modem_message'}
 end
 function actuDonne(data)
+	vie=data.vie	
+	if vie==0 then windows.vie.setBackgroundColor(colors.black)
+	elseif vie==1 then windows.vie.setBackgroundColor(colors.red)
+	elseif vie==2 then windows.vie..setBackgroundColor(colors.orange)
+	else windows.vie.setBackgroundColor(colors.green)	
+	end
+	windows.vie.clear()
+	windows.vie.setCursorPos(2,1)
+	if vie==0 then windows.vie.write("MORT")
+	elseif vie==1 then windows.vie.write("1 vie")
+	else
+		windows.vie.write(vie.." vies")
+	end		
+	
 	coeur=data.coeur
-	vie=data.vie
+	windows.coeur.clear()
+	windows.coeur.setCursorPos(2,1)
+	texte=coeur.." coeur"
+	if coeur>1 then
+		texte=texte+"s"
+	end
+	windows.coeur.write(texte)	
+	
 	checkpoint=data.checkpoint
 end
 local derTirage={}
 function tirage()
-	local tirageA
+	local tirageA={}
 	for k,v in pairs(choices) do
-		for i=1, v.weight then
+		for i=1, v.weight do
 			table.insert(tirageA,k)
 		end
 	end
 	derTirage={}
 	for i=1, coeur do
-		choiceColumn.setCursorPos(1,i)
+		windows.listColumn.setCursorPos(1,i)
 		index=math.random(#tirageA)
 		table.insert(derTirage,tirageA[index])
-		choiceColumn.write(choices[tirageA[index]].nomListe)
+		windows.listColumn.write(choices[tirageA[index]].nomListe)
 		table.remove(tirageA,index)
 	end
 	affWin(windows.playWindow)
