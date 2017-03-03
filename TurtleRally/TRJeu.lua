@@ -36,7 +36,7 @@ end
 function jeu()
 	while true do
 		config.set("etapeTelecommande","JOIN")
-		joueur.affichage("all",{action="JOIN"})
+		joueur.affichageTC("all",{action="JOIN"})
 		parallel.waitForAny(joueur.attenteInscription,affichage.attenteLancement)	
 		config.set("etapeTelecommande","WAIT")
 		joueur.lancementGame()	
@@ -84,15 +84,15 @@ function jeu()
 								print(reussi)
 								if reussi then
 									joueur.afficherInfo(idJoueur,"Tour "..tour.." "..choices[actions[idJoueur][tour]].nomListe..infoEnPlus,colors.green)
-									joueur.affichage(idJoueur,{action="infoTour",tour=tour,status=true})
+									joueur.affichageTC(idJoueur,{action="infoTour",tour=tour,status=true})
 								else
 									joueur.afficherInfo(idJoueur,"Tour "..tour.." "..choices[actions[idJoueur][tour]].nomListe..infoEnPlus,colors.red)
-									joueur.affichage(idJoueur,{action="infoTour",tour=tour,status=false})
+									joueur.affichageTC(idJoueur,{action="infoTour",tour=tour,status=false})
 									os.sleep(0.5)
 								end
 							end
 						else
-							joueur.affichage(idJoueur,{action="infoTour",status=false})
+							joueur.affichageTC(idJoueur,{action="infoTour",status=false})
 						end
 					end
 				end

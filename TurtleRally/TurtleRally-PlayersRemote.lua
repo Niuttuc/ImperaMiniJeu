@@ -8,10 +8,9 @@ os.loadAPI('windows')
 os.loadAPI('choices')
 os.loadAPI('sync')
 os.loadAPI('clicAPI')
-totalWeight=0
-for k,v in pairs(choices) do
-	totalWeight=totalWeight+v.weight
-end
+local coeur=0
+local vie=0
+local checkpoint=0
 function affWin(win)
 	currentWin.setVisible(false)
 	currentWin=win
@@ -24,6 +23,29 @@ end
 function join()
   	modem.transmit(84,color+1,'JOIN')
 	thingsToDo={os.pullEvent,'modem_message'}
+end
+function actuDonne(data)
+	coeur=data.coeur
+	vie=data.vie
+	checkpoint=data.checkpoint
+end
+local derTirage={}
+function tirage()
+	local tirageA
+	for k,v in pairs(choices) do
+		for i=1, v.weight then
+			table.insert(tirageA,k)
+		end
+	end
+	derTirage={}
+	for i=1, coeur do
+		choiceColumn.setCursorPos(1,i)
+		index=math.random(#tirageA)
+		table.insert(derTirage,tirageA[index])
+		choiceColumn.write(choices[tirageA[index]].nomListe)
+		table.remove(tirageA,index)
+	end
+	affWin(windows.playWindow)
 end
 thingsToDo={os.pullEvent,'modem_message'}
 currentWin=windows.waitingScreen
@@ -47,7 +69,16 @@ while true do
 		elseif message.action=="LOBBY" then
 			affWin(windows.beforeGame)
 			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{xmax-6,1,xmax,3,quit}}
+		elseif message.action=="TOOLATE" then
+			affWin(windows.gameInProgress)
+			thingsToDo={os.pullEvent,'modem_message'}
+		elseif message.action=="CHOIX" then
+			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,1,xmax,ymax,join}}
+			actuDonne(message)
+			tirage(message)
 		end
+		
+		
 	end
 	premierLancement=false
 end

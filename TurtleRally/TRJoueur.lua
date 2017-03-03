@@ -150,9 +150,9 @@ function lancementGame()
 			actuVie(idJoueur)		
 			liste[idJoueur].coeur=config.get("coeur")
 			actuCoeurAff(idJoueur)
-			joueur.affichage(idJoueur,{action="WAIT"})
+			joueur.affichageTC(idJoueur,{action="WAIT"})
 		else
-			joueur.affichage(idJoueur,{action="TOOLATE"})
+			joueur.affichageTC(idJoueur,{action="TOOLATE"})
 		end
 	end
 end
@@ -160,30 +160,30 @@ function renvoiLancementGame(couleur)
 	for idJoueur=1,#liste do
 		if liste[idJoueur].couleur==couleur then
 			if liste[idJoueur].actif then
-				joueur.affichage(idJoueur,{action="WAIT"})
+				joueur.affichageTC(idJoueur,{action="WAIT"})
 			else
-				joueur.affichage(idJoueur,{action="TOOLATE"})
+				joueur.affichageTC(idJoueur,{action="TOOLATE"})
 			end
 		end
 	end
 end
-function affichageCouleur(couleur,quoi)
+function affichageTCCouleur(couleur,quoi)
 	for idJoueur=1,#liste do
 		if liste[idJoueur].couleur==couleur then
-			affichageJ(idJoueur,quoi)
+			affichageTCJ(idJoueur,quoi)
 		end
 	end
 end
-function affichage(qui,quoi)
+function affichageTC(qui,quoi)
 	if qui=='all' then
 		for idJoueur=1,#liste do
-			affichageJ(idJoueur,quoi)
+			affichageTCJ(idJoueur,quoi)
 		end
 	else
-		affichageJ(qui,quoi)
+		affichageTCJ(qui,quoi)
 	end
 end
-function affichageJ(idJoueur,quoi)
+function affichageTCJ(idJoueur,quoi)
 	quoi.vie=liste[idJoueur].vie
 	quoi.coeur=liste[idJoueur].coeur
 	quoi.checkpoint=liste[idJoueur].checkpoint
@@ -206,19 +206,19 @@ function renvoiDemandeChoix(couleur)
 	for idJoueur=1, #liste do
 		if liste[idJoueur].actif then
 			if #liste[idJoueur].actions==5 then
-				affichage(idJoueur,{action="WAITPLAYER",actions=liste[idJoueur].actions})
+				affichageTC(idJoueur,{action="WAITPLAYER",actions=liste[idJoueur].actions})
 			else
-				affichage(idJoueur,{action="CHOIX"})
+				affichageTC(idJoueur,{action="CHOIX",actions=liste[idJoueur].actions})
 			end
 		else
-			joueur.affichage(idJoueur,{action="TOOLATE"})
+			joueur.affichageTC(idJoueur,{action="TOOLATE"})
 		end
 	end
 end
 function demandeChoix()
 	for idJoueur=1, #liste do
 		if liste[idJoueur].actif then
-			affichage(idJoueur,{action="CHOIX"})
+			affichageTC(idJoueur,{action="CHOIX",actions=liste[idJoueur].actions})
 			afficherInfo(idJoueur,"Choix en cours",colors.white)
 			liste[idJoueur].actions={}
 		end
@@ -241,7 +241,7 @@ function demandeChoix()
 				liste[idJoueur].actions=message -- ?? a confirmer
 				retour[idJoueur]=message
 				afficherInfo(idJoueur,"PRET",colors.white)
-				affichage(idJoueur,{action="WAITPLAYER",actions=liste[idJoueur].actions})
+				affichageTC(idJoueur,{action="WAITPLAYER",actions=liste[idJoueur].actions})
 			end
 			nbPret=0
 			for idJoueurTemp=1,#liste do
@@ -260,9 +260,9 @@ function renvoiJoin(couleur)
 	for idJoueur=1,#liste do
 		if liste[idJoueur].couleur==couleur then
 			if liste[idJoueur].actif then
-				joueur.affichage(idJoueur,{action="LOBBY"})
+				joueur.affichageTC(idJoueur,{action="LOBBY"})
 			else 
-				joueur.affichage(idJoueur,{action="JOIN"})
+				joueur.affichageTC(idJoueur,{action="JOIN"})
 			end
 		end
 	end
@@ -281,11 +281,11 @@ function attenteInscription()
 			if idJoueur~=-1 then
 				if liste[idJoueur].actif then
 					liste[idJoueur].actif=false	
-					joueur.affichage(idJoueur,{action="JOIN"})
+					joueur.affichageTC(idJoueur,{action="JOIN"})
 					print("Envoi JOIN")
 				else
 					liste[idJoueur].actif=true
-					joueur.affichage(idJoueur,{action="LOBBY"})
+					joueur.affichageTC(idJoueur,{action="LOBBY"})
 					print("Envoi LOBBY")
 				end
 				local cursY=2
@@ -354,7 +354,7 @@ function retourAlavie(ordre)
 				liste[idJoueur].vie=liste[idJoueur].vie-1
 				actuVie(idJoueur)
 				if liste[idJoueur].vie==0 then
-					affichage(idJoueur,{action="PERDU"})					
+					affichageTC(idJoueur,{action="PERDU"})					
 				else
 					liste[idJoueur].coeur=config.get("coeur")
 					actuCoeurAff(idJoueur)
@@ -395,7 +395,7 @@ function heal(idJoueur)
 	if liste[idJoueur].coeur>10 then
 		liste[idJoueur].coeur=10
 		actuCoeurAff(idJoueur)
-		affichage(idJoueur,{action="INFO"})
+		affichageTC(idJoueur,{action="INFO"})
 	end	
 end
 function degatAll(idJoueurImu)
@@ -414,7 +414,7 @@ function degat(idJoueur)
 		mort(idJoueur)
 	else
 		actuCoeurAff(idJoueur)
-		affichage(idJoueur,{action="INFO"})
+		affichageTC(idJoueur,{action="INFO"})
 	end	
 end
 function mort(idJoueur)
@@ -422,7 +422,7 @@ function mort(idJoueur)
 	actuCoeurAff(idJoueur)
 	liste[idJoueur].position.x=-1
 	liste[idJoueur].position.y=-1
-	affichage(idJoueur,{action="INFO"})
+	affichageTC(idJoueur,{action="INFO"})
 	modem.pp.transmit(liste[idJoueur].couleur,84,{"mort"})
 end
 function tirageOrdre()
@@ -453,7 +453,7 @@ function passageEtape(idJoueur,numero)
 		liste[idJoueur].checkpoint=numero
 	end
 	if liste[idJoueur].checkpoint==config.get("etape") then
-		affichage(idJoueur,{action="GAGNER"})
+		affichageTC(idJoueur,{action="GAGNER"})
 		config.set("partie",false)
 	end
 end
