@@ -394,7 +394,7 @@ function actuCoeurAff(idJoueur)
 	liste[idJoueur].affCoeur.setCursorPos(2,1)
 	texte=liste[idJoueur].coeur.." coeur"
 	if liste[idJoueur].coeur>1 then
-		texte=texte+"s"
+		texte=texte.."s"
 	end
 	liste[idJoueur].affCoeur.write(texte)	
 end

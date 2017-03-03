@@ -28,7 +28,7 @@ function actuDonne(data)
 	vie=data.vie	
 	if vie==0 then windows.vie.setBackgroundColor(colors.black)
 	elseif vie==1 then windows.vie.setBackgroundColor(colors.red)
-	elseif vie==2 then windows.vie..setBackgroundColor(colors.orange)
+	elseif vie==2 then windows.vie.setBackgroundColor(colors.orange)
 	else windows.vie.setBackgroundColor(colors.green)	
 	end
 	windows.vie.clear()
@@ -44,11 +44,17 @@ function actuDonne(data)
 	windows.coeur.setCursorPos(2,1)
 	texte=coeur.." coeur"
 	if coeur>1 then
-		texte=texte+"s"
+		texte=texte.."s"
 	end
-	windows.coeur.write(texte)	
+	windows.coeur.write(texte)
 	
+
 	checkpoint=data.checkpoint
+	windows.etape.clear()
+	if not(checkpoint==0) then
+		windows.etape.setCursorPos(2,1)
+		windows.etape.write("Etape : "..checkpoint)
+	end
 end
 local derTirage={}
 function tirage()

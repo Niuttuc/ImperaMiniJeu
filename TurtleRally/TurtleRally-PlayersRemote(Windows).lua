@@ -60,9 +60,9 @@ playWindow.setBackgroundColor(color)
 playWindow.setTextColor(colors.black)
 playWindow.clear()
 
-vie=indow.create(term.current(),math.floor((xmax-11)/2),1,11,1,false)
-coeur=indow.create(term.current(),math.floor((xmax-11)/2),1,11,1,false)
-etape=indow.create(term.current(),math.floor((xmax-11)/2),1,11,1,false)
+vie=window.create(term.current(),math.floor((xmax-11)/2),1,11,1,true)
+coeur=window.create(term.current(),math.floor((xmax-11)/2),1,11,1,true)
+etape=window.create(term.current(),math.floor((xmax-11)/2),1,11,1,true)
 
 listColumn=window.create(playWindow,1,4,math.floor(xmax/2)-1,math.max(10,ymax-9),true)
 listColumn.setBackgroundColor(colors.lightGray)
