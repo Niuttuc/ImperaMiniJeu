@@ -203,16 +203,20 @@ function afficherInfo(idJoueur,info,couleur)
 	liste[idJoueur].affInfo.write(info)
 end
 function renvoiDemandeChoix(couleur)
-	for idJoueur=1, #liste do
-		if liste[idJoueur].actif then
-			if #liste[idJoueur].actions==5 then
-				affichageTC(idJoueur,{action="WAITPLAYER",actions=liste[idJoueur].actions})
-			else
-				affichageTC(idJoueur,{action="CHOIX",actions=liste[idJoueur].actions})
-			end
-		else
-			joueur.affichageTC(idJoueur,{action="TOOLATE"})
+	for idJoueurTemp=1,#liste do
+		if liste[idJoueurTemp].couleur==couleur then
+			idJoueur=idJoueurTemp
 		end
+	end
+	if liste[idJoueur].actif then
+		if #liste[idJoueur].actions==5 then
+			print("WAITPLAYER")
+			affichageTC(idJoueur,{action="WAITPLAYER",actions=liste[idJoueur].actions})
+		else
+			affichageTC(idJoueur,{action="CHOIX",actions=liste[idJoueur].precActions})
+		end
+	else
+		joueur.affichageTC(idJoueur,{action="TOOLATE"})
 	end
 end
 function demandeChoix()
@@ -220,6 +224,7 @@ function demandeChoix()
 		if liste[idJoueur].actif then
 			affichageTC(idJoueur,{action="CHOIX",actions=liste[idJoueur].actions})
 			afficherInfo(idJoueur,"Choix en cours",colors.white)
+			liste[idJoueur].precActions=liste[idJoueur].actions
 			liste[idJoueur].actions={}
 		end
 	end

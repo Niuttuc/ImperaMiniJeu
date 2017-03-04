@@ -20,6 +20,7 @@ function ecoute()
 	while true do
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")		
 		if message=="JEFAITQUOI" then
+			print("JE FAIS QUOI")
 			if config.get("etapeTelecommande")=="JOIN" then
 				joueur.renvoiJoin(replyFrequency-1)
 				--joueur.affichageCouleur(replyFrequency-1,{action="JOIN"})
@@ -92,7 +93,7 @@ function jeu()
 								end
 							end
 						else
-							joueur.affichageTC(idJoueur,{action="infoTour",status=false})
+							joueur.affichageTC(idJoueur,{action="infoTour",tour=tour,status=false})
 						end
 					end
 				end

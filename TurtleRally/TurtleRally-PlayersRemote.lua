@@ -183,7 +183,7 @@ function actuAffichage(continue)
 	else
 		if continue then
 			windows.validerBouton.redraw()
-		then
+		end
 	end
 end
 thingsToDo={os.pullEvent,'modem_message'}
