@@ -67,7 +67,8 @@ function jeu()
 								or  actions[idJoueur][tour]=="trigoTurn" 
 								or  actions[idJoueur][tour]=="turnBack"  
 							then -- Tourne droite
-								joueur.tourne(idJoueur,actions[idJoueur][tour])						
+								joueur.tourne(idJoueur,actions[idJoueur][tour])
+								joueur.affichageTC(idJoueur,{action="infoTour",tour=tour,status=true})								
 							else
 								if actions[idJoueur][tour]=="avance2" then
 									x,y=joueur.calculCoord(idJoueur,"avance1")

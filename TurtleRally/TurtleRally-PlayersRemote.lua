@@ -92,7 +92,12 @@ function choixClic(x,y)
 	if y>8 then
 		if #mesActions==coeur or #mesActions==5 then
 			if coeur<5 then
-				
+				for i=1,5 do
+					if coeur>=i then
+					else
+						mesActions[i]=preActions[i]
+					end
+				end
 			end			
 			modem.transmit(84,color+1,mesActions)
 			continue=false
