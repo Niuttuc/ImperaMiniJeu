@@ -111,7 +111,7 @@ function actionTapis()
 			print("TAPIS")
 			joueur.deplacement(idJoueur,tapis[iTapis].x+tapis[iTapis].mx,tapis[iTapis].y+tapis[iTapis].my,false)
 			print("ROT "..tapis[iTapis].rot)
-			if not(tapis[iTapis].rot=="NON") then
+			if not(tapis[iTapis].rot=="non") then
 				joueur.tourne(idJoueur,tapis[iTapis].rot)
 			end
 		end

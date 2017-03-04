@@ -122,7 +122,7 @@ function mapDef()
 	map.add(10,17,"depart","monitor_20",5)
 	
 	-- FINIR PAR LES TAPIS, LES ENREGISTRER DANS L'ORDRE D'ACTIVATION
-	-- X Y TAPIS {mx=Mouvement en x,my=Mouvement en y,rot="NON" ou "clockTurn" ou "trigoTurn"}
+	-- X Y TAPIS {mx=Mouvement en x,my=Mouvement en y,rot="non" ou "clockTurn" ou "trigoTurn"}
 	map.add(11,12,"tapis",{mx=1,my=0,rot="non"})
 	map.add(10,12,"tapis",{mx=1,my=0,rot="non"})
 	map.add(9,12,"tapis",{mx=1,my=0,rot="non"})
