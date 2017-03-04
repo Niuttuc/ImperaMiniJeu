@@ -90,7 +90,7 @@ function choixClic(x,y)
 	else
 		if y-2<=#mesActions then
 			table.insert(derTirage,mesActions[y-2])
-			table.remove(derTirage,y-2)
+			table.remove(mesActions,y-2)
 		end
 	end
 	actuAffichage()
@@ -101,11 +101,7 @@ function actuAffichage()
 	windows.vie.redraw()
 	windows.coeur.redraw()
 	windows.etape.redraw()
-	windows.listColumn.clear()
-	for i=1, #derTirage do
-		windows.listColumn.setCursorPos(1,i)
-		windows.listColumn.write(choices[derTirage[i]].nomListe)
-	end
+	
 	windows.separateColumn.clear()
 	for i=1,5 do
 		if coeur>=i then 
@@ -118,6 +114,7 @@ function actuAffichage()
 	end
 	windows.choiceColumn.clear()
 	local first=true
+	local combien=0
 	for i=1,5 do
 		windows.choiceColumn.setCursorPos(1,i)
 		if coeur>=i then 			
@@ -131,12 +128,21 @@ function actuAffichage()
 					windows.choiceColumn.write("a choisir")
 				end
 			else
+				combien=combien+1
 				windows.choiceColumn.setTextColor(colors.black)
 				windows.choiceColumn.write(choices[mesActions[i]].nomListe)
 			end
 		else
+			combien=combien+1
 			windows.choiceColumn.setTextColor(colors.red)
 		end
+	end
+	if combien~=5 then
+		windows.listColumn.clear()
+		for i=1, #derTirage do
+			windows.listColumn.setCursorPos(1,i)
+			windows.listColumn.write(choices[derTirage[i]].nomListe)
+		end	
 	end
 end
 thingsToDo={os.pullEvent,'modem_message'}
