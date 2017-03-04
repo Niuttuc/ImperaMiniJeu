@@ -55,9 +55,9 @@ playWindow.setBackgroundColor(color)
 playWindow.setTextColor(colors.black)
 playWindow.clear()
 
-vie=window.create(playWindow,math.floor(1,1,6,1,true)
-coeur=window.create(playWindow,math.floor(7,1,9,1,true)
-etape=window.create(playWindow,math.floor(16,1,9,1,true)
+vie=window.create(playWindow,1,1,6,1,true)
+coeur=window.create(playWindow,7,1,9,1,true)
+etape=window.create(playWindow,16,1,9,1,true)
 etape.setBackgroundColor(colors.white)
 etape.setTextColor(colors.black)
 

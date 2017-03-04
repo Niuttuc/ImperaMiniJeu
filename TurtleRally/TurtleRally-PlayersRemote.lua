@@ -42,7 +42,7 @@ function actuDonne(data)
 	
 	if coeur>5 then windows.coeur.setBackgroundColor(colors.lime)
 	elseif coeur==5 then windows.coeur.setBackgroundColor(colors.yellow)
-	else then windows.coeur.setBackgroundColor(colors.red)
+	else windows.coeur.setBackgroundColor(colors.red)
 	end
 	coeur=data.coeur
 	windows.coeur.clear()
@@ -91,15 +91,15 @@ function actuAffichage()
 	for i=1, #derTirage do
 		windows.listColumn.write(choices[derTirage[i]].nomListe)
 	end
-	separateColumn.clear()
+	windows.separateColumn.clear()
 	for i=1,5 do
 		if coeur>=i then 
-			separateColumn.setTextColor(colors.black)
+			windows.separateColumn.setTextColor(colors.black)
 		else
-			separateColumn.setTextColor(colors.red)
+			windows.separateColumn.setTextColor(colors.red)
 		end
-		separateColumn.setCursorPos(1,i)
-		separateColumn.write(i)
+		windows.separateColumn.setCursorPos(1,i)
+		windows.separateColumn.write(i)
 	end
 	windows.choiceColumn.clear()
 	for i=1,5 do
