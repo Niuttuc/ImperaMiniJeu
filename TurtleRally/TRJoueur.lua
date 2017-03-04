@@ -72,7 +72,7 @@ function tourne(idJoueur,action)
 	event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
 	print("Fin tourne")
 end
-function deplacement(idJoueur,x,y,pousseJoueur)
+function deplacement(idJoueur,x,y,pousseJoueur,mode)
 	local reussi=true
 	if liste[idJoueur].coeur~=0 then
 		if present(x,y) then

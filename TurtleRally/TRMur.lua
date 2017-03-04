@@ -37,11 +37,12 @@ function test(x,y)
 		error("Pas de mur en "..x.." "..y)
 	end
 	print("Couleur "..couleurBouton)
+	local joueurDessus=false
 	for cMur, data in pairs(mur) do
-		if not(cMur==couleurBouton) then
-			local joueurDessus=false
+		if not(cMur==couleurBouton) then			
 			for iMur,pos in pairs(data.position) do
 				if joueur.present(pos.x,pos.y) then
+					print("Joueur present sur un mur "..cMur)
 					joueurDessus=true
 				end
 			end

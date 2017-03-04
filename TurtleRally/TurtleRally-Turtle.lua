@@ -90,6 +90,34 @@ end
 function goTo(goalPos,keepDir)						--va a la coordonee goalPos, garde son orientation si keepDir est vraie
 	startDir=compass.getFacing()
 	currentPos=getTurtlePos()
+	if math.abs(goalPos.x-currentPos.x)+math.abs(goalPos.y+currentPos.y)==1 then
+		print("Juste 1")
+		if goalPos.x>currentPos.x then
+			if card[startDir]-card[directionxplus])%4==2 then
+				if turtle.back() then
+					return
+				end
+			end
+		elseif goalPos.x<currentPos.x then
+			if card[startDir]-card[directionxmoins])%4==2 then
+				if turtle.back() then
+					return
+				end
+			end
+		elseif goalPos.y>currentPos.y then
+			if card[startDir]-card[directionyplus])%4==2 then
+				if turtle.back() then
+					return
+				end
+			end
+		elseif goalPos.y<currentPos.y then
+			if card[startDir]-card[directionymoins])%4==2 then
+				if turtle.back() then
+					return
+				end
+			end
+		end		
+	end
 	while goalPos.x~=currentPos.x or goalPos.y~=currentPos.y do
 		if goalPos.x>currentPos.x then
 			rotateToDirection(directionxplus)
