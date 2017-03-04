@@ -28,7 +28,7 @@ end
 
 
 --Forme des coordonnees: {x=coordonee en x relatif,y=coordonee en y relatif}
---L'entree du garage doit être libre d'accès selon l'AXE DES Y et un niveau au dessus du plateau
+--L'entree du garage doit etre libre d'acces selon l'AXE DES Y et un niveau au dessus du plateau
 
 
 function forward()
@@ -243,6 +243,7 @@ function waitForModem()
 		ev,side,freq,repFreq,mess,dis=os.pullEvent('modem_message')
 		if type(mess)=='string' then
 			mess=string.lower(mess)
+			
 		elseif type(mess)=='table' then
 			for i=1,#mess do
 				if type(mess[i])=='string' then
@@ -250,20 +251,17 @@ function waitForModem()
 				end
 			end
 		end
-		if mess=='trigoTurn' then
-			print("trigoTurn")
+		if mess=='trigoturn' then
 			if paresseux then
 				turtle.turnLeft()
 			end
 			modem.transmit(repFreq, color, 'fini')
-		elseif mess=='clockTurn' then
-			print("clockTurn")
+		elseif mess=='clockturn' then
 			if paresseux then
 				turtle.turnRight()
 			end
 			modem.transmit(repFreq, color, 'fini')
-		elseif mess=='turnBack' then
-			print("turnBack")
+		elseif mess=='turnback' then
 			if paresseux then
 				turtle.turnRight()
 				turtle.turnRight()
