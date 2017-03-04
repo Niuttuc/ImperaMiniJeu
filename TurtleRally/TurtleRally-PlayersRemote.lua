@@ -66,7 +66,6 @@ end
 local derTirage={}
 function tirage()
 	mesActions={}
-	windows.playWindow.clear()
 	local tirageA={}
 	for k,v in pairs(choices) do
 		for i=1, v.weight do
@@ -75,7 +74,6 @@ function tirage()
 	end
 	derTirage={}
 	for i=1, coeur do
-		windows.listColumn.setCursorPos(1,i)
 		index=math.random(#tirageA)
 		table.insert(derTirage,tirageA[index])
 		table.remove(tirageA,index)
@@ -84,11 +82,21 @@ function tirage()
 	affWin(windows.playWindow)
 end
 function choixClic(x,y)
-	error("SALUT")
+	if y>8 then
+		table.insert(mesActions,derTirage[y-8])
+		table.remove(derTirage,y-8)
+	end
+	actuAffichage()	
+	error("SALUT "..y)
 end
 function actuAffichage()
+	windows.playWindow.clear()
+	windows.vie.redraw()
+	windows.coeur.redraw()
+	windows.etape.redraw()
 	windows.listColumn.clear()
 	for i=1, #derTirage do
+		windows.listColumn.setCursorPos(1,i)
 		windows.listColumn.write(choices[derTirage[i]].nomListe)
 	end
 	windows.separateColumn.clear()
@@ -102,8 +110,26 @@ function actuAffichage()
 		windows.separateColumn.write(i)
 	end
 	windows.choiceColumn.clear()
+	local first=true
 	for i=1,5 do
-	
+		windows.choiceColumn.setCursorPos(1,i)
+		if coeur>=i then 			
+			if type(mesActions[i])=='nil' then
+				if first then
+					first=false
+					windows.choiceColumn.setTextColor(colors.white)
+					windows.choiceColumn.write("Prochain choix")
+				else
+					windows.choiceColumn.setTextColor(colors.black)
+					windows.choiceColumn.write("a choisir")
+				end
+			else
+				windows.choiceColumn.setTextColor(colors.black)
+				windows.choiceColumn.write(choices[mesActions[i]].nomListe)
+			end
+		else
+			windows.choiceColumn.setTextColor(colors.red)
+		end
 	end
 end
 thingsToDo={os.pullEvent,'modem_message'}
