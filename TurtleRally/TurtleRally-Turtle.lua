@@ -1,3 +1,4 @@
+print("Turtle charge version Git")
 modem=peripheral.find('modem')
 compass=peripheral.find('compass')
 color=colors[string.lower(string.sub(os.getComputerLabel(),7,-1))] --recuperation de la couleur associe a la turtle dans son label
@@ -294,6 +295,9 @@ function waitForModem()
 				enterTheGame(mess[2])
 			end
 			modem.transmit(repFreq, color, 'fini')
+		else
+			print("Pas de config ")
+			print(mess)
 		end
 	end
 end
