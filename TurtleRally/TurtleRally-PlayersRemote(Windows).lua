@@ -50,26 +50,28 @@ ahb.center('Partie en cours',gameInProgress,math.floor(ymax/2)-1)
 ahb.center("Trop tard.",gameInProgress,math.floor(ymax/2))
 ahb.center(" Desole!",gameInProgress,math.floor(ymax/2)+1)
 
-
-
-
-
-
 playWindow=window.create(term.current(),1,1,xmax,ymax,false)
 playWindow.setBackgroundColor(color)
 playWindow.setTextColor(colors.black)
 playWindow.clear()
 
-vie=window.create(playWindow,math.floor((xmax-11)/2),1,11,1,true)
-coeur=window.create(playWindow,math.floor((xmax-11)/2),1,11,1,true)
-etape=window.create(playWindow,math.floor((xmax-11)/2),1,11,1,true)
+vie=window.create(playWindow,math.floor(1,1,6,1,true)
+coeur=window.create(playWindow,math.floor(7,1,9,1,true)
+etape=window.create(playWindow,math.floor(16,1,9,1,true)
+etape.setBackgroundColor(colors.white)
+etape.setTextColor(colors.black)
 
-listColumn=window.create(playWindow,1,4,math.floor(xmax/2)-1,math.max(10,ymax-9),true)
-listColumn.setBackgroundColor(colors.lightGray)
+choiceColumn=window.create(playWindow,3,3,xmax,5,true)
+choiceColumn.setBackgroundColor(colors.lightGray)
+choiceColumn.setTextColor(colors.black)
+choiceColumn.clear()
+
+listColumn=window.create(playWindow,1,9,xmax,10,true)
+listColumn.setBackgroundColor(colors.gray)
 listColumn.setTextColor(colors.black)
 listColumn.clear()
 
-separateColumn=window.create(playWindow,math.floor(xmax/2),4,1,math.max(10,ymax-9),true)
+separateColumn=window.create(playWindow,1,3,2,5,true)
 separateColumn.setBackgroundColor(color)
 separateColumn.setTextColor(colors.black)
 separateColumn.clear()
@@ -77,18 +79,8 @@ for i=1,5 do
 	separateColumn.setCursorPos(1,i)
 	separateColumn.write(i)
 end
-for i=6,math.min(14,ymax-4) do
-	separateColumn.setCursorPos(1,i)
-	separateColumn.write('|')
-end
 
-choiceColumn=window.create(playWindow,math.floor(xmax/2)+1,4,math.floor(xmax/2),math.max(10,ymax-9),true)
-choiceColumn.setBackgroundColor(colors.gray)
-choiceColumn.setTextColor(colors.black)
-choiceColumn.clear()
-
-
-countDown=window.create(playWindow,math.floor(xmax/2)-3,ymax-3,8,4,true)
+countDown=window.create(playWindow,math.floor(xmax/2)-3,ymax-3,8,4,false)
 countDown.setBackgroundColor(colors.black)
 countDown.setTextColor(colors.white)
 countDown.clear()

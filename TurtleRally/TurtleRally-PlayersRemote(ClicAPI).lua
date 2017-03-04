@@ -4,7 +4,7 @@ function waitClic(xstart,ystart,xend,yend,func,...)
 		while true do
 			ev,side,x,y=os.pullEvent('monitor_touch')
 			if x>=xstart and x<=xend and y>=ystart and y<=yend and side==monitor_side then
-				func()
+				func(x,y)
 				return true
 			end
 		end
@@ -13,7 +13,7 @@ function waitClic(xstart,ystart,xend,yend,func,...)
 		while true do
 			ev,button,x,y=os.pullEvent('mouse_click')
 			if x>=xstart and x<=xend and y>=ystart and y<=yend then
-				func()
+				func(x,y)
 				return true
 			end
 		end

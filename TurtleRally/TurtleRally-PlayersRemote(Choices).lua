@@ -8,25 +8,25 @@
 --		}
 
 avance1={
-		nomListe='Avance 1',
+		nomListe='Avance de 1',
 		weight=7,
 		message='avance1',
 		}
 
 avance2={
-		nomListe='Avance 2',
+		nomListe='Avance de 2',
 		weight=1,
 		message='avance2',
 		}
 
 clockTurn={
-		nomListe='Tour droite',
+		nomListe='Tourne droite',
 		weight=8,
 		message='clockTurn',
 		}
 
 trigoTurn={
-		nomListe='Tour gauche',
+		nomListe='Tourne gauche',
 		weight=8,
 		message='trigoTurn',
 		}
@@ -38,7 +38,7 @@ turnBack={
 		}
 
 backUp={
-		nomListe='Recule 1',
+		nomListe='Recule de 1',
 		weight=8,
 		message='backUp',
 		}

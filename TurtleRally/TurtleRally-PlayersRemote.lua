@@ -11,16 +11,17 @@ os.loadAPI('clicAPI')
 local coeur=0
 local vie=0
 local checkpoint=0
+local mesActions={}
 function affWin(win)
 	currentWin.setVisible(false)
 	currentWin=win
 	currentWin.setVisible(true)
 end
-function quit()
+function quit(x,y)
 	modem.transmit(84,color+1,'LEAVE')
 	thingsToDo={os.pullEvent,'modem_message'}
 end
-function join()
+function join(x,y)
   	modem.transmit(84,color+1,'JOIN')
 	thingsToDo={os.pullEvent,'modem_message'}
 end
@@ -32,32 +33,40 @@ function actuDonne(data)
 	else windows.vie.setBackgroundColor(colors.green)	
 	end
 	windows.vie.clear()
-	windows.vie.setCursorPos(2,1)
+	windows.vie.setCursorPos(1,1)
 	if vie==0 then windows.vie.write("MORT")
 	elseif vie==1 then windows.vie.write("1 vie")
 	else
 		windows.vie.write(vie.." vies")
 	end		
 	
+	if coeur>5 then windows.coeur.setBackgroundColor(colors.lime)
+	elseif coeur==5 then windows.coeur.setBackgroundColor(colors.yellow)
+	else then windows.coeur.setBackgroundColor(colors.red)
+	end
 	coeur=data.coeur
 	windows.coeur.clear()
-	windows.coeur.setCursorPos(2,1)
+	windows.coeur.setCursorPos(1,1)
 	texte=coeur.." coeur"
 	if coeur>1 then
 		texte=texte.."s"
 	end
 	windows.coeur.write(texte)
 	
-
+	
 	checkpoint=data.checkpoint
 	windows.etape.clear()
-	if not(checkpoint==0) then
-		windows.etape.setCursorPos(2,1)
+	windows.etape.setCursorPos(1,1)
+	if not(checkpoint==0) then		
 		windows.etape.write("Etape : "..checkpoint)
+	else
+		windows.etape.write("Depart")
 	end
 end
 local derTirage={}
 function tirage()
+	mesActions={}
+	windows.playWindow.clear()
 	local tirageA={}
 	for k,v in pairs(choices) do
 		for i=1, v.weight do
@@ -69,10 +78,33 @@ function tirage()
 		windows.listColumn.setCursorPos(1,i)
 		index=math.random(#tirageA)
 		table.insert(derTirage,tirageA[index])
-		windows.listColumn.write(choices[tirageA[index]].nomListe)
 		table.remove(tirageA,index)
 	end
+	actuAffichage()
 	affWin(windows.playWindow)
+end
+function choixClic(x,y)
+	error("SALUT")
+end
+function actuAffichage()
+	windows.listColumn.clear()
+	for i=1, #derTirage do
+		windows.listColumn.write(choices[derTirage[i]].nomListe)
+	end
+	separateColumn.clear()
+	for i=1,5 do
+		if coeur>=i then 
+			separateColumn.setTextColor(colors.black)
+		else
+			separateColumn.setTextColor(colors.red)
+		end
+		separateColumn.setCursorPos(1,i)
+		separateColumn.write(i)
+	end
+	windows.choiceColumn.clear()
+	for i=1,5 do
+	
+	end
 end
 thingsToDo={os.pullEvent,'modem_message'}
 currentWin=windows.waitingScreen
@@ -100,7 +132,7 @@ while true do
 			affWin(windows.gameInProgress)
 			thingsToDo={os.pullEvent,'modem_message'}
 		elseif message.action=="CHOIX" then
-			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,1,xmax,ymax,join}}
+			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,9,xmax,ymax,choixClic}}
 			actuDonne(message)
 			tirage(message)
 		end
