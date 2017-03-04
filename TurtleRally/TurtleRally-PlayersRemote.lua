@@ -40,11 +40,11 @@ function actuDonne(data)
 		windows.vie.write(vie.." vies")
 	end		
 	
+	coeur=data.coeur
 	if coeur>5 then windows.coeur.setBackgroundColor(colors.lime)
 	elseif coeur==5 then windows.coeur.setBackgroundColor(colors.yellow)
 	else windows.coeur.setBackgroundColor(colors.red)
-	end
-	coeur=data.coeur
+	end	
 	windows.coeur.clear()
 	windows.coeur.setCursorPos(1,1)
 	texte=coeur.." coeur"
@@ -85,9 +85,13 @@ function choixClic(x,y)
 	if y>8 then
 		table.insert(mesActions,derTirage[y-8])
 		table.remove(derTirage,y-8)
+	else
+		if y-2<=#mesActions then
+			table.insert(derTirage,mesActions[y-2])
+			table.remove(derTirage,y-2)
+		end
 	end
-	actuAffichage()	
-	error("SALUT "..y)
+	actuAffichage()
 end
 function actuAffichage()
 	windows.playWindow.clear()
@@ -158,12 +162,10 @@ while true do
 			affWin(windows.gameInProgress)
 			thingsToDo={os.pullEvent,'modem_message'}
 		elseif message.action=="CHOIX" then
-			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,9,xmax,ymax,choixClic}}
+			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,3,xmax,16,choixClic}}
 			actuDonne(message)
 			tirage(message)
 		end
-		
-		
 	end
 	premierLancement=false
 end
