@@ -17,7 +17,7 @@ end
 -- renvoi degat subit
 local tuilesAvent={
 	libre=function(x,y) return true, 0 end,
-	depart=function(x,y) return end,
+	depart=function(x,y) return true, 0 end,
 	mur=function(x,y) return false,0 end,
 	mur2=function(x,y)
 		if mur.getEtat(x,y) then return false, 0

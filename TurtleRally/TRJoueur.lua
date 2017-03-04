@@ -407,10 +407,10 @@ end
 function heal(idJoueur)
 	liste[idJoueur].coeur=liste[idJoueur].coeur+5
 	if liste[idJoueur].coeur>10 then
-		liste[idJoueur].coeur=10
-		actuCoeurAff(idJoueur)
-		affichageTC(idJoueur,{action="INFO"})
+		liste[idJoueur].coeur=10		
 	end	
+	actuCoeurAff(idJoueur)
+	affichageTC(idJoueur,{action="INFO"})
 end
 function degatAll(idJoueurImu)
 	for idJoueur=1,#liste do

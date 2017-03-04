@@ -9,7 +9,7 @@ items={
 liste={"heal","damageothers","damageself"}
 fc={
 	heal=function(idJoueur) 
-		joueur.head(idJoueur)
+		joueur.heal(idJoueur)
 	end,
 	damageothers=function(idJoueur) 
 		joueur.degatAll(idJoueur)
