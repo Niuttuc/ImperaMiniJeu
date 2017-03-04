@@ -3,6 +3,7 @@ colorString=string.lower(string.sub(os.getComputerLabel(),7,-1))
 color=colors[colorString]
 modem.open(color+1)
 xmax,ymax=term.getSize()
+
 os.loadAPI('ahb')
 os.loadAPI('windows')
 os.loadAPI('choices')
@@ -13,6 +14,7 @@ local vie=0
 local checkpoint=0
 local mesActions={}
 local preActions={}
+local tours={-1,-1,-1,-1,-1}
 function affWin(win)
 	currentWin.setVisible(false)
 	currentWin=win
@@ -122,7 +124,11 @@ function actuAffichage(continue)
 	
 	windows.separateColumn.clear()
 	for i=1,5 do
-		if coeur>=i then 
+		if tours[i]==true then
+			windows.separateColumn.setTextColor(colors.green)
+		elseif tours[i]==false then
+			windows.separateColumn.setTextColor(colors.red)
+		elseif coeur>=i then 
 			windows.separateColumn.setTextColor(colors.black)
 		else
 			windows.separateColumn.setTextColor(colors.red)
@@ -147,12 +153,25 @@ function actuAffichage(continue)
 				end
 			else
 				combien=combien+1
-				windows.choiceColumn.setTextColor(colors.black)
+				if tours[i]==true then
+					windows.choiceColumn.setTextColor(colors.green)
+				elseif tours[i]==false then
+					windows.choiceColumn.setTextColor(colors.red)
+				else
+					windows.choiceColumn.setTextColor(colors.black)
+				end
 				windows.choiceColumn.write(choices[mesActions[i]].nomListe)
 			end
 		else
 			combien=combien+1
-			windows.choiceColumn.setTextColor(colors.red)
+			if tours[i]==true then
+				windows.choiceColumn.setTextColor(colors.green)
+			elseif tours[i]==false then
+				windows.choiceColumn.setTextColor(colors.red)
+			else
+				windows.choiceColumn.setTextColor(colors.black)
+			end
+			windows.choiceColumn.write(choices[preActions[i]].nomListe)			
 		end
 	end
 	if combien~=5 then
@@ -193,14 +212,22 @@ while true do
 			affWin(windows.gameInProgress)
 			thingsToDo={os.pullEvent,'modem_message'}
 		elseif message.action=="CHOIX" then
+			tours={-1,-1,-1,-1,-1}
 			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,3,xmax,18,choixClic}}
 			actuDonne(message)
 			tirage(message)
 		elseif message.action=="WAITPLAYER" then
-			actuAffichage(false)
+			tours={-1,-1,-1,-1,-1}
 			actuDonne(message)
 			preActions=message.actions
 			mesActions=message.actions
+			actuAffichage(false)
+			thingsToDo={os.pullEvent,'modem_message'}
+		elseif message.action=="infoTour" then
+			tours[message.tour]=message.status
+			actuAffichage(false)			
+			thingsToDo={os.pullEvent,'modem_message'}
+		else 
 			thingsToDo={os.pullEvent,'modem_message'}
 		end
 	end
