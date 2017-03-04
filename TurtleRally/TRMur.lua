@@ -53,9 +53,9 @@ function test(x,y)
 		couleurs=0
 		for cMur, data in pairs(mur) do
 			if cMur==couleurBouton then
-				mur[cMur].etat=true
-			else
 				mur[cMur].etat=false
+			else
+				mur[cMur].etat=true
 				couleurs=couleurs+mur[cMur].couleur
 			end
 		end
@@ -73,7 +73,8 @@ function getEtat(x,y)
 	error("Pas de mur en "..x.." "..y)
 end
 function reset()
-	mur["rouge"].etat=false
-	mur["bleu"].etat=false
+	for cMur, data in pairs(mur) do
+		mur[cMur].etat=false
+	end
 	redstone.getBundledInput(redstoneSide,0)
 end

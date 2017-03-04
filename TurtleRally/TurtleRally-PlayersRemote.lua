@@ -64,7 +64,7 @@ function actuDonne(data)
 	windows.etape.clear()
 	windows.etape.setCursorPos(2,1)
 	if not(checkpoint==0) then		
-		windows.etape.write("Etape : "..checkpoint)
+		windows.etape.write("Etape "..checkpoint)
 	else
 		windows.etape.write("Depart")
 	end
