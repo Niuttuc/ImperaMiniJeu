@@ -100,9 +100,10 @@ function deplacement(idJoueur,x,y,pousseJoueur)
 				print("Joueur"..liste[idJoueur].nom.." avance en "..x.." "..y)
 				modem.pp.transmit(liste[idJoueur].couleur,84,{"bouge",{x=x,y=y}})
 				event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
+				map.posteAction1(liste[idJoueur].position.x,liste[idJoueur].position.y,idJoueur)
 				liste[idJoueur].position.x=x
 				liste[idJoueur].position.y=y
-				map.posteAction(case,x,y,idJoueur,tapis)
+				map.posteAction2(case,x,y,idJoueur)
 			end
 		end
 	else

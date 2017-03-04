@@ -28,27 +28,27 @@ end
 -- Fonction execute apres deplacement ou rotation du joueur
 -- Les tapis, engrenage et validation d'etape ne se font pas ici
 tuilesOver={
-	libre=function(idJoueur,x,y,tapis) return end,
-	mur2=function(idJoueur,x,y,tapis) return end,
-	bout=function(idJoueur,x,y,tapis)
+	libre=function(idJoueur,x,y) return end,
+	mur2=function(idJoueur,x,y) return end,
+	bout=function(idJoueur,x,y)
 		mur.test("bleu","rouge")
 		mur.test("rouge","bleu")
 		return
 	end,
-	tapis=function(idJoueur,x,y,tapis) return end,
-	bonus=function(idJoueur,x,y,tapis)
+	tapis=function(idJoueur,x,y) return end,
+	bonus=function(idJoueur,x,y)
 		bonus.action(idJoueur,x,y)		
 		return
 	end,
-	trou=function(idJoueur,x,y,tapis)
+	trou=function(idJoueur,x,y)
 		joueur.mort(idJoueur)
 		return
 	end,
-	laser=function(idJoueur,x,y,tapis)
+	laser=function(idJoueur,x,y)
 		joueur.degat(idJoueur)
 		return
 	end,
-	etape=function(idJoueur,x,y,tapis) return end
+	etape=function(idJoueur,x,y) return end
 }
 tuilesOut={
 	libre=function(x,y) return end,
@@ -64,10 +64,14 @@ tuilesOut={
 	laser=function(x,y) return end,
 	etape=function(x,y) return end
 }
-function posteAction(case,x,y,idJoueur,tapis)
-	print("map.posteAction("..case)
-	tuilesOver[case](idJoueur,x,y,tapis)
+function posteAction1(x,y,idJoueur)
+	local case=maps[x][y]
+	print("map.posteAction(")
 	tuilesOut[case](x,y)
+end
+function posteAction2(case,x,y,idJoueur)
+	print("map.posteAction("..case)
+	tuilesOver[case](idJoueur,x,y)	
 end
 local maps={}
 for x=1, config.get("tailleX") do
