@@ -17,6 +17,7 @@ end
 -- renvoi degat subit
 local tuilesAvent={
 	libre=function(x,y) return true, 0 end,
+	depart=function(x,y) return end,
 	mur=function(x,y) return false,0 end,
 	mur2=function(x,y)
 		if mur.getEtat(x,y) then return false, 0
@@ -41,6 +42,7 @@ end
 tuilesOver={
 	libre=function(idJoueur,x,y) return end,
 	mur2=function(idJoueur,x,y) return end,
+	depart=function(idJoueur,x,y) return end,
 	bout=function(idJoueur,x,y)
 		mur.test("bleu","rouge")
 		mur.test("rouge","bleu")
@@ -63,6 +65,7 @@ tuilesOver={
 }
 tuilesOut={
 	libre=function(x,y) return end,
+	depart=function(x,y) return end,
 	mur2=function(x,y) return end,
 	bout=function(x,y)return end,
 	tapis=function(x,y)	return end,
@@ -75,9 +78,9 @@ tuilesOut={
 	laser=function(x,y) return end,
 	etape=function(x,y) return end
 }
-function posteAction1(x,y,idJoueur)
-	print("map.posteAction1("..x.." "..y)
+function posteAction1(x,y,idJoueur)	
 	local case=maps[x][y]
+	print("map.posteAction1("..x.." "..y.." "..case)
 	tuilesOut[case](x,y)
 end
 function posteAction2(case,x,y,idJoueur)
