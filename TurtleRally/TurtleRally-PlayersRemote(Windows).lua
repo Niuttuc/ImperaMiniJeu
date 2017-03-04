@@ -56,8 +56,8 @@ playWindow.setTextColor(colors.black)
 playWindow.clear()
 
 vie=window.create(playWindow,1,1,7,1,true)
-coeur=window.create(playWindow,8,1,9,1,true)
-etape=window.create(playWindow,17,1,10,1,true)
+coeur=window.create(playWindow,8,1,11,1,true)
+etape=window.create(playWindow,19,1,10,1,true)
 etape.setBackgroundColor(colors.white)
 etape.setTextColor(colors.black)
 
@@ -85,6 +85,12 @@ countDown.setBackgroundColor(colors.black)
 countDown.setTextColor(colors.white)
 countDown.clear()
 
+validerBouton=window.create(playWindow,math.floor(xmax/2)-5,9,11,3,true)
+validerBouton.setBackgroundColor(colors.white)
+validerBouton.setTextColor(colors.black)
+validerBouton.clear()
+validerBouton.setCursorPos(3,2)
+validerBouton.write("Valider")
 
 gameOver=window.create(term.current(),1,1,xmax,ymax,false)
 

@@ -12,6 +12,7 @@ local coeur=0
 local vie=0
 local checkpoint=0
 local mesActions={}
+local preActions={}
 function affWin(win)
 	currentWin.setVisible(false)
 	currentWin=win
@@ -46,17 +47,20 @@ function actuDonne(data)
 	else windows.coeur.setBackgroundColor(colors.red)
 	end	
 	windows.coeur.clear()
-	windows.coeur.setCursorPos(1,1)
+	windows.coeur.setCursorPos(2,1)
 	texte=coeur.." coeur"
 	if coeur>1 then
 		texte=texte.."s"
+	end
+	if coeur<10 then
+		texte=" "..texte
 	end
 	windows.coeur.write(texte)
 	
 	
 	checkpoint=data.checkpoint
 	windows.etape.clear()
-	windows.etape.setCursorPos(1,1)
+	windows.etape.setCursorPos(2,1)
 	if not(checkpoint==0) then		
 		windows.etape.write("Etape : "..checkpoint)
 	else
@@ -64,7 +68,8 @@ function actuDonne(data)
 	end
 end
 local derTirage={}
-function tirage()
+function tirage(data)
+	preActions=data.actions
 	mesActions={}
 	local tirageA={}
 	for k,v in pairs(choices) do
@@ -82,10 +87,19 @@ function tirage()
 	affWin(windows.playWindow)
 end
 function choixClic(x,y)
+	local continue=true
 	if y>8 then
-		if y-8<=#derTirage then
-			table.insert(mesActions,derTirage[y-8])
-			table.remove(derTirage,y-8)
+		if #mesActions==coeur or #mesActions==5 then
+			if coeur<5 then
+				
+			end			
+			modem.transmit(84,color+1,mesActions)
+			continue=false
+		else
+			if y-8<=#derTirage then
+				table.insert(mesActions,derTirage[y-8])
+				table.remove(derTirage,y-8)
+			end
 		end
 	else
 		if y-2<=#mesActions then
@@ -94,7 +108,11 @@ function choixClic(x,y)
 		end
 	end
 	actuAffichage()
-	thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,3,xmax,18,choixClic}}
+	if continue then
+		thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,3,xmax,18,choixClic}}
+	else
+		thingsToDo={os.pullEvent,'modem_message'}
+	end
 end
 function actuAffichage()
 	windows.playWindow.clear()
@@ -143,6 +161,8 @@ function actuAffichage()
 			windows.listColumn.setCursorPos(1,i)
 			windows.listColumn.write(choices[derTirage[i]].nomListe)
 		end	
+	else
+		windows.validerBouton.redraw()
 	end
 end
 thingsToDo={os.pullEvent,'modem_message'}
