@@ -83,7 +83,7 @@ function tirage(data)
 		table.insert(derTirage,tirageA[index])
 		table.remove(tirageA,index)
 	end
-	actuAffichage()
+	actuAffichage(true)
 	affWin(windows.playWindow)
 end
 function choixClic(x,y)
@@ -107,14 +107,14 @@ function choixClic(x,y)
 			table.remove(mesActions,y-2)
 		end
 	end
-	actuAffichage()
+	actuAffichage(continue)
 	if continue then
 		thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,3,xmax,18,choixClic}}
 	else
 		thingsToDo={os.pullEvent,'modem_message'}
 	end
 end
-function actuAffichage()
+function actuAffichage(continue)
 	windows.playWindow.clear()
 	windows.vie.redraw()
 	windows.coeur.redraw()
@@ -162,7 +162,9 @@ function actuAffichage()
 			windows.listColumn.write(choices[derTirage[i]].nomListe)
 		end	
 	else
-		windows.validerBouton.redraw()
+		if continue then
+			windows.validerBouton.redraw()
+		then
 	end
 end
 thingsToDo={os.pullEvent,'modem_message'}
@@ -194,6 +196,12 @@ while true do
 			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,3,xmax,18,choixClic}}
 			actuDonne(message)
 			tirage(message)
+		elseif message.action=="WAITPLAYER" then
+			actuAffichage(false)
+			actuDonne(message)
+			preActions=message.actions
+			mesActions=message.actions
+			thingsToDo={os.pullEvent,'modem_message'}
 		end
 	end
 	premierLancement=false
