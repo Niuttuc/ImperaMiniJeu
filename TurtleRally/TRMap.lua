@@ -91,6 +91,8 @@ function add(x,y,ttype,info,info2)
 	maps[x][y]=ttype
 	if ttype=="mur2" then
 		mur.add(info,x,y)
+	elseif ttype=="bout" then
+		mur.addBouton(info,x,y)
 	elseif ttype=="tapis" then
 		info.x=x
 		info.y=y

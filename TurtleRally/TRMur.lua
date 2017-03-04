@@ -3,12 +3,14 @@ local mur={
 	rouge={
 		etat=true,
 		couleur=colors.red,
-		position={}
+		position={},
+		positionBt={}
 	},
 	bleu={
 		etat=true,
 		couleur=colors.blue,
-		position={}
+		position={},
+		positionBt={}
 	}
 }
 local redstoneSide=config.get("redstone")
@@ -16,13 +18,16 @@ local redstoneSide=config.get("redstone")
 function add(couleur,x,y)
 	table.insert(mur[couleur].position,{x=x,y=y})
 end
+function addBouton(couleur,x,y)
+	table.insert(mur[couleur].positionBt,{x=x,y=y})
+end
 -- Verification de la presence d'un joueur sur le mur Up
 -- couleurUp Couleur du mur qui monte
 -- couleurDown Couleur du mur qui descend
 function test(x,y)
 	couleurBouton=""
 	for cMur, data in pairs(mur) do
-		for i, pos in pairs(data.position) do
+		for i, pos in pairs(data.positionBt) do
 			if pos.x==x and pos.y == y then
 				couleurBouton=cMur
 			end
