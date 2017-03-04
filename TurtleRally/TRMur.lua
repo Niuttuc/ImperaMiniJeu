@@ -48,6 +48,7 @@ function test(x,y)
 		end
 	end
 	if joueurDessus==false then
+		print("Changement de mur")
 		for cMur, data in pairs(mur) do
 			if cMur==couleurBouton then
 				mur[cMur].etat=true
@@ -55,7 +56,8 @@ function test(x,y)
 				mur[cMur].etat=false
 			end
 		end
-		redstone.getBundledInput(redstoneSide,mur[couleurBouton].couleur)
+		print()
+		redstone.setBundledOutput(redstoneSide,mur[couleurBouton].couleur)
 	end
 end
 function getEtat(x,y)
