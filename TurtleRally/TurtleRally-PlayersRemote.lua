@@ -225,6 +225,7 @@ while true do
 			thingsToDo={os.pullEvent,'modem_message'}
 		elseif message.action=="infoTour" then
 			tours[message.tour]=message.status
+			actuDonne(message)
 			actuAffichage(false)			
 			thingsToDo={os.pullEvent,'modem_message'}
 		else 

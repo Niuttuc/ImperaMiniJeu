@@ -251,16 +251,19 @@ function waitForModem()
 			end
 		end
 		if mess=='trigoTurn' then
+			print("trigoTurn")
 			if paresseux then
 				turtle.turnLeft()
 			end
 			modem.transmit(repFreq, color, 'fini')
 		elseif mess=='clockTurn' then
+			print("clockTurn")
 			if paresseux then
 				turtle.turnRight()
 			end
 			modem.transmit(repFreq, color, 'fini')
 		elseif mess=='turnBack' then
+			print("turnBack")
 			if paresseux then
 				turtle.turnRight()
 				turtle.turnRight()
