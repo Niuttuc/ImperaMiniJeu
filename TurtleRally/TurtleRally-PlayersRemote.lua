@@ -83,8 +83,10 @@ function tirage()
 end
 function choixClic(x,y)
 	if y>8 then
-		table.insert(mesActions,derTirage[y-8])
-		table.remove(derTirage,y-8)
+		if y-8<=#derTirage then
+			table.insert(mesActions,derTirage[y-8])
+			table.remove(derTirage,y-8)
+		end
 	else
 		if y-2<=#mesActions then
 			table.insert(derTirage,mesActions[y-2])
@@ -92,6 +94,7 @@ function choixClic(x,y)
 		end
 	end
 	actuAffichage()
+	thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,3,xmax,18,choixClic}}
 end
 function actuAffichage()
 	windows.playWindow.clear()
@@ -162,7 +165,7 @@ while true do
 			affWin(windows.gameInProgress)
 			thingsToDo={os.pullEvent,'modem_message'}
 		elseif message.action=="CHOIX" then
-			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,3,xmax,16,choixClic}}
+			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,3,xmax,18,choixClic}}
 			actuDonne(message)
 			tirage(message)
 		end
