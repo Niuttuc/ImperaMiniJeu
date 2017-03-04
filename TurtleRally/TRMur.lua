@@ -19,18 +19,39 @@ end
 -- Verification de la presence d'un joueur sur le mur Up
 -- couleurUp Couleur du mur qui monte
 -- couleurDown Couleur du mur qui descend
-function test(couleurUp,couleurDown) 
-	local joueurDessus=false
-	for iMur,pos in pairs(mur[couleurUp].position) do
-		if joueur.present(pos.x,pos.y) then
-			joueurDessus=true
+function test(x,y)
+	couleurBouton=""
+	for cMur, data in pairs(mur) do
+		for i, pos in pairs(data.position) do
+			if pos.x==x and pos.y == y then
+				couleurBouton=cMur
+			end
+		end
+	end
+	if couleurBouton=="" then
+		error("Pas de mur en "..x.." "..y)
+	end
+	print("Couleur "..couleurBouton)
+	for cMur, data in pairs(mur) do
+		if not(cMur==couleurBouton) then
+			local joueurDessus=false
+			for iMur,pos in pairs(data.position) do
+				if joueur.present(pos.x,pos.y) then
+					joueurDessus=true
+				end
+			end
 		end
 	end
 	if joueurDessus==false then
-		mur[couleurUp].etat=true
-		mur[couleurDown].etat=false
-		redstone.getBundledInput(redstoneSide,mur[couleurUp].couleur)
-	end	
+		for cMur, data in pairs(mur) do
+			if cMur==couleurBouton then
+				mur[cMur].etat=true
+			else
+				mur[cMur].etat=false
+			end
+		end
+		redstone.getBundledInput(redstoneSide,mur[couleurBouton].couleur)
+	end
 end
 function getEtat(x,y)
 	for cMur, data in pairs(mur) do

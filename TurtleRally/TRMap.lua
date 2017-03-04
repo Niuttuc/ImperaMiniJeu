@@ -44,8 +44,7 @@ tuilesOver={
 	mur2=function(idJoueur,x,y) return end,
 	depart=function(idJoueur,x,y) return end,
 	bout=function(idJoueur,x,y)
-		mur.test("bleu","rouge")
-		mur.test("rouge","bleu")
+		mur.test(x,y)
 		return
 	end,
 	tapis=function(idJoueur,x,y) return end,

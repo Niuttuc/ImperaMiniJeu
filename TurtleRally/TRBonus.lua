@@ -31,6 +31,7 @@ function add(x,y,nom)
 	})
 end
 function change(idBonus,nom)
+	print("Bonus change "..idBonus.." "..nom)
 	bonus[idBonus].bonus=nom
 	bonus[idBonus].actif=true
 	bonus[idBonus].selector.pp.setSlot(1,items[nom])		
@@ -44,6 +45,7 @@ function tiragePos(x,y)
 end
 function tirage(idBonus)
 	if not(joueur.present(bonus[idBonus].x,bonus[idBonus].y)) then
+		
 		change(idBonus,liste[math.random(#liste)])
 	end
 end
