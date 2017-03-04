@@ -86,7 +86,6 @@ function tirage(data)
 		table.remove(tirageA,index)
 	end
 	actuAffichage(true)
-	affWin(windows.playWindow)
 end
 function choixClic(x,y)
 	local continue=true
@@ -117,6 +116,7 @@ function choixClic(x,y)
 	end
 end
 function actuAffichage(continue)
+	affWin(windows.playWindow)
 	windows.playWindow.clear()
 	windows.vie.redraw()
 	windows.coeur.redraw()
