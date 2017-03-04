@@ -1,4 +1,15 @@
 print("LOAD Map v0.10")
+local tapis={}
+local plaques={}
+local maps={}
+for x=1, config.get("tailleX") do
+	maps[x]={}
+	for y=1, config.get("tailleY") do
+		maps[x][y]="libre"
+	end
+end
+
+
 
 -- fonction execute avant deplacement pour verifier deplacement et possible
 -- renvoi bool pour deplacement autorise ou non
@@ -65,24 +76,15 @@ tuilesOut={
 	etape=function(x,y) return end
 }
 function posteAction1(x,y,idJoueur)
+	print("map.posteAction1("..x.." "..y)
 	local case=maps[x][y]
-	print("map.posteAction(")
 	tuilesOut[case](x,y)
 end
 function posteAction2(case,x,y,idJoueur)
 	print("map.posteAction("..case)
 	tuilesOver[case](idJoueur,x,y)	
 end
-local maps={}
-for x=1, config.get("tailleX") do
-	maps[x]={}
-	for y=1, config.get("tailleY") do
-		maps[x][y]="libre"
-	end
-end
 
-local tapis={}
-local plaques={}
 function add(x,y,ttype,info,info2)
 	maps[x][y]=ttype
 	if ttype=="mur2" then
@@ -126,6 +128,5 @@ function actionTapis()
 			joueur.tourne(idJoueur,plaques[iPlaque].rot)
 		end
 	end
-	etape.verif()
-	
+	etape.verif()	
 end
