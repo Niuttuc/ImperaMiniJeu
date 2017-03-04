@@ -50,15 +50,16 @@ function test(x,y)
 	end
 	if joueurDessus==false then
 		print("Changement de mur")
+		couleurs=0
 		for cMur, data in pairs(mur) do
 			if cMur==couleurBouton then
 				mur[cMur].etat=true
 			else
 				mur[cMur].etat=false
+				couleurs=couleurs+mur[cMur].couleur
 			end
 		end
-		print()
-		redstone.setBundledOutput(redstoneSide,mur[couleurBouton].couleur)
+		redstone.setBundledOutput(redstoneSide,couleurs)
 	end
 end
 function getEtat(x,y)
