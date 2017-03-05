@@ -373,7 +373,7 @@ function retourAlavie(ordre)
 					if liste[idJoueur].checkpoint==0 then
 						x, y=depart.joueur(idJoueur)
 						liste[idJoueur].position.x=x
-						liste[idJoueur].position.y=y					
+						liste[idJoueur].position.y=y				
 					else
 						x, y=etape.coord(liste[idJoueur].checkpoint)
 						if present(x,y) then
@@ -382,6 +382,7 @@ function retourAlavie(ordre)
 						liste[idJoueur].position.x=x
 						liste[idJoueur].position.y=y
 					end
+					print("onboard "..x.." "..y)
 					modem.pp.transmit(liste[idJoueur].couleur,84,{"onboard",{x=x,y=y}})
 					os.sleep(1)
 					enAttente=enAttente+1
