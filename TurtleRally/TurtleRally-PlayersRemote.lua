@@ -98,7 +98,10 @@ function choixClic(x,y)
 						mesActions[i]=preActions[i]
 					end
 				end
-			end			
+			end
+			if y>11 then
+			
+			end
 			modem.transmit(84,color+1,mesActions)
 			continue=false
 		else
@@ -188,6 +191,7 @@ function actuAffichage(continue)
 	else
 		if continue then
 			windows.validerBouton.redraw()
+			windows.sleepBt.redraw()
 		end
 	end
 end

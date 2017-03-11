@@ -114,7 +114,7 @@ end
 function get(x,y)
 	if type(maps[x])=='nil' then
 		return 'trou'
-	elseif type(map[x][y])=='nil' then
+	elseif type(maps[x][y])=='nil' then
 		return 'trou'
 	end
 	return maps[x][y]

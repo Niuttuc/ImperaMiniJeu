@@ -21,24 +21,24 @@ avance2={
 
 clockTurn={
 		nomListe='Tourne droite',
-		weight=8,
+		weight=7,
 		message='clockTurn',
 		}
 
 trigoTurn={
 		nomListe='Tourne gauche',
-		weight=8,
+		weight=7,
 		message='trigoTurn',
 		}
 
 turnBack={
 		nomListe='Demi-tour',
-		weight=8,
+		weight=4,
 		message='turnBack',
 		}
 
 backUp={
 		nomListe='Recule de 1',
-		weight=8,
+		weight=6,
 		message='backUp',
 		}

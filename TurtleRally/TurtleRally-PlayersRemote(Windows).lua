@@ -80,7 +80,7 @@ for i=1,5 do
 	separateColumn.write(i)
 end
 
-countDown=window.create(playWindow,math.floor(xmax/2)-3,ymax-3,8,4,false)
+countDown=window.create(playWindow,1,ymax-1,4,1,false)
 countDown.setBackgroundColor(colors.black)
 countDown.setTextColor(colors.white)
 countDown.clear()
@@ -91,6 +91,17 @@ validerBouton.setTextColor(colors.black)
 validerBouton.clear()
 validerBouton.setCursorPos(3,2)
 validerBouton.write("Valider")
+
+sleepBt=window.create(playWindow,math.floor(xmax/2)-5,14,11,4,true)
+sleepBt.setBackgroundColor(colors.red)
+sleepBt.setTextColor(colors.white)
+sleepBt.clear()
+
+sleepBt.setCursorPos(3,2)
+sleepBt.write("Valider")
+sleepBt.setCursorPos(3,2)
+sleepBt.write("puis dodo")
+
 
 gameOver=window.create(term.current(),1,1,xmax,ymax,false)
 
