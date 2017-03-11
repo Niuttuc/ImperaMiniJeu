@@ -81,32 +81,30 @@ function deplacement(idJoueur,x,y,pousseJoueur,mode)
 				local pousseReussi=deplacement(joueurPousser,x+(x-liste[idJoueur].position.x),y+(y-liste[idJoueur].position.y),false)
 				if pousseReussi then
 					print("Joueur"..liste[joueurPousser].nom.." pousser")
-					return true, liste[idJoueur].coeur
 				else
-					joueur.degat(joueurPousser)					
+					joueur.degat(joueurPousser)			
 					return false, liste[idJoueur].coeur
 				end
 			else
 				return false, liste[idJoueur].coeur
 			end
-		else 
-			local case=map.get(x,y)
-			reussi=true
-			reussi, degat=map.preAction(case,x,y)
-			if not(degat==0) then
-				joueur.degat(idJoueur)
-			end
-			if reussi then
-				print("Joueur"..liste[idJoueur].nom.." avance en "..x.." "..y)
-				modem.pp.transmit(liste[idJoueur].couleur,84,{"bouge",{x=x,y=y}})
-				event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
-				precX=liste[idJoueur].position.x
-				precY=liste[idJoueur].position.y
-				liste[idJoueur].position.x=x
-				liste[idJoueur].position.y=y
-				map.posteAction1(precX,precY,idJoueur)
-				map.posteAction2(case,x,y,idJoueur)
-			end
+		end
+		local case=map.get(x,y)
+		reussi=true
+		reussi, degat=map.preAction(case,x,y)
+		if not(degat==0) then
+			joueur.degat(idJoueur)
+		end
+		if reussi then
+			print("Joueur"..liste[idJoueur].nom.." avance en "..x.." "..y)
+			modem.pp.transmit(liste[idJoueur].couleur,84,{"bouge",{x=x,y=y}})
+			event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
+			precX=liste[idJoueur].position.x
+			precY=liste[idJoueur].position.y
+			liste[idJoueur].position.x=x
+			liste[idJoueur].position.y=y
+			map.posteAction1(precX,precY,idJoueur)
+			map.posteAction2(case,x,y,idJoueur)
 		end
 	else
 		return false, liste[idJoueur].coeur
