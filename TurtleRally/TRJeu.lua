@@ -1,4 +1,4 @@
-print("LOAD jeu v0.14")
+print("LOAD jeu v0.15")
 os.loadAPI("ahb")
 os.loadAPI("config")
 os.loadAPI("joueur")
@@ -53,9 +53,9 @@ function jeu()
 			local actions=joueur.demandeChoix()
 			config.set("etapeTelecommande","TOUR")
 			
-			print("Action TOUTES RECU")
+			--print("Action TOUTES RECU")
 			for tour=1, 5 do
-				print("==== Tour "..tour.." "..tostring(config.get("partie")))
+				--print("==== Tour "..tour.." "..tostring(config.get("partie")))
 				for i=1, #ordre do
 					if config.get("partie") then
 						idJoueur=ordre[i]
@@ -84,7 +84,7 @@ function jeu()
 									if coeurs==0 then
 										infoEnPlus=" MORT"
 									end
-									print(reussi)
+									--print(reussi)
 									if reussi then
 										joueur.afficherInfo(idJoueur,"Tour "..tour.." "..choices[actions[idJoueur][tour]].nomListe..infoEnPlus,colors.green)
 										joueur.affichageTC(idJoueur,{action="infoTour",tour=tour,status=true})
@@ -101,13 +101,13 @@ function jeu()
 					end
 				end
 				if config.get("partie") then
-					print("  ACTION TAPIS, PLAQUE, TIR ;)")
+					--print("  ACTION TAPIS, PLAQUE, TIR ;)")
 					map.actionTapis()
 					joueur.tires()
 				end
 			end
 			if config.get("partie") then
-				print("  RETOUR A LA VIE")
+				--print("  RETOUR A LA VIE")
 				joueur.retourAlavie(ordre)
 			end
 		end
