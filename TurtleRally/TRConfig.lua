@@ -1,4 +1,4 @@
-print("LOAD Config v0.12")
+print("LOAD Config v0.13")
 
 local config=ahb.config("TR",{
 	ecran={typ="side",info="Ecran principal"},
