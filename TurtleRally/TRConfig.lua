@@ -130,7 +130,7 @@ function mapDef()
 	map.add(7,12,"tapis",{mx=1,my=0,rot="non"})
 	
 	map.add(8,4,"tapis",{mx=0,my=-1,rot="non"})
-	map.add(8,5,"tapis",{mx=0,my=-1,rot="non"})
+	map.add(9,4,"tapis",{mx=0,my=-1,rot="non"})
 	
 	-- FINIR PAR LES PLAQUES TOURNANTE
 	-- X Y pt "clockTurn" ou "trigoTurn"
