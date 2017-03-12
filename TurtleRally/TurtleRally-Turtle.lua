@@ -304,10 +304,7 @@ function waitForModem()
 		elseif type(mess)=='table' and mess[1]=='mort' then
 			if paresseux then
 				death(not(turtle.detectDown()))
-
-				if mess[2]==garagePos then
-					seGarer()
-				end
+				seGarer()
 			end
 			modem.transmit(repFreq, color, 'fini')
 		elseif mess=='home' then
