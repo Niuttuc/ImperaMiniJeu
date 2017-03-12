@@ -263,7 +263,7 @@ function demandeChoix()
 			print("Action "..idJoueur)
 			if not(idJoueur==-1) then
 				if type(message)=='table' then
-					if #message==5 then
+					if #message.actions==5 then
 						liste[idJoueur].actions=message.actions
 						liste[idJoueur].prochainDodo=message.dodo
 						retour[idJoueur]=message
