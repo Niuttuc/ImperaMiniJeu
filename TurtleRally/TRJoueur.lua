@@ -11,7 +11,9 @@ function configJ(couleur,nom,y)
 	local data={
 		couleur=couleur, -- couleur du joueur
 		nom=nom, -- nom de la couleur
-		actif=false, -- Passe sur true quand le joueur a rejoint
+		actif=false, -- Passe sur true quand le joueur a rejoint,
+		dodo=false,
+		prochainDodo=false,
 		vie=0, -- a 0 perdu
 		coeur=0, -- a 0 perd une vie retour au dernier checkpoint
 		position={x=x,y=y}, -- position actuel de la trutleq
@@ -214,19 +216,33 @@ function renvoiDemandeChoix(couleur)
 			print("WAITPLAYER")
 			affichageTC(idJoueur,{action="WAITPLAYER",actions=liste[idJoueur].actions})
 		else
-			affichageTC(idJoueur,{action="CHOIX",actions=liste[idJoueur].precActions})
+			if liste[idJoueur].dodo then
+				affichageTC(idJoueur,{action="DODO",actions=liste[idJoueur].actions})
+			else
+				affichageTC(idJoueur,{action="CHOIX",actions=liste[idJoueur].precActions})
+			end
 		end
 	else
 		joueur.affichageTC(idJoueur,{action="TOOLATE"})
 	end
 end
+function dodo(idJoueur)
+	return liste[idJoueur].dodo
+end
 function demandeChoix()
 	for idJoueur=1, #liste do
 		if liste[idJoueur].actif then
-			affichageTC(idJoueur,{action="CHOIX",actions=liste[idJoueur].actions})
-			afficherInfo(idJoueur,"Choix en cours",colors.white)
-			liste[idJoueur].precActions=liste[idJoueur].actions
-			liste[idJoueur].actions={}
+			if liste[idJoueur].prochainDodo then
+				liste[idJoueur].dodo=true
+				liste[idJoueur].prochainDodo=false
+				affichageTC(idJoueur,{action="DODO",actions=liste[idJoueur].actions})
+				afficherInfo(idJoueur,"Dort",colors.white)
+			else
+				affichageTC(idJoueur,{action="CHOIX",actions=liste[idJoueur].actions})
+				afficherInfo(idJoueur,"Choix en cours",colors.white)
+				liste[idJoueur].precActions=liste[idJoueur].actions
+				liste[idJoueur].actions={}
+			end
 		end
 	end
 	local total=actifs()
@@ -246,7 +262,8 @@ function demandeChoix()
 			if not(idJoueur==-1) then
 				if type(message)=='table' then
 					if #message==5 then
-						liste[idJoueur].actions=message -- ?? a confirmer
+						liste[idJoueur].actions=message.actions
+						liste[idJoueur].prochainDodo=message.dodo
 						retour[idJoueur]=message
 						afficherInfo(idJoueur,"PRET",colors.white)
 						affichageTC(idJoueur,{action="WAITPLAYER",actions=liste[idJoueur].actions})

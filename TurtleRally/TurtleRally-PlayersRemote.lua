@@ -99,10 +99,11 @@ function choixClic(x,y)
 					end
 				end
 			end
+			local dodo=false
 			if y>11 then
-			
+				dodo=true
 			end
-			modem.transmit(84,color+1,mesActions)
+			modem.transmit(84,color+1,{actions=mesActions,dodo=dodo})
 			continue=false
 		else
 			if y-8<=#derTirage then

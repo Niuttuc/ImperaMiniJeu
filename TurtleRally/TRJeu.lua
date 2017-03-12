@@ -59,42 +59,44 @@ function jeu()
 				for i=1, #ordre do
 					if config.get("partie") then
 						idJoueur=ordre[i]
-						if joueur.envie(idJoueur) then
-							print("  JOUEUR "..idJoueur.." "..actions[idJoueur][tour])
-							joueur.afficherInfo(idJoueur,"T"..tour.." "..choices[actions[idJoueur][tour]].nomListe,colors.white)
-							if 
-									actions[idJoueur][tour]=="clockTurn" 
-								or  actions[idJoueur][tour]=="trigoTurn" 
-								or  actions[idJoueur][tour]=="turnBack"  
-							then -- Tourne droite
-								joueur.tourne(idJoueur,actions[idJoueur][tour])
-								joueur.affichageTC(idJoueur,{action="infoTour",tour=tour,status=true})								
-							else
-								if actions[idJoueur][tour]=="avance2" then
-									x,y=joueur.calculCoord(idJoueur,"avance1")
-									reussi, coeurs=joueur.deplacement(idJoueur,x,y,true)
-									x,y=joueur.calculCoord(idJoueur,"avance1")
-									reussi, coeurs=joueur.deplacement(idJoueur,x,y,true)
-								else 
-									x,y=joueur.calculCoord(idJoueur,actions[idJoueur][tour])
-									reussi, coeurs=joueur.deplacement(idJoueur,x,y,true)
-								end
-								local infoEnPlus=""
-								if coeurs==0 then
-									infoEnPlus=" MORT"
-								end
-								print(reussi)
-								if reussi then
-									joueur.afficherInfo(idJoueur,"Tour "..tour.." "..choices[actions[idJoueur][tour]].nomListe..infoEnPlus,colors.green)
-									joueur.affichageTC(idJoueur,{action="infoTour",tour=tour,status=true})
+						if not(joueur.dodo(idJoueur)) then
+							if joueur.envie(idJoueur) then
+								print("  JOUEUR "..idJoueur.." "..actions[idJoueur][tour])
+								joueur.afficherInfo(idJoueur,"T"..tour.." "..choices[actions[idJoueur][tour]].nomListe,colors.white)
+								if 
+										actions[idJoueur][tour]=="clockTurn" 
+									or  actions[idJoueur][tour]=="trigoTurn" 
+									or  actions[idJoueur][tour]=="turnBack"  
+								then -- Tourne droite
+									joueur.tourne(idJoueur,actions[idJoueur][tour])
+									joueur.affichageTC(idJoueur,{action="infoTour",tour=tour,status=true})								
 								else
-									joueur.afficherInfo(idJoueur,"Tour "..tour.." "..choices[actions[idJoueur][tour]].nomListe..infoEnPlus,colors.red)
-									joueur.affichageTC(idJoueur,{action="infoTour",tour=tour,status=false})
-									os.sleep(0.5)
+									if actions[idJoueur][tour]=="avance2" then
+										x,y=joueur.calculCoord(idJoueur,"avance1")
+										reussi, coeurs=joueur.deplacement(idJoueur,x,y,true)
+										x,y=joueur.calculCoord(idJoueur,"avance1")
+										reussi, coeurs=joueur.deplacement(idJoueur,x,y,true)
+									else 
+										x,y=joueur.calculCoord(idJoueur,actions[idJoueur][tour])
+										reussi, coeurs=joueur.deplacement(idJoueur,x,y,true)
+									end
+									local infoEnPlus=""
+									if coeurs==0 then
+										infoEnPlus=" MORT"
+									end
+									print(reussi)
+									if reussi then
+										joueur.afficherInfo(idJoueur,"Tour "..tour.." "..choices[actions[idJoueur][tour]].nomListe..infoEnPlus,colors.green)
+										joueur.affichageTC(idJoueur,{action="infoTour",tour=tour,status=true})
+									else
+										joueur.afficherInfo(idJoueur,"Tour "..tour.." "..choices[actions[idJoueur][tour]].nomListe..infoEnPlus,colors.red)
+										joueur.affichageTC(idJoueur,{action="infoTour",tour=tour,status=false})
+										os.sleep(0.5)
+									end
 								end
+							else
+								joueur.affichageTC(idJoueur,{action="infoTour",tour=tour,status=false})
 							end
-						else
-							joueur.affichageTC(idJoueur,{action="infoTour",tour=tour,status=false})
 						end
 					end
 				end
