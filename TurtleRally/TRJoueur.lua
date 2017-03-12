@@ -230,6 +230,10 @@ function dodo(idJoueur)
 	return liste[idJoueur].dodo
 end
 function demandeChoix()
+	local total=0
+	local retour={}
+	local idJoueur=-1
+	local nbPret=0
 	for idJoueur=1, #liste do
 		if liste[idJoueur].actif then
 			if liste[idJoueur].prochainDodo then
@@ -238,6 +242,7 @@ function demandeChoix()
 				affichageTC(idJoueur,{action="DODO",actions=liste[idJoueur].actions})
 				afficherInfo(idJoueur,"Dort",colors.white)
 			else
+				total=total+1
 				affichageTC(idJoueur,{action="CHOIX",actions=liste[idJoueur].actions})
 				afficherInfo(idJoueur,"Choix en cours",colors.white)
 				liste[idJoueur].precActions=liste[idJoueur].actions
@@ -245,10 +250,7 @@ function demandeChoix()
 			end
 		end
 	end
-	local total=actifs()
-	local retour={}
-	local idJoueur=-1
-	local nbPret=0
+	
 	while not(total==nbPret) do
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
 		if message~="JEFAITQUOI" then
@@ -378,6 +380,8 @@ function retourAlavie(ordre)
 		idJoueur=ordre[i]
 		if liste[idJoueur].actif then
 			if liste[idJoueur].coeur==0 then
+				liste[idJoueur].dodo=false
+				liste[idJoueur].prochainDodo=false
 				liste[idJoueur].vie=liste[idJoueur].vie-1
 				actuVie(idJoueur)
 				if liste[idJoueur].vie==0 then
@@ -402,6 +406,13 @@ function retourAlavie(ordre)
 					os.sleep(1)
 					enAttente=enAttente+1
 				end				
+			else
+				if liste[idJoueur].dodo then
+					liste[idJoueur].dodo=false
+					liste[idJoueur].prochainDodo=false
+					liste[idJoueur].coeur=config.get("coeur")
+					actuCoeurAff(idJoueur)
+				end
 			end
 		end
 	end

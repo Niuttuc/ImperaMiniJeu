@@ -22,13 +22,20 @@ beforeGame.blit(' partie','fffffff','eeeeeee')
 
 
 waitingScreen=window.create(term.current(),1,1,xmax,ymax,false)
-
 waitingScreen.setBackgroundColor(color)
 waitingScreen.setTextColor(colors.black)
 waitingScreen.clear()
 ahb.center('Veuillez patienter',waitingScreen,math.floor(ymax/2)-1)
 ahb.center("Une operation",waitingScreen,math.floor(ymax/2))
 ahb.center(" est en cours.",waitingScreen,math.floor(ymax/2)+1)
+
+veille=window.create(term.current(),1,1,xmax,ymax,false)
+veille.setBackgroundColor(color)
+veille.setTextColor(colors.black)
+veille.clear()
+ahb.center('Votre robot dort',veille,math.floor(ymax/2)-1)
+ahb.center("prochain tour",veille,math.floor(ymax/2))
+ahb.center("il serra repare",veille,math.floor(ymax/2)+1)
 
 
 

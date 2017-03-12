@@ -100,7 +100,7 @@ function choixClic(x,y)
 				end
 			end
 			local dodo=false
-			if y>11 then
+			if y>14 then
 				dodo=true
 			end
 			modem.transmit(84,color+1,{actions=mesActions,dodo=dodo})
@@ -215,6 +215,9 @@ while true do
 		elseif message.action=="WAIT" then
 			affWin(windows.waitingScreen)
 			thingsToDo={os.pullEvent,'modem_message'}
+		elseif message.action=="DODO" then
+			affWin(windows.veille)
+			thingsToDo={os.pullEvent,'modem_message'}
 		elseif message.action=="LOBBY" then
 			affWin(windows.beforeGame)
 			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{xmax-6,1,xmax,3,quit}}
@@ -223,7 +226,7 @@ while true do
 			thingsToDo={os.pullEvent,'modem_message'}
 		elseif message.action=="CHOIX" then
 			tours={-1,-1,-1,-1,-1}
-			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,3,xmax,18,choixClic}}
+			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,3,xmax,ymax,choixClic}}
 			actuDonne(message)
 			tirage(message)
 		elseif message.action=="WAITPLAYER" then
