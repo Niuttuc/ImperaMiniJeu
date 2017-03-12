@@ -274,7 +274,7 @@ function demandeChoix()
 			end
 			nbPret=0
 			for idJoueurTemp=1,#liste do
-				if liste[idJoueurTemp].actif then
+				if liste[idJoueurTemp].actif and not(liste[idJoueur].dodo) then
 					if #liste[idJoueurTemp].actions==5 then
 						nbPret=nbPret+1
 					end
@@ -442,6 +442,7 @@ function heal(idJoueur)
 	affichageTC(idJoueur,{action="INFO"})
 end
 function degatAll(idJoueurImu)
+	print("Degat pour tous sauf "..idJoueurImu)
 	for idJoueur=1,#liste do
 		if liste[idJoueur].actif then
 			if idJoueur~=idJoueurImu then
