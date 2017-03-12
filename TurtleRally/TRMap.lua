@@ -111,10 +111,16 @@ function add(x,y,ttype,info,info2)
 		etape.add(x,y,info)
 	end
 end
-function get(x,y)
+function inmap(x,y)
 	if type(maps[x])=='nil' then
-		return 'trou'
+		return false
 	elseif type(maps[x][y])=='nil' then
+		return false
+	end
+	return true
+end
+function get(x,y)	
+	if inmap(x,y) then
 		return 'trou'
 	end
 	return maps[x][y]

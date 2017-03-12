@@ -103,6 +103,7 @@ function jeu()
 				if config.get("partie") then
 					print("  ACTION TAPIS, PLAQUE, TIR ;)")
 					map.actionTapis()
+					joueur.tires()
 				end
 			end
 			if config.get("partie") then

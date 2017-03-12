@@ -114,17 +114,53 @@ function deplacement(idJoueur,x,y,pousseJoueur,mode)
 	print("Envoi de "..tostring(reussi))
 	return reussi, liste[idJoueur].coeur
 end
+function tires()
+	local calx=0,
+	local caly=0
+	local case=''
+	local boucle=true
+	for idJoueur=1,#liste do
+		if liste[idJoueur].actif then
+			if not(liste[idJoueur].coeur==0) then
+				calx=liste[idJoueur].position.x
+				caly=liste[idJoueur].position.y
+				boucle=true
+				while boucle then
+					calx,caly=calculPlusUn(calx,caly,liste[idJoueur].direction)
+					if map.inmap(calx,caly) then
+						toucher=presentGetId(calx,caly)
+						if toucher==-1 then
+							case=map.get(calx,caly)
+							libre, ldegat=map.preAction(case,calx,caly) 
+							if not(libre) then
+								boucle=false
+							end
+						else
+							joueur.degat(toucher)
+						end
+					else
+						boucle=false
+					end
+				end
+				os.sleep(0.5)
+			end
+		end
+	end
+end
+function calculPlusUn(x,y,direction)
+	if direction=="MY" then
+		return x,y-1
+	elseif direction=="PX" then
+		return x+1,y
+	elseif direction=="PY" then
+		return x,y+1
+	elseif direction=="MX" then
+		return x-1,y
+	end
+end
 function calculCoord(idJoueur,action)
 	if action=="avance1" then
-		if liste[idJoueur].direction=="MY" then
-			return liste[idJoueur].position.x,liste[idJoueur].position.y-1
-		elseif liste[idJoueur].direction=="PX" then
-			return liste[idJoueur].position.x+1,liste[idJoueur].position.y
-		elseif liste[idJoueur].direction=="PY" then
-			return liste[idJoueur].position.x,liste[idJoueur].position.y+1
-		elseif liste[idJoueur].direction=="MX" then
-			return liste[idJoueur].position.x-1,liste[idJoueur].position.y
-		end
+		return calculPlusUn(liste[idJoueur].position.x,liste[idJoueur].position.y,liste[idJoueur].direction)
 	elseif action=="backUp" then
 		if liste[idJoueur].direction=="MY" then
 			return liste[idJoueur].position.x,liste[idJoueur].position.y+1
