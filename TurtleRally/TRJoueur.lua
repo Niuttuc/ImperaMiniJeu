@@ -274,7 +274,7 @@ function demandeChoix()
 			end
 			nbPret=0
 			for idJoueurTemp=1,#liste do
-				if liste[idJoueurTemp].actif and not(liste[idJoueur].dodo) then
+				if liste[idJoueurTemp].actif and not(liste[idJoueurTemp].dodo) then
 					if #liste[idJoueurTemp].actions==5 then
 						nbPret=nbPret+1
 					end
@@ -385,7 +385,8 @@ function retourAlavie(ordre)
 				liste[idJoueur].vie=liste[idJoueur].vie-1
 				actuVie(idJoueur)
 				if liste[idJoueur].vie==0 then
-					affichageTC(idJoueur,{action="PERDU"})					
+					affichageTC(idJoueur,{action="PERDU"})
+					liste[idJoueur].actif=false
 				else
 					liste[idJoueur].coeur=config.get("coeur")
 					actuCoeurAff(idJoueur)
