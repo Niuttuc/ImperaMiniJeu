@@ -1,4 +1,4 @@
-print("LOAD joueur v1.27")
+print("LOAD joueur v1.28")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -124,9 +124,11 @@ function tires()
 			if not(liste[idJoueur].coeur==0) then
 				calx=liste[idJoueur].position.x
 				caly=liste[idJoueur].position.y
+				print("Tire depuis "..calx..' '..caly)
 				boucle=true
 				while boucle do
 					calx,caly=calculPlusUn(calx,caly,liste[idJoueur].direction)
+					print("Tire > "..calx..' '..caly)
 					if map.inmap(calx,caly) then
 						toucher=presentGetId(calx,caly)
 						if toucher==-1 then
