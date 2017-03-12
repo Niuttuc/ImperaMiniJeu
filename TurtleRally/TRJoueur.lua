@@ -1,4 +1,4 @@
-print("LOAD joueur v1.25")
+print("LOAD joueur v1.26")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -266,7 +266,7 @@ function demandeChoix()
 					if #message.actions==5 then
 						liste[idJoueur].actions=message.actions
 						liste[idJoueur].prochainDodo=message.dodo
-						retour[idJoueur]=message
+						retour[idJoueur]=message.actions
 						afficherInfo(idJoueur,"PRET",colors.white)
 						affichageTC(idJoueur,{action="WAITPLAYER",actions=liste[idJoueur].actions})
 					end
