@@ -115,7 +115,7 @@ function deplacement(idJoueur,x,y,pousseJoueur,mode)
 	return reussi, liste[idJoueur].coeur
 end
 function tires()
-	local calx=0,
+	local calx=0
 	local caly=0
 	local case=''
 	local boucle=true
@@ -125,7 +125,7 @@ function tires()
 				calx=liste[idJoueur].position.x
 				caly=liste[idJoueur].position.y
 				boucle=true
-				while boucle then
+				while boucle do
 					calx,caly=calculPlusUn(calx,caly,liste[idJoueur].direction)
 					if map.inmap(calx,caly) then
 						toucher=presentGetId(calx,caly)
@@ -137,6 +137,7 @@ function tires()
 							end
 						else
 							joueur.degat(toucher)
+							boucle=false
 						end
 					else
 						boucle=false
