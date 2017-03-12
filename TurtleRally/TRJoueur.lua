@@ -1,4 +1,4 @@
-print("LOAD joueur v1.26")
+print("LOAD joueur v1.27")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -93,8 +93,8 @@ function deplacement(idJoueur,x,y,pousseJoueur,mode)
 		end
 		local case=map.get(x,y)
 		reussi=true
-		reussi, degat=map.preAction(case,x,y)
-		if not(degat==0) then
+		reussi, ldegat=map.preAction(case,x,y)
+		if not(ldegat==0) then
 			joueur.degat(idJoueur)
 		end
 		if reussi then
@@ -446,7 +446,7 @@ function degatAll(idJoueurImu)
 	for idJoueur=1,#liste do
 		if liste[idJoueur].actif then
 			if idJoueur~=idJoueurImu then
-				degat(idJoueur)
+				joueur.degat(idJoueur)
 			end
 		end
 	end
