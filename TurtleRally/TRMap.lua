@@ -120,7 +120,7 @@ function inmap(x,y)
 	return true
 end
 function get(x,y)	
-	if inmap(x,y) then
+	if not(inmap(x,y)) then
 		return 'trou'
 	end
 	return maps[x][y]
