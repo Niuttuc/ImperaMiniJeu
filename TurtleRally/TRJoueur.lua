@@ -36,6 +36,7 @@ function configJ(couleur,nom,y)
 	
 	modem.pp.transmit(couleur,84,"home")
 	
+	
 	table.insert(liste,data)
 end
 function tourne(idJoueur,action)
@@ -71,7 +72,13 @@ function tourne(idJoueur,action)
 		end
 	end
 	modem.pp.transmit(liste[idJoueur].couleur,84,action)
-	event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
+	local boucle=true
+	while boule then
+		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
+		if liste[idJoueur].couleur==replyFrequency then
+			boule=false
+		end
+	end
 	print("Fin tourne")
 end
 function deplacement(idJoueur,x,y,pousseJoueur,mode)
@@ -100,7 +107,13 @@ function deplacement(idJoueur,x,y,pousseJoueur,mode)
 		if reussi then
 			print("Joueur"..liste[idJoueur].nom.." avance en "..x.." "..y)
 			modem.pp.transmit(liste[idJoueur].couleur,84,{"bouge",{x=x,y=y}})
-			event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
+			local boucle=true
+			while boule then
+				event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
+				if liste[idJoueur].couleur==replyFrequency then
+					boule=false
+				end
+			end
 			precX=liste[idJoueur].position.x
 			precY=liste[idJoueur].position.y
 			liste[idJoueur].position.x=x
@@ -444,6 +457,7 @@ function retourAlavie(ordre)
 					modem.pp.transmit(liste[idJoueur].couleur,84,{"onboard",{x=x,y=y}})
 					os.sleep(1)
 					enAttente=enAttente+1
+					liste[idJoueur].turtlePret=false
 				end				
 			else
 				if liste[idJoueur].dodo then
@@ -456,9 +470,19 @@ function retourAlavie(ordre)
 		end
 	end
 	while enAttente~=0 do
+		enAttente=0
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
 		if message~="JEFAITQUOI" then
-			enAttente=enAttente-1
+			for idJoueur=1,#liste then
+				if liste[idJoueur].actif then
+					if replyFrequency=liste[idJoueur].couleur then
+						liste[idJoueur].turtlePret=true
+					end
+					if liste[idJoueur].turtlePret then						
+						enAttente=enAttente+1
+					end
+				end				
+			end
 		end
 		print("Plus que "..enAttente)
 	end
@@ -507,6 +531,13 @@ function mort(idJoueur)
 	liste[idJoueur].position.y=-1
 	affichageTC(idJoueur,{action="INFO"})
 	modem.pp.transmit(liste[idJoueur].couleur,84,{"mort"})
+	local boucle=true
+	while boule then
+		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
+		if liste[idJoueur].couleur==replyFrequency then
+			boule=false
+		end
+	end
 end
 function tirageOrdre()
 	local joueurTirage={}
@@ -567,9 +598,19 @@ function tirageDepart()
 	end
 	print("Attente de "..enAttente.." turtle")
 	while enAttente~=0 do
+		enAttente=0
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
 		if message~="JEFAITQUOI" then
-			enAttente=enAttente-1
+			for idJoueur=1,#liste then
+				if liste[idJoueur].actif then
+					if replyFrequency=liste[idJoueur].couleur then
+						liste[idJoueur].turtlePret=true
+					end
+					if liste[idJoueur].turtlePret then						
+						enAttente=enAttente+1
+					end
+				end				
+			end
 		end
 		print("Plus que "..enAttente)
 	end
