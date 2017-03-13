@@ -343,13 +343,17 @@ function waitForModem()
 			modem.transmit(repFreq, color, 'fini')
 		elseif type(mess)=='table' and mess[1]=='mort' and #mess==1 then
 			if paresseux then
-				death(not(turtle.detectDown()))
+				pos=getTurtlePos()
+				booll=(not(turtle.detectDown()) and pos.x>0 and pos.x<15 and pos.y>0 and pos.y<19)
+				death(booll)
 				seGarer()
 			end
 			modem.transmit(repFreq, color, 'fini')
 		elseif type(mess)=='table' and mess[1]=='mort' and #mess==2 then
 			if paresseux then
-				deathDest(not(turtle.detectDown()),mess[2])
+				pos=getTurtlePos()
+				booll=(not(turtle.detectDown()) and pos.x>0 and pos.x<15 and pos.y>0 and pos.y<19)
+				deathDest(booll,mess[2])
 			end
 			modem.transmit(repFreq, color, 'fini')
 		elseif mess=='home' then
