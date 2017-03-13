@@ -73,7 +73,7 @@ function tourne(idJoueur,action)
 	end
 	modem.pp.transmit(liste[idJoueur].couleur,84,action)
 	local boucle=true
-	while boule then
+	while boule do
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
 		if liste[idJoueur].couleur==replyFrequency then
 			boule=false
@@ -108,7 +108,7 @@ function deplacement(idJoueur,x,y,pousseJoueur,mode)
 			print("Joueur"..liste[idJoueur].nom.." avance en "..x.." "..y)
 			modem.pp.transmit(liste[idJoueur].couleur,84,{"bouge",{x=x,y=y}})
 			local boucle=true
-			while boule then
+			while boule do
 				event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
 				if liste[idJoueur].couleur==replyFrequency then
 					boule=false
@@ -532,7 +532,7 @@ function mort(idJoueur)
 	affichageTC(idJoueur,{action="INFO"})
 	modem.pp.transmit(liste[idJoueur].couleur,84,{"mort"})
 	local boucle=true
-	while boule then
+	while boule do
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
 		if liste[idJoueur].couleur==replyFrequency then
 			boule=false
