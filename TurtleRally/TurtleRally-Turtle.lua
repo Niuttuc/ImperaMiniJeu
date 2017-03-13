@@ -1,4 +1,4 @@
-print("Turtle charge version Git v2.2")
+print("Turtle charge version Git v2.3")
 modem=peripheral.find('modem')
 compass=peripheral.find('compass')
 color=colors[string.lower(string.sub(os.getComputerLabel(),7,-1))] --recuperation de la couleur associe a la turtle dans son label
