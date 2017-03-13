@@ -1,4 +1,4 @@
-print("LOAD joueur v1.31")
+print("LOAD joueur v1.32")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -478,7 +478,7 @@ function retourAlavie(ordre)
 					if replyFrequency==liste[idJoueur].couleur then
 						liste[idJoueur].turtlePret=true
 					end
-					if liste[idJoueur].turtlePret then						
+					if not(liste[idJoueur].turtlePret) then						
 						enAttente=enAttente+1
 					end
 				end				
@@ -592,6 +592,7 @@ function tirageDepart()
 		if liste[idJoueur].actif then
 			modem.pp.transmit(liste[idJoueur].couleur,84,{"onboard",{x=x,y=y}})
 			enAttente=enAttente+1
+			liste[idJoueur].turtlePret=false
 		else
 			modem.pp.transmit(liste[idJoueur].couleur,84,"home")
 		end
@@ -606,7 +607,7 @@ function tirageDepart()
 					if replyFrequency==liste[idJoueur].couleur then
 						liste[idJoueur].turtlePret=true
 					end
-					if liste[idJoueur].turtlePret then						
+					if not(liste[idJoueur].turtlePret) then						
 						enAttente=enAttente+1
 					end
 				end				
