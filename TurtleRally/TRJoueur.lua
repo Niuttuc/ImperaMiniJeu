@@ -1,4 +1,4 @@
-print("LOAD joueur v1.30")
+print("LOAD joueur v1.31")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -475,7 +475,7 @@ function retourAlavie(ordre)
 		if message~="JEFAITQUOI" then
 			for idJoueur=1,#liste do
 				if liste[idJoueur].actif then
-					if replyFrequency=liste[idJoueur].couleur then
+					if replyFrequency==liste[idJoueur].couleur then
 						liste[idJoueur].turtlePret=true
 					end
 					if liste[idJoueur].turtlePret then						
@@ -601,9 +601,9 @@ function tirageDepart()
 		enAttente=0
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
 		if message~="JEFAITQUOI" then
-			for idJoueur=1,#liste then
+			for idJoueur=1,#liste do
 				if liste[idJoueur].actif then
-					if replyFrequency=liste[idJoueur].couleur then
+					if replyFrequency==liste[idJoueur].couleur then
 						liste[idJoueur].turtlePret=true
 					end
 					if liste[idJoueur].turtlePret then						
