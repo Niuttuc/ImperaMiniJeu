@@ -1,4 +1,4 @@
-print("Turtle charge version Git v2.1")
+print("Turtle charge version Git v2.2")
 modem=peripheral.find('modem')
 compass=peripheral.find('compass')
 color=colors[string.lower(string.sub(os.getComputerLabel(),7,-1))] --recuperation de la couleur associe a la turtle dans son label
@@ -181,6 +181,46 @@ function death(trou)								--si trou est a true (j'ai pas pu m'en empecher :D),
 	print('death done')
 end
 
+
+
+function deathDest(trou,dest)						--si trou est a true (j'ai pas pu m'en empecher :D), passe par le bas
+	h=getTurtlePos().h								-- et se rend au garage, sinon, se rend au garage
+	if trou and h==1 then									
+		down()
+		down()
+		rotateToDirection(sortieTrou)
+		forward()
+		forward()
+		forward()
+	elseif h==0 then
+		down()
+		rotateToDirection(sortieTrou)
+		forward()
+		forward()
+		forward()
+	elseif h==-1 then
+		rotateToDirection(sortieTrou)
+		forward()
+		forward()
+		forward()
+	elseif not(trou) and h==1 then
+		up()
+	end
+	if trou then
+		up()
+		up()
+		up()
+	end
+	pos=getTurtlePos()
+	goTo(dest,false)
+	turtle.down()
+	periphs=peripheral.getNames()
+	while not(peripheral.getType('back') and peripheral.getType('back')=='teleporter') do
+		turtle.turnLeft()
+	end
+	pos=getTurtlePos()
+end
+
 function enterTheGame(destination)					--quitte le gararge et va se placer sur le depart destination
 	forward()
 	forward()
@@ -301,10 +341,15 @@ function waitForModem()
 				goTo(mess[2],true)
 			end
 			modem.transmit(repFreq, color, 'fini')
-		elseif type(mess)=='table' and mess[1]=='mort' then
+		elseif type(mess)=='table' and mess[1]=='mort' and #mess==1 then
 			if paresseux then
 				death(not(turtle.detectDown()))
 				seGarer()
+			end
+			modem.transmit(repFreq, color, 'fini')
+		elseif type(mess)=='table' and mess[1]=='mort' and #mess==2 then
+			if paresseux then
+				deathDest(not(turtle.detectDown()),mess[2])
 			end
 			modem.transmit(repFreq, color, 'fini')
 		elseif mess=='home' then
