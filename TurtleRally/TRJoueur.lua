@@ -1,4 +1,4 @@
-print("LOAD joueur v1.32")
+print("LOAD joueur v1.33")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -73,10 +73,10 @@ function tourne(idJoueur,action)
 	end
 	modem.pp.transmit(liste[idJoueur].couleur,84,action)
 	local boucle=true
-	while boule do
+	while boucle do
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
 		if liste[idJoueur].couleur==replyFrequency then
-			boule=false
+			boucle=false
 		end
 	end
 	print("Fin tourne")
@@ -108,10 +108,10 @@ function deplacement(idJoueur,x,y,pousseJoueur,mode)
 			print("Joueur"..liste[idJoueur].nom.." avance en "..x.." "..y)
 			modem.pp.transmit(liste[idJoueur].couleur,84,{"bouge",{x=x,y=y}})
 			local boucle=true
-			while boule do
+			while boucle do
 				event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
 				if liste[idJoueur].couleur==replyFrequency then
-					boule=false
+					boucle=false
 				end
 			end
 			precX=liste[idJoueur].position.x
@@ -532,10 +532,10 @@ function mort(idJoueur)
 	affichageTC(idJoueur,{action="INFO"})
 	modem.pp.transmit(liste[idJoueur].couleur,84,{"mort"})
 	local boucle=true
-	while boule do
+	while boucle do
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
 		if liste[idJoueur].couleur==replyFrequency then
-			boule=false
+			boucle=false
 		end
 	end
 end
