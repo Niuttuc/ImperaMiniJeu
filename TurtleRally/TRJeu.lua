@@ -1,4 +1,4 @@
-print("LOAD jeu v0.15")
+print("LOAD jeu v0.16")
 os.loadAPI("ahb")
 os.loadAPI("config")
 os.loadAPI("joueur")
@@ -74,8 +74,10 @@ function jeu()
 									if actions[idJoueur][tour]=="avance2" then
 										x,y=joueur.calculCoord(idJoueur,"avance1")
 										reussi, coeurs=joueur.deplacement(idJoueur,x,y,true)
+										print("AV2 / 1 "..tostring(reussi))
 										x,y=joueur.calculCoord(idJoueur,"avance1")
 										reussi, coeurs=joueur.deplacement(idJoueur,x,y,true)
+										print("AV2 / 2 "..tostring(reussi))
 									else 
 										x,y=joueur.calculCoord(idJoueur,actions[idJoueur][tour])
 										reussi, coeurs=joueur.deplacement(idJoueur,x,y,true)
