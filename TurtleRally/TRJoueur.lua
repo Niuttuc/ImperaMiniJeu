@@ -1,4 +1,4 @@
-print("LOAD joueur v1.33")
+print("LOAD joueur v1.34")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -455,6 +455,7 @@ function retourAlavie(ordre)
 					end
 					print("onboard "..x.." "..y)
 					modem.pp.transmit(liste[idJoueur].couleur,84,{"onboard",{x=x,y=y}})
+					liste[idJoueur].direction="MY"
 					os.sleep(1)
 					enAttente=enAttente+1
 					liste[idJoueur].turtlePret=false
