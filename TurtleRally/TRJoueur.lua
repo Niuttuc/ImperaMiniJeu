@@ -1,4 +1,4 @@
-print("LOAD joueur v1.35")
+print("LOAD joueur v1.36")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -445,7 +445,7 @@ function retourAlavie(ordre)
 					liste[idJoueur].position.x=x
 					liste[idJoueur].position.y=y
 					modem.pp.transmit(liste[idJoueur].couleur,84,{"onboard",{x=x,y=y}})
-					print(liste[idJoueur].position.x..' '..liste[idJoueur].position.y)
+					print(liste[idJoueur].position.x..' '..liste[idJoueur].position.y..' '..orientation)
 					liste[idJoueur].direction=orientation
 					os.sleep(1)
 					enAttente=enAttente+1
@@ -538,7 +538,7 @@ function tirageOrdre()
 			table.insert(joueurTirage,idJoueur)
 		end
 	end
-	
+	ecran.pp.clear()
 	for i=1, #joueurTirage do
 		index=math.random(#joueurTirage)
 		idJoueur=joueurTirage[index]

@@ -1,4 +1,4 @@
-print("LOAD Etape v0.04")
+print("LOAD Etape v0.05")
 function tirage()
 	etapesTirage={}
 	for etapesI=1, #etapes do
