@@ -79,7 +79,6 @@ function tourne(idJoueur,action)
 			boucle=false
 		end
 	end
-	print("Fin tourne")
 end
 function deplacement(idJoueur,x,y,pousseJoueur,mode)
 	local reussi=true
@@ -89,7 +88,6 @@ function deplacement(idJoueur,x,y,pousseJoueur,mode)
 				local joueurPousser=joueur.trouver(x,y)
 				local pousseReussi=deplacement(joueurPousser,x+(x-liste[idJoueur].position.x),y+(y-liste[idJoueur].position.y),false)
 				if pousseReussi then
-					print("Joueur"..liste[joueurPousser].nom.." pousser")
 				else
 					joueur.degat(joueurPousser)			
 					return false, liste[idJoueur].coeur
@@ -105,7 +103,6 @@ function deplacement(idJoueur,x,y,pousseJoueur,mode)
 			joueur.degat(idJoueur)
 		end
 		if reussi then
-			print("Joueur"..liste[idJoueur].nom.." avance en "..x.." "..y)
 			modem.pp.transmit(liste[idJoueur].couleur,84,{"bouge",{x=x,y=y}})
 			local boucle=true
 			while boucle do
@@ -124,7 +121,6 @@ function deplacement(idJoueur,x,y,pousseJoueur,mode)
 	else
 		return false, liste[idJoueur].coeur
 	end
-	print("Envoi de "..tostring(reussi))
 	return reussi, liste[idJoueur].coeur
 end
 function tires()
@@ -265,7 +261,6 @@ function renvoiDemandeChoix(couleur)
 	end
 	if liste[idJoueur].actif then
 		if #liste[idJoueur].actions==5 then
-			print("WAITPLAYER")
 			affichageTC(idJoueur,{action="WAITPLAYER",actions=liste[idJoueur].actions})
 		else
 			if liste[idJoueur].dodo then
@@ -312,7 +307,6 @@ function demandeChoix()
 					idJoueur=idJoueurTemp
 				end
 			end
-			print("Action "..idJoueur)
 			if not(idJoueur==-1) then
 				if type(message)=='table' then
 					if #message.actions==5 then
@@ -332,7 +326,6 @@ function demandeChoix()
 					end
 				end
 			end
-			print("Joueur actif "..total.." Nombre de joueur pret "..nbPret)
 		end
 	end
 	return retour
@@ -358,16 +351,13 @@ function attenteInscription()
 					idJoueur=idJoueurTemp
 				end
 			end
-			print("inscription "..idJoueur)
 			if idJoueur~=-1 then
 				if liste[idJoueur].actif then
 					liste[idJoueur].actif=false	
 					joueur.affichageTC(idJoueur,{action="JOIN"})
-					print("Envoi JOIN")
 				else
 					liste[idJoueur].actif=true
 					joueur.affichageTC(idJoueur,{action="LOBBY"})
-					print("Envoi LOBBY")
 				end
 				local cursY=2
 				fenetre.clear()
@@ -443,19 +433,17 @@ function retourAlavie(ordre)
 					liste[idJoueur].coeur=config.get("coeur")
 					actuCoeurAff(idJoueur)
 					if liste[idJoueur].checkpoint==0 then
-						x, y=depart.joueur(idJoueur)
-						liste[idJoueur].position.x=x
-						liste[idJoueur].position.y=y				
+						x, y=depart.joueur(idJoueur)			
 					else
 						x, y=etape.coord(liste[idJoueur].checkpoint)
 						if present(x,y) then
 							x, y=depart.joueur(idJoueur)
 						end
-						liste[idJoueur].position.x=x
-						liste[idJoueur].position.y=y
 					end
-					print("onboard "..x.." "..y)
+					liste[idJoueur].position.x=x
+					liste[idJoueur].position.y=y
 					modem.pp.transmit(liste[idJoueur].couleur,84,{"onboard",{x=x,y=y}})
+					print(liste[idJoueur].position.x..' '..liste[idJoueur].position.y)
 					liste[idJoueur].direction="MY"
 					os.sleep(1)
 					enAttente=enAttente+1
@@ -486,7 +474,6 @@ function retourAlavie(ordre)
 				end				
 			end
 		end
-		print("Plus que "..enAttente)
 	end
 end
 function actuCoeurAff(idJoueur)
@@ -507,7 +494,6 @@ function heal(idJoueur)
 	affichageTC(idJoueur,{action="INFO"})
 end
 function degatAll(idJoueurImu)
-	print("Degat pour tous sauf "..idJoueurImu)
 	for idJoueur=1,#liste do
 		if liste[idJoueur].actif then
 			if idJoueur~=idJoueurImu then
@@ -562,9 +548,6 @@ function tirageOrdre()
 	return retour
 end
 function passageEtape(idJoueur,numero)
-	print("etape")
-	print(idJoueur)
-	print(numero)
 	if liste[idJoueur].checkpoint==numero-1 then
 		liste[idJoueur].checkpoint=numero
 	end
@@ -599,7 +582,6 @@ function tirageDepart()
 			modem.pp.transmit(liste[idJoueur].couleur,84,"home")
 		end
 	end
-	print("Attente de "..enAttente.." turtle")
 	while enAttente~=0 do
 		enAttente=0
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
@@ -615,6 +597,5 @@ function tirageDepart()
 				end				
 			end
 		end
-		print("Plus que "..enAttente)
 	end
 end

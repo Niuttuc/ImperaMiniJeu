@@ -20,7 +20,6 @@ function ecoute()
 	while true do
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")		
 		if message=="JEFAITQUOI" then
-			print("JE FAIS QUOI")
 			if config.get("etapeTelecommande")=="JOIN" then
 				joueur.renvoiJoin(replyFrequency-1)
 				--joueur.affichageCouleur(replyFrequency-1,{action="JOIN"})
@@ -61,7 +60,6 @@ function jeu()
 						idJoueur=ordre[i]
 						if not(joueur.dodo(idJoueur)) then
 							if joueur.envie(idJoueur) then
-								print("  JOUEUR "..idJoueur.." "..actions[idJoueur][tour])
 								joueur.afficherInfo(idJoueur,"T"..tour.." "..choices[actions[idJoueur][tour]].nomListe,colors.white)
 								if 
 										actions[idJoueur][tour]=="clockTurn" 
@@ -74,10 +72,8 @@ function jeu()
 									if actions[idJoueur][tour]=="avance2" then
 										x,y=joueur.calculCoord(idJoueur,"avance1")
 										reussi, coeurs=joueur.deplacement(idJoueur,x,y,true)
-										print("AV2 / 1 "..tostring(reussi))
 										x,y=joueur.calculCoord(idJoueur,"avance1")
 										reussi, coeurs=joueur.deplacement(idJoueur,x,y,true)
-										print("AV2 / 2 "..tostring(reussi))
 									else 
 										x,y=joueur.calculCoord(idJoueur,actions[idJoueur][tour])
 										reussi, coeurs=joueur.deplacement(idJoueur,x,y,true)
