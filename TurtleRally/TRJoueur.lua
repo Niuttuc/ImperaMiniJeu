@@ -495,16 +495,34 @@ function heal(idJoueur)
 	affichageTC(idJoueur,{action="INFO"})
 end
 function degatAll(idJoueurImu)
+	local mini=0
 	for idJoueur=1,#liste do
 		if liste[idJoueur].actif then
 			if idJoueur~=idJoueurImu then
-				joueur.degat(idJoueur)
+				mini=math.min(mini,liste[idJoueur].checkpoint)
+			end
+		end
+	end
+	for idJoueur=1,#liste do
+		if liste[idJoueur].actif then
+			if idJoueur~=idJoueurImu then
+				degats=1+((liste[idJoueur].checkpoint-mini)*3)
+				if degats>=liste[idJoueur].coeur then
+					degats=liste[idJoueur].coeur-2
+				end
+				joueur.degat(idJoueur,degats)
 			end
 		end
 	end
 end
-function degat(idJoueur)
-	liste[idJoueur].coeur=liste[idJoueur].coeur-1
+function degat(idJoueur,cb)
+	if cb==nil then
+		cb=1
+	end
+	if cb<0 then
+		cb=0
+	end
+	liste[idJoueur].coeur=liste[idJoueur].coeur-cb
 	if liste[idJoueur].coeur<0 then liste[idJoueur].coeur=0 end
 	if liste[idJoueur].coeur==0 then
 		mort(idJoueur)
