@@ -87,7 +87,7 @@ function posteAction2(case,x,y,idJoueur)
 	tuilesOver[case](idJoueur,x,y)	
 end
 
-function add(x,y,ttype,info,info2)
+function add(x,y,ttype,info,info2,info3)
 	maps[x][y]=ttype
 	if ttype=="mur2" then
 		mur.add(info,x,y)
@@ -104,11 +104,11 @@ function add(x,y,ttype,info,info2)
 		info2.rot=info
 		table.insert(plaques,info2)
 	elseif ttype=="depart" then
-		depart.add(x,y,info,info2)
+		depart.add(x,y,info,info2,info3)
 	elseif ttype=="bonus" then
 		bonus.add(x,y,info)
 	elseif ttype=="etape" then
-		etape.add(x,y,info)
+		etape.add(x,y,info,info3)
 	end
 end
 function inmap(x,y)

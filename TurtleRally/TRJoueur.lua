@@ -130,30 +130,32 @@ function tires()
 	local boucle=true
 	for idJoueur=1,#liste do
 		if liste[idJoueur].actif then
-			if not(liste[idJoueur].coeur==0) then
-				calx=liste[idJoueur].position.x
-				caly=liste[idJoueur].position.y
-				-- LANCER LE TIRE ICI
-				boucle=true
-				while boucle do
-					calx,caly=calculPlusUn(calx,caly,liste[idJoueur].direction)
-					if map.inmap(calx,caly) then
-						toucher=presentGetId(calx,caly)
-						if toucher==-1 then
-							case=map.get(calx,caly)
-							libre, ldegat=map.preAction(case,calx,caly) 
-							if not(libre) then
+			if not(liste[idJoueur].dodo) then
+				if not(liste[idJoueur].coeur==0) then
+					calx=liste[idJoueur].position.x
+					caly=liste[idJoueur].position.y
+					-- LANCER LE TIRE ICI
+					boucle=true
+					while boucle do
+						calx,caly=calculPlusUn(calx,caly,liste[idJoueur].direction)
+						if map.inmap(calx,caly) then
+							toucher=presentGetId(calx,caly)
+							if toucher==-1 then
+								case=map.get(calx,caly)
+								libre, ldegat=map.preAction(case,calx,caly) 
+								if not(libre) then
+									boucle=false
+								end
+							else
+								joueur.degat(toucher)
 								boucle=false
 							end
 						else
-							joueur.degat(toucher)
 							boucle=false
 						end
-					else
-						boucle=false
 					end
+					os.sleep(0.1)
 				end
-				os.sleep(0.1)
 			end
 		end
 	end
@@ -433,18 +435,18 @@ function retourAlavie(ordre)
 					liste[idJoueur].coeur=config.get("coeur")
 					actuCoeurAff(idJoueur)
 					if liste[idJoueur].checkpoint==0 then
-						x, y=depart.joueur(idJoueur)			
+						x, y, orientation=depart.joueur(idJoueur)			
 					else
 						x, y=etape.coord(liste[idJoueur].checkpoint)
 						if present(x,y) then
-							x, y=depart.joueur(idJoueur)
+							x, y, orientation=depart.joueur(idJoueur)
 						end
 					end
 					liste[idJoueur].position.x=x
 					liste[idJoueur].position.y=y
 					modem.pp.transmit(liste[idJoueur].couleur,84,{"onboard",{x=x,y=y}})
 					print(liste[idJoueur].position.x..' '..liste[idJoueur].position.y)
-					liste[idJoueur].direction="MY"
+					liste[idJoueur].direction=orientation
 					os.sleep(1)
 					enAttente=enAttente+1
 					liste[idJoueur].turtlePret=false
@@ -567,8 +569,8 @@ function tirageDepart()
 	for idDepart=1, depart.total() do
 		index=math.random(#joueurTirage)
 		idJoueur=joueurTirage[index]
-		local x, y=depart.def(idDepart,idJoueur,liste[idJoueur].couleur,liste[idJoueur].actif)
-		liste[idJoueur].direction="MY"
+		local x, y, orientation=depart.def(idDepart,idJoueur,liste[idJoueur].couleur,liste[idJoueur].actif)
+		liste[idJoueur].direction=orientation
 		liste[idJoueur].position.x=x
 		liste[idJoueur].position.y=y
 		liste[idJoueur].idDepart=idDepart
