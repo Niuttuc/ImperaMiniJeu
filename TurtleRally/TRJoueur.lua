@@ -1,4 +1,4 @@
-print("LOAD joueur v1.36")
+print("LOAD joueur v1.37")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -437,7 +437,7 @@ function retourAlavie(ordre)
 					if liste[idJoueur].checkpoint==0 then
 						x, y, orientation=depart.joueur(idJoueur)			
 					else
-						x, y=etape.coord(liste[idJoueur].checkpoint)
+						x, y, orientation=etape.coord(liste[idJoueur].checkpoint)
 						if present(x,y) then
 							x, y, orientation=depart.joueur(idJoueur)
 						end
@@ -445,7 +445,6 @@ function retourAlavie(ordre)
 					liste[idJoueur].position.x=x
 					liste[idJoueur].position.y=y
 					modem.pp.transmit(liste[idJoueur].couleur,84,{"onboard",{x=x,y=y}})
-					print(liste[idJoueur].position.x..' '..liste[idJoueur].position.y..' '..orientation)
 					liste[idJoueur].direction=orientation
 					os.sleep(1)
 					enAttente=enAttente+1

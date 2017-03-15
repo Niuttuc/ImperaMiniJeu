@@ -79,11 +79,9 @@ tuilesOut={
 }
 function posteAction1(x,y,idJoueur)	
 	local case=maps[x][y]
-	print("map.posteAction1("..x.." "..y.." "..case)
 	tuilesOut[case](x,y)
 end
 function posteAction2(case,x,y,idJoueur)
-	print("map.posteAction("..case)
 	tuilesOver[case](idJoueur,x,y)	
 end
 
