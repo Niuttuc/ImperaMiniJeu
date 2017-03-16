@@ -135,88 +135,9 @@ function tires()
 		if liste[idJoueur].actif then
 			if not(liste[idJoueur].dodo) then
 				if not(liste[idJoueur].coeur==0) then
-					calx=liste[idJoueur].position.x
-					caly=liste[idJoueur].position.y
-					local tireDirection=''
-					local tireX=config.get('x')
-					local tireY=config.get('y')
-					local tireZ=config.get('z')
-					calx,caly=calculPlusUn(calx,caly,liste[idJoueur].direction,0.5)
-					if config.get("orientation")=="WEST" then
-						tireX=tireX+(calx*-1)
-						tireZ=tireZ+(caly*-1)
-						if liste[idJoueur].direction=="MY" then
-							tireDirection="SOUTH"
-						elseif liste[idJoueur].direction=="PX" then
-							tireDirection="WEST"
-						elseif liste[idJoueur].direction=="PY" then
-							tireDirection="NORTH"
-						elseif liste[idJoueur].direction=="MX" then
-							tireDirection="EAST"
-						end
-					elseif config.get("orientation")=="NORTH" then
-						tireX=tireX+(calx*-1)
-						tireZ=tireZ+(caly)
-						if liste[idJoueur].direction=="MY" then
-							tireDirection="EAST"
-						elseif liste[idJoueur].direction=="PX" then
-							tireDirection="NORTH"
-						elseif liste[idJoueur].direction=="PY" then
-							tireDirection="WEST"
-						elseif liste[idJoueur].direction=="MX" then
-							tireDirection="SOUTH"
-						end
-					elseif config.get("orientation")=="EAST" then
-						tireX=tireX+(calx)
-						tireZ=tireZ+(caly)
-						if liste[idJoueur].direction=="MY" then
-							tireDirection="SOUTH"
-						elseif liste[idJoueur].direction=="PX" then
-							tireDirection="EAST"
-						elseif liste[idJoueur].direction=="PY" then
-							tireDirection="NORTH"
-						elseif liste[idJoueur].direction=="MX" then
-							tireDirection="WEST"
-						end
-					else
-						tireX=tireX+(caly*-1)
-						tireZ=tireZ+(calx)
-						if liste[idJoueur].direction=="MY" then
-							tireDirection="WEST"
-						elseif liste[idJoueur].direction=="PX" then
-							tireDirection="SOUTH"
-						elseif liste[idJoueur].direction=="PY" then
-							tireDirection="EAST"
-						elseif liste[idJoueur].direction=="MX" then
-							tireDirection="NORTH"
-						end
-					end
-					
-					print(liste[idJoueur].position.x..' '..liste[idJoueur].position.y..' '..liste[idJoueur].direction)
-					print(tireX..' '..tireY..' '..tireZ..' '..tireDirection)
-					laser.pp.tire(tireX,tireY,tireZ,tireDirection,1)
-										
-					calx=liste[idJoueur].position.x
-					caly=liste[idJoueur].position.y
-					boucle=true
-					while boucle do
-						calx,caly=calculPlusUn(calx,caly,liste[idJoueur].direction)
-						if map.inmap(calx,caly) then
-							toucher=presentGetId(calx,caly)
-							if toucher==-1 then
-								case=map.get(calx,caly)
-								libre, ldegat=map.preAction(case,calx,caly) 
-								if not(libre) then
-									boucle=false
-								end
-							else
-								joueur.degat(toucher)
-								boucle=false
-							end
-						else
-							boucle=false
-						end
-					end
+				
+					calx,caly=calculPlusUn(calx,caly,liste[idJoueur].direction,0.5)					
+					laser.tire(calx,caly,liste[idJoueur].direction)
 					os.sleep(0.2)
 				end
 			end
@@ -348,10 +269,45 @@ function dodo(idJoueur)
 	return liste[idJoueur].dodo
 end
 function demandeChoix()
+	timerActif=false
+	timeTime=30
+	parallel.waitForAny(demandeChoix2timer,demandeChoix2)
+end
+function demandeChoix2timer()
+	local idJoueurTemp
+	-- jamais fini
+	while true do
+		if timerActif then
+			if timeTime==0 then
+				for idJoueurTemp=1,#liste do
+					if liste[idJoueurTemp].actif and not(liste[idJoueurTemp].dodo) then
+						if not(#liste[idJoueurTemp].actions==5) then
+							affichageTC(idJoueur,{action="CHOIXIMPOSER"})
+						end
+					end
+				end				
+				timerActif=false
+			else
+				for idJoueurTemp=1,#liste do
+					if liste[idJoueurTemp].actif and not(liste[idJoueurTemp].dodo) then
+						if not(#liste[idJoueurTemp].actions==5) then
+							affichageTC(idJoueur,{action="TIME",t=timeTime})
+						end
+					end
+				end	
+			end
+			timeTime=timeTime-1
+		end
+		os.sleep(1)
+	end
+end
+timerActif=false
+function demandeChoix2()
 	local total=0
 	local retour={}
 	local idJoueur=-1
 	local nbPret=0
+	local idJoueurTemp
 	for idJoueur=1, #liste do
 		if liste[idJoueur].actif then
 			if liste[idJoueur].prochainDodo then
@@ -386,6 +342,7 @@ function demandeChoix()
 						retour[idJoueur]=message.actions
 						afficherInfo(idJoueur,"PRET",colors.white)
 						affichageTC(idJoueur,{action="WAITPLAYER",actions=liste[idJoueur].actions})
+						timerActif=true
 					end
 				end
 			end

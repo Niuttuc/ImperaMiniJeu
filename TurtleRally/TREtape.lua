@@ -8,7 +8,7 @@ function tirage()
 		index=math.random(#etapesTirage)
 		etapes[i].numero=etapesTirage[index]
 		if etapes[i].numero>config.get("etape") then
-			etapes[i].numero=""			
+			etapes[i].numero=""
 		end
 		table.remove(etapesTirage,index)
 		

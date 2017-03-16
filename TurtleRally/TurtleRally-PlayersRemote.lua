@@ -102,7 +102,24 @@ function tirage(data)
 	actuAffichage(true)
 end
 function forcage()
-	
+	if coeur<5 then
+		for i=1,5 do
+			if coeur>=i then
+				if not(mesActions[i]) then
+					index=math.random(#derTirage)
+					mesActions[i]=derTirage[index]
+					table.remove(derTirage,index)					
+				end
+			else
+				mesActions[i]=preActions[i]
+			END
+		end
+	end
+	modem.transmit(84,color+1,{actions=mesActions,dodo=false})
+	if fs.exists('Tirage') then
+		fs.delete('Tirage')
+	end
+	actuAffichage(false)
 end
 function choixClic(x,y)
 	local continue=true
@@ -238,12 +255,16 @@ while true do
 			end
 			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,1,xmax,ymax,join}}
 		elseif message.action=="CHOIXIMPOSER" then
+			countDown.clear()
+			countDown.setCursorPos(2,1)
+			countDown.write('0')
+			affWin(countDown)
 			forcage()
 			thingsToDo={os.pullEvent,'modem_message'}
 		elseif message.action=="TIME" then
 			countDown.clear()
 			countDown.setCursorPos(2,1)
-			countDown.write(message.time)
+			countDown.write(message.t)
 			affWin(countDown)			
 			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,3,xmax,ymax,choixClic}}
 		elseif message.action=="WAIT" then
@@ -259,6 +280,7 @@ while true do
 			affWin(windows.gameInProgress)
 			thingsToDo={os.pullEvent,'modem_message'}
 		elseif message.action=="CHOIX" then
+			countDown.clear()
 			tours={-1,-1,-1,-1,-1}
 			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,3,xmax,ymax,choixClic}}
 			actuDonne(message)

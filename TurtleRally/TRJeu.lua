@@ -9,6 +9,7 @@ os.loadAPI("depart")
 os.loadAPI("map")
 os.loadAPI("affichage")
 os.loadAPI('choices')
+os.loadAPI("laser")
 
 local modem=config.modem()
 modem.pp.open(84)
@@ -101,6 +102,7 @@ function jeu()
 				if config.get("partie") then
 					--print("  ACTION TAPIS, PLAQUE, TIR ;)")
 					map.actionTapis()
+					laser.tires()
 					joueur.tires()
 				end
 			end

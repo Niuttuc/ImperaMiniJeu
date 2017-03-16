@@ -37,7 +37,7 @@ local tuilesAvent={
 	pt=function(x,y) return true,0 end,
 	bonus=function(x,y) return true,0 end,
 	trou=function(x,y) return true,0 end,
-	laser=function(x,y) return true,0 end,
+	laser=function(x,y) return false,0 end,
 	etape=function(x,y) return true,0 end
 }
 function preAction(case,x,y)
@@ -63,10 +63,7 @@ tuilesOver={
 		joueur.mort(idJoueur)
 		return
 	end,
-	laser=function(idJoueur,x,y)
-		joueur.degat(idJoueur)
-		return
-	end,
+	laser=function(idJoueur,x,y) return	end,
 	etape=function(idJoueur,x,y) return end
 }
 tuilesOut={
@@ -99,6 +96,8 @@ function add(x,y,ttype,info,info2,info3)
 		mur.add(info,x,y)
 	elseif ttype=="bout" then
 		mur.addBouton(info,x,y)
+	elseif ttype=="laser" then
+		laser.add(x,y,info)
 	elseif ttype=="tapis" then
 		info.x=x
 		info.y=y
