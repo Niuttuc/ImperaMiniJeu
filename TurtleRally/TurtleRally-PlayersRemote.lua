@@ -1,4 +1,4 @@
-laversion=' v1.0 '
+
 modem=peripheral.find('modem')
 colorString=string.lower(string.sub(os.getComputerLabel(),7,-1))
 color=colors[colorString]
@@ -17,6 +17,8 @@ os.loadAPI('windows')
 os.loadAPI('choices')
 os.loadAPI('sync')
 os.loadAPI('clicAPI')
+
+windows.affVersion(' v1.0 ')
 
 local coeur=0
 local vie=0

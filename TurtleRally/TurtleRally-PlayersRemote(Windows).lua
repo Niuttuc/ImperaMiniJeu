@@ -18,12 +18,21 @@ beforeGame.blit('   la  ','fffffff','eeeeeee')
 beforeGame.setCursorPos(xmax-6, 3)
 beforeGame.blit(' partie','fffffff','eeeeeee')
 
-fversion=window.create(playWindow,xmax-6,ymax,7,1,true)
-fversion.setBackgroundColor(colors.black)
-fversion.setTextColor(colors.white)
-fversion.clear()
-fversion.write(laversion)
+function affVersion(laversion)
 
+	fversion=window.create(beforeGame,xmax-6,ymax,7,1,true)
+	fversion.setBackgroundColor(colors.black)
+	fversion.setTextColor(colors.white)
+	fversion.clear()
+	fversion.write(laversion)
+	
+	fversion=window.create(playWindow,xmax-6,ymax,7,1,true)
+	fversion.setBackgroundColor(colors.black)
+	fversion.setTextColor(colors.white)
+	fversion.clear()
+	fversion.write(laversion)
+
+end
 
 
 
@@ -99,11 +108,7 @@ countDown.setBackgroundColor(colors.black)
 countDown.setTextColor(colors.white)
 countDown.clear()
 
-fversion=window.create(playWindow,xmax-6,ymax,7,1,true)
-fversion.setBackgroundColor(colors.black)
-fversion.setTextColor(colors.white)
-fversion.clear()
-fversion.write(laversion)
+
 
 validerBouton=window.create(playWindow,math.floor(xmax/2)-5,9,11,3,true)
 validerBouton.setBackgroundColor(colors.white)
