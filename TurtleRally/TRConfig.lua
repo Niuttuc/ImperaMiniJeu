@@ -1,9 +1,16 @@
-print("LOAD Config v0.14")
+print("LOAD Config v0.40")
 
 local config=ahb.config("TR",{
 	ecran={typ="side",info="Ecran principal"},
 	modem={typ="side",info="Modem WIFI"},
-	redstone={typ="side",info="Redstone pour mur"}
+	redstone={typ="side",info="Redstone pour mur"},
+	couleurTapis={typ="couleur",info="Couleur tapis"},
+	couleurPlaque={typ="couleur",info="Couleur tapis"},
+	laser={typ="side",info="Laser"},
+	x={typ="string",info="Coordinne 0 0 0 X"},
+	y={typ="string",info="Coordinne 0 0 0 Y"},
+	z={typ="string",info="Coordinne 0 0 0 Z"},
+	orientation={typ="coord",info="Orientation de X"},
 })
 config.tailleY=18
 config.tailleX=14
@@ -63,9 +70,19 @@ function mapDef()
 	-- depart monitor_id_periph idDepart
 	-- mur2 couleur
 	-- bout couleur
+	map.add(11,0,'mur')
+	map.add(12,0,'mur')
+	map.add(13,0,'mur')
+	map.add(14,0,'mur')
+	map.add(15,1,'mur')
+	map.add(15,2,'mur')
+	map.add(15,3,'mur')
+	map.add(15,4,'mur')
+	
 	map.add(5,2,"bonus","openperipheral_selector_84")
 	map.add(9,2,"etape","monitor_27","MX")
 	map.add(10,2,"mur")
+	map.add(6,3,"pique")
 	map.add(7,3,"mur")
 	map.add(8,3,"laser")
 	map.add(9,3,"laser")
@@ -74,6 +91,8 @@ function mapDef()
 	map.add(12,3,"bonus","openperipheral_selector_83")
 	map.add(3,4,"etape","monitor_18","MX")
 	map.add(4,4,"mur")
+	map.add(12,4,"mur")
+	map.add(2,5,"trou")
 	map.add(2,5,"trou")
 	map.add(3,5,"trou")
 	map.add(2,6,"trou")
@@ -101,12 +120,18 @@ function mapDef()
 	map.add(9,10,"mur")
 	map.add(10,10,"pique")
 	map.add(12,11,"bonus","openperipheral_selector_80")
+	map.add(1,12,"trou")
 	map.add(2,12,"trou")
 	map.add(3,12,"trou")
+	map.add(1,13,"trou")
 	map.add(2,13,"trou")
 	map.add(3,13,"trou")
 	map.add(12,12,"pique")
-	map.add(6,13,"bonus","openperipheral_selector_79")
+	
+	map.add(13,12,"mur")
+	map.add(14,12,"mur")
+	
+	map.add(6,13,"bonus","openperipheral_selector_85")
 	map.add(6,14,"pique")
 	map.add(4,17,"mur")
 	map.add(4,16,"depart","monitor_23",2,"MY")
@@ -123,17 +148,86 @@ function mapDef()
 	
 	-- FINIR PAR LES TAPIS, LES ENREGISTRER DANS L'ORDRE D'ACTIVATION
 	-- X Y TAPIS {mx=Mouvement en x,my=Mouvement en y,rot="non" ou "clockTurn" ou "trigoTurn"}
+	map.add(2,2,"tapis",{mx=0,my=1,rot="trigoTurn"})
+	map.add(3,2,"tapis",{mx=0,my=1,rot="trigoTurn"})
+	map.add(2,3,"tapis",{mx=0,my=1,rot="trigoTurn"})
+	map.add(3,3,"tapis",{mx=0,my=1,rot="trigoTurn"})
+	
+	map.add(7,6,"tapis",{mx=0,my=-1,rot="trigoTurn"})
+	map.add(7,5,"tapis",{mx=1,my=0,rot="clockTurn"})
+	map.add(8,5,"tapis",{mx=0,my=-1,rot="trigoTurn"})
+	map.add(8,4,"tapis",{mx=0,my=-1,rot="non"})
+	
+	map.add(11,6,"tapis",{mx=-1,my=0,rot="trigoTurn"})
+	map.add(10,6,"tapis",{mx=0,my=-1,rot="clockTurn"})
+	map.add(10,5,"tapis",{mx=-1,my=0,rot="trigoTurn"})
+	map.add(9,5,"tapis",{mx=0,my=-1,rot="clockTurn"})
+	map.add(9,4,"tapis",{mx=0,my=-1,rot="non"})
+	
+	map.add(5,11,"tapis",{mx=-1,my=0,rot="non"})
+	map.add(4,11,"tapis",{mx=-1,my=0,rot="non"})
+	map.add(3,10,"tapis",{mx=0,my=-1,rot="clockTurn"})
+	map.add(3,9,"tapis",{mx=0,my=-1,rot="non"})
+	map.add(3,8,"tapis",{mx=1,my=0,rot="clockTurn"})
+	map.add(4,8,"tapis",{mx=1,my=0,rot="non"})
+	
+	map.add(11,10,"tapis",{mx=1,my=0,rot="non"})
+	map.add(12,10,"tapis",{mx=1,my=0,rot="non"})
+	map.add(13,10,"tapis",{mx=0,my=-1,rot="trigoTurn"})
+	map.add(13,9,"tapis",{mx=0,my=-1,rot="non"})
+	map.add(13,8,"tapis",{mx=-1,my=0,rot="trigoTurn"})
+	map.add(12,8,"tapis",{mx=-1,my=0,rot="non"})
+	
 	map.add(11,12,"tapis",{mx=1,my=0,rot="non"})
 	map.add(10,12,"tapis",{mx=1,my=0,rot="non"})
 	map.add(9,12,"tapis",{mx=1,my=0,rot="non"})
 	map.add(8,12,"tapis",{mx=1,my=0,rot="non"})
 	map.add(7,12,"tapis",{mx=1,my=0,rot="non"})
+	map.add(6,12,"tapis",{mx=1,my=0,rot="non"})
 	
-	map.add(8,4,"tapis",{mx=0,my=-1,rot="non"})
-	map.add(9,4,"tapis",{mx=0,my=-1,rot="non"})
 	
 	-- FINIR PAR LES PLAQUES TOURNANTE
 	-- X Y pt "clockTurn" ou "trigoTurn"
+	
+	map.add(11,1,"pt","trigoTurn")
+	map.add(12,1,"pt","clockTurn")
+	map.add(13,1,"pt","trigoTurn")
+	map.add(14,1,"pt","clockTurn")
+	
+	
+	map.add(7,2,"pt","trigoTurn")
+	
+	map.add(11,2,"pt","clockTurn")
+	map.add(12,2,"pt","trigoTurn")
+	map.add(13,2,"pt","clockTurn")
+	map.add(14,2,"pt","trigoTurn")	
+	
+	map.add(5,3,"pt","clockTurn")
+	
+	map.add(13,3,"pt","trigoTurn")
+	map.add(14,3,"pt","clockTurn")
+	
+	map.add(13,4,"pt","clockTurn")
+	map.add(14,4,"pt","trigoTurn")
+	
+	map.add(5,5,"pt","trigoTurn")
+	map.add(4,6,"pt","trigoTurn")
+	
+	map.add(1,8,"pt","trigoTurn")
+	map.add(8,8,"pt","trigoTurn")
+	map.add(7,9,"pt","trigoTurn")
+	map.add(9,9,"pt","clockTurn")
+	
+	map.add(4,12,"pt","trigoTurn")
+	
+	map.add(2,15,"pt","clockTurn")
+	map.add(4,14,"pt","clockTurn")
+	map.add(6,15,"pt","trigoTurn")
+	map.add(8,14,"pt","trigoTurn")
+	map.add(10,15,"pt","clockTurn")
+	map.add(12,14,"pt","clockTurn")
+	
+	
 end
 
 local ordiReboot={

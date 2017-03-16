@@ -1,8 +1,9 @@
-print("LOAD joueur v1.37")
+print("LOAD joueur v1.40")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
 local fenetre,taille=0
+local laser=ahb.addPeripheral(config.get("laser"))
 function configFenetre(fenetreC,tailleC)
 	fenetre=fenetreC
 	taille=tailleC
@@ -71,7 +72,7 @@ function tourne(idJoueur,action)
 			liste[idJoueur].direction="PX"
 		end
 	end
-	modem.pp.transmit(liste[idJoueur].couleur,84,action)
+	modem.pp.transmit(liste[idJoueur].couleur,84,{"tourne",liste[idJoueur].direction})
 	local boucle=true
 	while boucle do
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
@@ -103,7 +104,7 @@ function deplacement(idJoueur,x,y,pousseJoueur,mode)
 			joueur.degat(idJoueur)
 		end
 		if reussi then
-			modem.pp.transmit(liste[idJoueur].couleur,84,{"bouge",{x=x,y=y}})
+			modem.pp.transmit(liste[idJoueur].couleur,84,{"bouge",{x=x,y=y,direction=liste[idJoueur].direction}})
 			local boucle=true
 			while boucle do
 				event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
@@ -134,6 +135,63 @@ function tires()
 				if not(liste[idJoueur].coeur==0) then
 					calx=liste[idJoueur].position.x
 					caly=liste[idJoueur].position.y
+					local tireDirection=''
+					local tireX=config.get('x')
+					local tireY=config.get('y')
+					local tireZ=config.get('z')
+					calx,caly=calculPlusUn(calx,caly,liste[idJoueur].direction)
+					if config.get("orientation")=="WEST" then
+						tireX=tireX+(calx*-1)
+						tireZ=tireZ+(caly*-1)
+						if liste[idJoueur].direction=="MY" then
+							tireDirection="SOUTH"
+						elseif liste[idJoueur].direction=="PX" then
+							tireDirection="WEST"
+						elseif liste[idJoueur].direction=="PY" then
+							tireDirection="NORTH"
+						elseif liste[idJoueur].direction=="MX" then
+							tireDirection="EAST"
+						end
+					elseif config.get("orientation")=="NORTH" then
+						tireX=tireX+(calx*-1)
+						tireZ=tireZ+(caly)
+						if liste[idJoueur].direction=="MY" then
+							tireDirection="EAST"
+						elseif liste[idJoueur].direction=="PX" then
+							tireDirection="NORTH"
+						elseif liste[idJoueur].direction=="PY" then
+							tireDirection="WEST"
+						elseif liste[idJoueur].direction=="MX" then
+							tireDirection="SOUTH"
+						end
+					elseif config.get("orientation")=="EAST" then
+						tireX=tireX+(calx)
+						tireZ=tireZ+(caly)
+						if liste[idJoueur].direction=="MY" then
+							tireDirection="SOUTH"
+						elseif liste[idJoueur].direction=="PX" then
+							tireDirection="EAST"
+						elseif liste[idJoueur].direction=="PY" then
+							tireDirection="NORTH"
+						elseif liste[idJoueur].direction=="MX" then
+							tireDirection="WEST"
+						end
+					else
+						tireX=tireX+(caly*-1)
+						tireZ=tireZ+(calx)
+						if liste[idJoueur].direction=="MY" then
+							tireDirection="WEST"
+						elseif liste[idJoueur].direction=="PX" then
+							tireDirection="SOUTH"
+						elseif liste[idJoueur].direction=="PY" then
+							tireDirection="EAST"
+						elseif liste[idJoueur].direction=="MX" then
+							tireDirection="NORTH"
+						end
+					end
+					
+					
+					laser.pp.tire(config.get('x'),config.get('y'),config.get('z'),tireDirection,1)
 					-- LANCER LE TIRE ICI
 					boucle=true
 					while boucle do
@@ -444,8 +502,8 @@ function retourAlavie(ordre)
 					end
 					liste[idJoueur].position.x=x
 					liste[idJoueur].position.y=y
-					modem.pp.transmit(liste[idJoueur].couleur,84,{"onboard",{x=x,y=y}})
 					liste[idJoueur].direction=orientation
+					modem.pp.transmit(liste[idJoueur].couleur,84,{"onboard",{x=x,y=y,direction=liste[idJoueur].direction}}})					
 					os.sleep(1)
 					enAttente=enAttente+1
 					liste[idJoueur].turtlePret=false
@@ -575,6 +633,17 @@ function passageEtape(idJoueur,numero)
 		config.set("partie",false)
 	end
 end
+function itapisReset()
+	for idJoueur=1,#liste do
+		liste[idJoueur].tapisOk=true
+	end
+end
+function itapis(idJoueur)
+	return liste[idJoueur].tapisOk
+end
+function itapisOff(idJoueur)
+	liste[idJoueur].tapisOk=false
+end
 function tirageDepart()
 	-- Tirage depart
 	local joueurTirage={}
@@ -594,7 +663,7 @@ function tirageDepart()
 		liste[idJoueur].checkpoint=0
 		table.remove(joueurTirage,index)
 		if liste[idJoueur].actif then
-			modem.pp.transmit(liste[idJoueur].couleur,84,{"onboard",{x=x,y=y}})
+			modem.pp.transmit(liste[idJoueur].couleur,84,{"onboard",{x=x,y=y,direction=liste[idJoueur].direction}})
 			enAttente=enAttente+1
 			liste[idJoueur].turtlePret=false
 		else
