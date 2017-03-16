@@ -1,4 +1,4 @@
-print("LOAD joueur v1.42")
+print("LOAD joueur v1.45")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -141,7 +141,7 @@ function tires()
 					local tireX=config.get('x')
 					local tireY=config.get('y')
 					local tireZ=config.get('z')
-					calx,caly=calculPlusUn(calx,caly,liste[idJoueur].direction)
+					calx,caly=calculPlusUn(calx,caly,liste[idJoueur].direction,0.5)
 					if config.get("orientation")=="WEST" then
 						tireX=tireX+(calx*-1)
 						tireZ=tireZ+(caly*-1)
@@ -192,9 +192,12 @@ function tires()
 						end
 					end
 					
+					print(liste[idJoueur].position.x..' '..liste[idJoueur].position.y..' '..liste[idJoueur].direction)
 					print(tireX..' '..tireY..' '..tireZ..' '..tireDirection)
 					laser.pp.tire(tireX,tireY,tireZ,tireDirection,1)
-					-- LANCER LE TIRE ICI
+										
+					calx=liste[idJoueur].position.x
+					caly=liste[idJoueur].position.y
 					boucle=true
 					while boucle do
 						calx,caly=calculPlusUn(calx,caly,liste[idJoueur].direction)
@@ -214,12 +217,12 @@ function tires()
 							boucle=false
 						end
 					end
-					os.sleep(0.1)
+					os.sleep(0.2)
 				end
 			end
 		end
 	end
-	os.sleep(0.5)
+	os.sleep(2)
 end
 function calculPlusUn(x,y,direction)
 	if direction=="MY" then
@@ -257,6 +260,12 @@ function actifs()
 	return qte
 end
 function lancementGame()
+	ecran.pp.clear()
+	for idJoueur=1,#liste do
+		if liste[idJoueur].actif then
+			liste[idJoueur].ligne.redraw()
+		end
+	end
 	for idJoueur=1,#liste do
 		if liste[idJoueur].actif then
 			liste[idJoueur].vie=config.get("vie")
@@ -650,6 +659,7 @@ end
 function itapisOff(idJoueur)
 	liste[idJoueur].tapisOk=false
 end
+
 function tirageDepart()
 	-- Tirage depart
 	local joueurTirage={}
@@ -669,7 +679,7 @@ function tirageDepart()
 		liste[idJoueur].checkpoint=0
 		liste[idJoueur].affEtape.clear()
 		liste[idJoueur].affEtape.setCursorPos(1,1)
-		liste[idJoueur].affEtape.write("Depart")
+		liste[idJoueur].affEtape.write(" Depart")
 		table.remove(joueurTirage,index)
 		if liste[idJoueur].actif then
 			modem.pp.transmit(liste[idJoueur].couleur,84,{"onboard",{x=x,y=y,direction=liste[idJoueur].direction}})
