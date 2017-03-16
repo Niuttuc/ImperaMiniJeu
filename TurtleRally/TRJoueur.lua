@@ -1,4 +1,4 @@
-print("LOAD joueur v1.51")
+print("LOAD joueur v1.52")
 liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -135,7 +135,7 @@ function tires()
 			if not(liste[idJoueur].dodo) then
 				if not(liste[idJoueur].coeur==0) then
 				
-					calx,caly=calculPlusUn(calx,caly,liste[idJoueur].direction,0.5)					
+					calx,caly=calculPlusUn(liste[idJoueur].position.x,liste[idJoueur].position.y,liste[idJoueur].direction,0.5)					
 					laser.tire(calx,caly,liste[idJoueur].direction)
 					os.sleep(0.2)
 				end
