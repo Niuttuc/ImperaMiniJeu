@@ -1,4 +1,4 @@
-print("Turtle charge version Git v2.3")
+print("Turtle charge version Git v3.0")
 modem=peripheral.find('modem')
 compass=peripheral.find('compass')
 color=colors[string.lower(string.sub(os.getComputerLabel(),7,-1))] --recuperation de la couleur associe a la turtle dans son label
@@ -98,6 +98,7 @@ end
 
 
 function goTo(goalPos)						--va a la coordonee goalPos, garde son orientation si keepDir est vraie
+	startDir=compass.getFacing()
 	currentPos=getTurtlePos()
 	if math.abs(goalPos.x-currentPos.x)+math.abs(goalPos.y-currentPos.y)==1 then
 		print("Juste 1")
