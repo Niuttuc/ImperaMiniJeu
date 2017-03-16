@@ -1,4 +1,4 @@
-print("LOAD Map v0.41")
+print("LOAD Map v0.42")
 local tapis={}
 local plaques={}
 local maps={}
@@ -34,6 +34,7 @@ local tuilesAvent={
 		return false,1
 	end,
 	tapis=function(x,y) return true,0 end,
+	tp=function(x,y) return true,0 end,
 	bonus=function(x,y) return true,0 end,
 	trou=function(x,y) return true,0 end,
 	laser=function(x,y) return true,0 end,
@@ -52,7 +53,8 @@ tuilesOver={
 		mur.test(x,y)
 		return
 	end,
-	tapis=function(idJoueur,x,y) return end,
+	tapis=function(idJoueur,x,y) return end,	
+	tp=function(idJoueur,x,y) return end,
 	bonus=function(idJoueur,x,y)
 		bonus.action(idJoueur,x,y)		
 		return
@@ -78,6 +80,7 @@ tuilesOut={
 		return
 	end,
 	tapis=function(x,y) return end,
+	tp=function(x,y) return end,
 	trou=function(x,y)	return end,
 	laser=function(x,y) return end,
 	etape=function(x,y) return end
