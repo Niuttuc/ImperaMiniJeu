@@ -1,4 +1,4 @@
-print("LOAD joueur v1.41")
+print("LOAD joueur v1.42")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -33,7 +33,9 @@ function configJ(couleur,nom,y)
 	
 	data.affVie=window.create(data.ligne,10,1,8,1,true)
 	data.affCoeur=window.create(data.ligne,19,1,11,1,true)
-	data.affInfo=window.create(data.ligne,31,1,30,1,true)
+	data.affEtape=window.create(data.ligne,31,1,10,1,true)
+	data.affInfo=window.create(data.ligne,42,1,30,1,true)
+	
 	
 	modem.pp.transmit(couleur,84,"home")
 	
@@ -624,14 +626,18 @@ function tirageOrdre()
 	end
 	return retour
 end
+
 function passageEtape(idJoueur,numero)
 	if liste[idJoueur].checkpoint==numero-1 then
 		liste[idJoueur].checkpoint=numero
-	end
-	if liste[idJoueur].checkpoint==config.get("etape") then
-		affichageTC(idJoueur,{action="GAGNER"})
-		config.set("partie",false)
-	end
+		liste[idJoueur].affEtape.clear()
+		liste[idJoueur].affEtape.setCursorPos(1,1)
+		liste[idJoueur].affEtape.write("Etape "..numero)
+		if liste[idJoueur].checkpoint==config.get("etape") then
+			affichageTC(idJoueur,{action="GAGNER"})
+			config.set("partie",false)
+		end
+	end	
 end
 function itapisReset()
 	for idJoueur=1,#liste do
@@ -661,6 +667,9 @@ function tirageDepart()
 		liste[idJoueur].position.y=y
 		liste[idJoueur].idDepart=idDepart
 		liste[idJoueur].checkpoint=0
+		liste[idJoueur].affEtape.clear()
+		liste[idJoueur].affEtape.setCursorPos(1,1)
+		liste[idJoueur].affEtape.write("Depart")
 		table.remove(joueurTirage,index)
 		if liste[idJoueur].actif then
 			modem.pp.transmit(liste[idJoueur].couleur,84,{"onboard",{x=x,y=y,direction=liste[idJoueur].direction}})
