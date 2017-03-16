@@ -112,7 +112,7 @@ function forcage()
 				end
 			else
 				mesActions[i]=preActions[i]
-			END
+			end
 		end
 	end
 	modem.transmit(84,color+1,{actions=mesActions,dodo=false})
