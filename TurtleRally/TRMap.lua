@@ -114,7 +114,7 @@ function add(x,y,ttype,info,info2,info3)
 	elseif ttype=="bonus" then
 		bonus.add(x,y,info)
 	elseif ttype=="etape" then
-		etape.add(x,y,info,info3)
+		etape.add(x,y,info,info2)
 	end
 end
 function inmap(x,y)

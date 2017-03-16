@@ -222,7 +222,7 @@ function tires()
 			end
 		end
 	end
-	os.sleep(2)
+	os.sleep(1)
 end
 function calculPlusUn(x,y,direction)
 	if direction=="MY" then
@@ -564,12 +564,10 @@ function heal(idJoueur)
 	affichageTC(idJoueur,{action="INFO"})
 end
 function degatAll(idJoueurImu)
-	local mini=0
+	local mini=5
 	for idJoueur=1,#liste do
 		if liste[idJoueur].actif then
-			if idJoueur~=idJoueurImu then
-				mini=math.min(mini,liste[idJoueur].checkpoint)
-			end
+			mini=math.min(mini,liste[idJoueur].checkpoint)			
 		end
 	end
 	for idJoueur=1,#liste do
