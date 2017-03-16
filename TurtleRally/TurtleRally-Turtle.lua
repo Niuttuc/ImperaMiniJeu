@@ -6,27 +6,27 @@ card={north=1,east=2,south=3,west=4}
 invCard={'north','east','south','west'}
 paresseux=true
 
-garagePos={x=8,y=22,h=2}									--Position relative de l'entrée du garage
+garagePos={x=8,y=22,h=2,diretion='PY'}									--Position relative de l'entrée du garage
 garageStartsDirection='south'						--Direction de la sortie pour les starts du garage par rapport a la route pour se garer.
 sortieTrou='east'
-directionxplus='west'								--Direction pour les coordonnees relatives du plateau
-directionyplus='north'								--Juste xplus et yplus a remplir
+px='west'								--Direction pour les coordonnees relatives du plateau
+py='north'								--Juste xplus et yplus a remplir
 													--si comme nous vous avez pas pense a ca avant...
 
 
 
 for k,v in pairs(card) do							--On calcule les directions qui nous manque
-	if math.abs(v-card[directionxplus])==2 then
-		directionxmoins=k
-	elseif math.abs(v-card[directionyplus])==2 then
-		directionymoins=k
+	if math.abs(v-card[px])==2 then
+		mx=k
+	elseif math.abs(v-card[py])==2 then
+		my=k
 	end
 	if math.abs(v-card[garageStartsDirection])==2 then
 		garageCheckpointsDirection=k
 	end
 end
-
-
+cardPlateau={[px]=1,[py]=2,[mx]=3,[my]=4}
+cardNamePlateau={PX=px,PY=py,MX=mx,MY=my}
 
 --Forme des coordonnees: {x=coordonee en x relatif,y=coordonee en y relatif}
 --L'entree du garage doit etre libre d'acces selon l'AXE DES Y et un niveau au dessus du plateau
@@ -59,7 +59,7 @@ end
 
 function getTurtlePos()								--recupere les coordonnees relatives de la turtle, s'adapte a l'orientation
 	local currenty,h,currentx
-	if card[directionxplus]%2==1 then
+	if card[px]%2==1 then
 		currenty,h,currentx=gps.locate()
 	else
 		currentx,h,currenty=gps.locate()
@@ -78,6 +78,16 @@ function rotateToDirection(dir)						--Tourne, tourne, Turtle
 		turtle.turnRight()
 	end
 end
+function rotateToDirPlateau(dirPlateau)						--Tourne, tourne, Turtle
+	if (cardPlateau[compass.getFacing()]-cardNamePlateau[dirPlateau])%4==1 then
+		turtle.turnLeft()
+	elseif (cardPlateau[compass.getFacing()]-cardNamePlateau[dirPlateau])%4==2 then
+		turtle.turnLeft()
+		turtle.turnLeft()
+	elseif (cardPlateau[compass.getFacing()]-cardNamePlateau[dirPlateau])%4==3 then
+		turtle.turnRight()
+	end
+end
 
 function dirReldirCard(dirrel)
 	corr={front=0,back=2,left=-1,right=1}
@@ -87,31 +97,30 @@ end
 
 
 
-function goTo(goalPos,keepDir)						--va a la coordonee goalPos, garde son orientation si keepDir est vraie
-	startDir=compass.getFacing()
+function goTo(goalPos)						--va a la coordonee goalPos, garde son orientation si keepDir est vraie
 	currentPos=getTurtlePos()
 	if math.abs(goalPos.x-currentPos.x)+math.abs(goalPos.y-currentPos.y)==1 then
 		print("Juste 1")
 		if goalPos.x>currentPos.x then
-			if (card[startDir]-card[directionxplus])%4==2 then
+			if (card[startDir]-card[px])%4==2 then
 				if turtle.back() then
 					return
 				end
 			end
 		elseif goalPos.x<currentPos.x then
-			if (card[startDir]-card[directionxmoins])%4==2 then
+			if (card[startDir]-card[mx])%4==2 then
 				if turtle.back() then
 					return
 				end
 			end
 		elseif goalPos.y>currentPos.y then
-			if (card[startDir]-card[directionyplus])%4==2 then
+			if (card[startDir]-card[py])%4==2 then
 				if turtle.back() then
 					return
 				end
 			end
 		elseif goalPos.y<currentPos.y then
-			if (card[startDir]-card[directionymoins])%4==2 then
+			if (card[startDir]-card[my])%4==2 then
 				if turtle.back() then
 					return
 				end
@@ -120,19 +129,19 @@ function goTo(goalPos,keepDir)						--va a la coordonee goalPos, garde son orien
 	end
 	while goalPos.x~=currentPos.x or goalPos.y~=currentPos.y do
 		if goalPos.x>currentPos.x then
-			rotateToDirection(directionxplus)
+			rotateToDirection(px)
 		elseif goalPos.x<currentPos.x then
-			rotateToDirection(directionxmoins)
+			rotateToDirection(mx)
 		elseif goalPos.y>currentPos.y then
-			rotateToDirection(directionyplus)
+			rotateToDirection(py)
 		elseif goalPos.y<currentPos.y then
-			rotateToDirection(directionymoins)
+			rotateToDirection(my)
 		end
 		forward()
 		currentPos=getTurtlePos()
 	end
-	if keepDir then
-		rotateToDirection(startDir)
+	if goalPos.direction then
+		rotateToDirPlateau(goalPos.direction)
 	end
 end
 
@@ -166,7 +175,7 @@ function death(trou)								--si trou est a true (j'ai pas pu m'en empecher :D),
 		up()
 	end
 	pos=getTurtlePos()
-	goTo(garagePos,false)
+	goTo(garagePos)
 	rotateToDirection(garageCheckpointsDirection)
 	pos=getTurtlePos()
 	while pos.h<garagePos.h do
@@ -212,12 +221,8 @@ function deathDest(trou,dest)						--si trou est a true (j'ai pas pu m'en empech
 		up()
 	end
 	pos=getTurtlePos()
-	goTo(dest,false)
+	goTo(dest)
 	turtle.down()
-	periphs=peripheral.getNames()
-	while not(peripheral.getType('back') and peripheral.getType('back')=='teleporter') do
-		turtle.turnLeft()
-	end
 	pos=getTurtlePos()
 end
 
@@ -231,10 +236,6 @@ function enterTheGame(destination)					--quitte le gararge et va se placer sur l
 	forward()
 	goTo(destination)
 	turtle.down()
-	periphs=peripheral.getNames()
-	while not(peripheral.getType('back') and peripheral.getType('back')=='teleporter') do
-		turtle.turnLeft()
-	end
 end
 
 function seGarer()									--la turtle se gare depuis le teleporter du garage
@@ -320,25 +321,14 @@ function waitForModem()
 				end
 			end
 		end
-		if mess=='trigoturn' then
+		if type(mess)=='table' and mess[1]=='tourne' then
 			if paresseux then
-				turtle.turnLeft()
-			end
-			modem.transmit(repFreq, color, 'fini')
-		elseif mess=='clockturn' then
-			if paresseux then
-				turtle.turnRight()
-			end
-			modem.transmit(repFreq, color, 'fini')
-		elseif mess=='turnback' then
-			if paresseux then
-				turtle.turnRight()
-				turtle.turnRight()
+				rotateToDirPlateau(mess[2])
 			end
 			modem.transmit(repFreq, color, 'fini')
 		elseif type(mess)=='table' and mess[1]=='bouge' then
 			if paresseux then
-				goTo(mess[2],true)
+				goTo(mess[2])
 			end
 			modem.transmit(repFreq, color, 'fini')
 		elseif type(mess)=='table' and mess[1]=='mort' and #mess==1 then
