@@ -1,11 +1,16 @@
-print("LOAD Map v0.10")
+print("LOAD Map v0.40")
 local tapis={}
 local plaques={}
 local maps={}
-for x=1, config.get("tailleX") do
+for x=0, config.get("tailleX")+1 do
 	maps[x]={}
-	for y=1, config.get("tailleY") do
-		maps[x][y]="libre"
+	for y=0, config.get("tailleY")+1 do
+		if x==0 or x==config.get("tailleX")+1 or y==0 or y==config.get("tailleY")+1 then$
+			maps[x][y]="trou"
+		else
+			maps[x][y]="libre"
+		end
+		
 	end
 end
 
@@ -124,22 +129,35 @@ function get(x,y)
 	return maps[x][y]
 end
 function actionTapis()
+	local redstoneNormal=redstone.getBundledOutput(config.get("redstone"))
+	redstone.setBundledOutput(config.get("redstone"),redstoneNormal+config.get("couleurTapis"))
+	
 	for iTapis=1, #tapis do
 		local idJoueur=joueur.presentGetId(tapis[iTapis].x,tapis[iTapis].y)
-		if not(idJoueur==-1) then	
-			print("TAPIS")
-			joueur.deplacement(idJoueur,tapis[iTapis].x+tapis[iTapis].mx,tapis[iTapis].y+tapis[iTapis].my,false)
-			print("ROT "..tapis[iTapis].rot)
-			if not(tapis[iTapis].rot=="non") then
-				joueur.tourne(idJoueur,tapis[iTapis].rot)
+		joueur.itapisReset()
+		if not(idJoueur==-1) then
+			if joueur.itapis(idJoueur) then
+				print("ROT "..tapis[iTapis].rot)
+				if not(tapis[iTapis].rot=="non") then
+					joueur.tourne(idJoueur,tapis[iTapis].rot)
+				end
+				print("TAPIS")
+				joueur.deplacement(idJoueur,tapis[iTapis].x+tapis[iTapis].mx,tapis[iTapis].y+tapis[iTapis].my,false)
+				joueur.itapisOff(idJoueur)				
 			end
 		end
 	end
+	
+	redstone.setBundledOutput(config.get("redstone"),redstoneNormal+config.get("couleurPlaque"))
+	
 	for iPlaque=1, #plaques do
 		local idJoueur=joueur.presentGetId(plaques[iPlaque].x,plaques[iPlaque].y)
 		if not(idJoueur==-1) then			
 			joueur.tourne(idJoueur,plaques[iPlaque].rot)
 		end
 	end
+	
+	redstone.setBundledOutput(config.get("redstone"),redstoneNormal)
+	
 	etape.verif()	
 end
