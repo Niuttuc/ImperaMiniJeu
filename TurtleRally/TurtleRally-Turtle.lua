@@ -1,4 +1,4 @@
-print("Turtle charge version Git v3.0")
+print("Turtle charge version Git v3.1")
 modem=peripheral.find('modem')
 compass=peripheral.find('compass')
 color=colors[string.lower(string.sub(os.getComputerLabel(),7,-1))] --recuperation de la couleur associe a la turtle dans son label
@@ -79,12 +79,12 @@ function rotateToDirection(dir)						--Tourne, tourne, Turtle
 	end
 end
 function rotateToDirPlateau(dirPlateau)						--Tourne, tourne, Turtle
-	if (cardPlateau[compass.getFacing()]-cardNamePlateau[dirPlateau])%4==1 then
+	if (cardPlateau[compass.getFacing()]-cardPlateau[cardNamePlateau[dirPlateau]])%4==1 then
 		turtle.turnLeft()
-	elseif (cardPlateau[compass.getFacing()]-cardNamePlateau[dirPlateau])%4==2 then
+	elseif (cardPlateau[compass.getFacing()]-cardPlateau[cardNamePlateau[dirPlateau]])%4==2 then
 		turtle.turnLeft()
 		turtle.turnLeft()
-	elseif (cardPlateau[compass.getFacing()]-cardNamePlateau[dirPlateau])%4==3 then
+	elseif (cardPlateau[compass.getFacing()]-cardPlateau[cardNamePlateau[dirPlateau]])%4==3 then
 		turtle.turnRight()
 	end
 end
