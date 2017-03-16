@@ -1,4 +1,4 @@
-print("LOAD joueur v1.47")
+print("LOAD joueur v1.48")
 liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -258,7 +258,11 @@ function renvoiDemandeChoix(couleur)
 			if liste[idJoueur].dodo then
 				affichageTC(idJoueur,{action="DODO",actions=liste[idJoueur].actions})
 			else
-				affichageTC(idJoueur,{action="CHOIX",actions=liste[idJoueur].precActions})
+				if timeTime==30 then
+					affichageTC(idJoueur,{action="CHOIX",actions=liste[idJoueur].precActions})
+				else
+					affichageTC(idJoueur,{action="CHOIXIMPOSER",actions=liste[idJoueur].precActions})
+				end
 			end
 		end
 	else
@@ -271,7 +275,7 @@ end
 function demandeChoix()
 	timerActif=false
 	timeTime=30
-	parallel.waitForAny(demandeChoix2timer,demandeChoix2)
+	return parallel.waitForAny(demandeChoix2timer,demandeChoix2)
 end
 function demandeChoix2timer()
 	local idJoueurTemp
@@ -284,7 +288,7 @@ function demandeChoix2timer()
 					if liste[idJoueurTemp].actif and not(liste[idJoueurTemp].dodo) then
 						if not(#liste[idJoueurTemp].actions==5) then
 							print('CHOIXIMPOSER '..idJoueurTemp)
-							affichageTC(idJoueur,{action="CHOIXIMPOSER"})
+							affichageTC(idJoueur,{action="CHOIXIMPOSER"},actions=liste[idJoueur].precActions})
 						end
 					end
 				end				
@@ -292,10 +296,8 @@ function demandeChoix2timer()
 			else
 				for idJoueurTemp=1,#liste do
 					if liste[idJoueurTemp].actif and not(liste[idJoueurTemp].dodo) then
-						if not(#liste[idJoueurTemp].actions==5) then
-							print('TIME '..idJoueurTemp)
-							affichageTC(idJoueur,{action="TIME",t=timeTime})
-						end
+						print('TIME '..idJoueurTemp)
+						affichageTC(idJoueur,{action="TIME",t=timeTime})
 					end
 				end	
 			end
