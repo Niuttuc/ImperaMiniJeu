@@ -18,7 +18,7 @@ os.loadAPI('choices')
 os.loadAPI('sync')
 os.loadAPI('clicAPI')
 
-windows.affVersion(' v1.0 ')
+windows.affVersion(' v1.1 ')
 
 local coeur=0
 local vie=0
@@ -263,6 +263,7 @@ while true do
 			windows.countDown.clear()
 			windows.countDown.setCursorPos(2,1)
 			windows.countDown.write('0')
+			preActions=message.actions
 			forcage()
 			thingsToDo={os.pullEvent,'modem_message'}
 		elseif message.action=="TIME" then
