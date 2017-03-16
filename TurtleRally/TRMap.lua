@@ -1,4 +1,4 @@
-print("LOAD Map v0.42")
+print("LOAD Map v0.44")
 local tapis={}
 local plaques={}
 local maps={}
@@ -34,7 +34,7 @@ local tuilesAvent={
 		return false,1
 	end,
 	tapis=function(x,y) return true,0 end,
-	tp=function(x,y) return true,0 end,
+	pt=function(x,y) return true,0 end,
 	bonus=function(x,y) return true,0 end,
 	trou=function(x,y) return true,0 end,
 	laser=function(x,y) return true,0 end,
@@ -54,7 +54,7 @@ tuilesOver={
 		return
 	end,
 	tapis=function(idJoueur,x,y) return end,	
-	tp=function(idJoueur,x,y) return end,
+	pt=function(idJoueur,x,y) return end,
 	bonus=function(idJoueur,x,y)
 		bonus.action(idJoueur,x,y)		
 		return
@@ -80,7 +80,7 @@ tuilesOut={
 		return
 	end,
 	tapis=function(x,y) return end,
-	tp=function(x,y) return end,
+	pt=function(x,y) return end,
 	trou=function(x,y)	return end,
 	laser=function(x,y) return end,
 	etape=function(x,y) return end
@@ -103,8 +103,8 @@ function add(x,y,ttype,info,info2,info3)
 		info.x=x
 		info.y=y
 		table.insert(tapis,info)
-	elseif ttype=="plaque" then
-		infos2={}
+	elseif ttype=="pt" then
+		info2={}
 		info2.x=x
 		info2.y=y
 		info2.rot=info
