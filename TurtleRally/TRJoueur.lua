@@ -137,7 +137,7 @@ function tires()
 				
 					calx,caly=calculPlusUn(liste[idJoueur].position.x,liste[idJoueur].position.y,liste[idJoueur].direction,0.5)					
 					laser.tire(calx,caly,liste[idJoueur].direction)
-					os.sleep(1)
+					os.sleep(0.7)
 				end
 			end
 		end

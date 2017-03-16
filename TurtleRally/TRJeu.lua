@@ -1,4 +1,4 @@
-print("LOAD jeu v0.19")
+print("LOAD jeu v0.20")
 os.loadAPI("ahb")
 os.loadAPI("config")
 os.loadAPI("joueur")
@@ -106,7 +106,7 @@ function jeu()
 					map.actionTapis()
 					os.sleep(1)
 					laser.tires()
-					os.sleep(2)
+					os.sleep(0.7)
 					joueur.tires()
 					
 				end
@@ -115,7 +115,7 @@ function jeu()
 				--print("  RETOUR A LA VIE")
 				joueur.retourAlavie(ordre)
 			else
-				os.sleep(3)
+				os.sleep(1)
 			end
 		end
 	end
