@@ -1,4 +1,4 @@
-print("LOAD joueur v1.53")
+print("LOAD joueur v1.54")
 liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -137,12 +137,12 @@ function tires()
 				
 					calx,caly=calculPlusUn(liste[idJoueur].position.x,liste[idJoueur].position.y,liste[idJoueur].direction,0.5)					
 					laser.tire(calx,caly,liste[idJoueur].direction)
-					os.sleep(0.5)
+					os.sleep(1)
 				end
 			end
 		end
 	end
-	os.sleep(1)
+	os.sleep(2)
 end
 function calculPlusUn(x,y,direction)
 	if direction=="MY" then
