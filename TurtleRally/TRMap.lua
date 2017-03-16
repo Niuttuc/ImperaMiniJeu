@@ -1,11 +1,11 @@
-print("LOAD Map v0.40")
+print("LOAD Map v0.41")
 local tapis={}
 local plaques={}
 local maps={}
 for x=0, config.get("tailleX")+1 do
 	maps[x]={}
 	for y=0, config.get("tailleY")+1 do
-		if x==0 or x==config.get("tailleX")+1 or y==0 or y==config.get("tailleY")+1 then$
+		if x==0 or x==config.get("tailleX")+1 or y==0 or y==config.get("tailleY")+1 then
 			maps[x][y]="trou"
 		else
 			maps[x][y]="libre"

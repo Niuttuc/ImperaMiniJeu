@@ -1,4 +1,4 @@
-print("LOAD joueur v1.40")
+print("LOAD joueur v1.41")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -190,8 +190,8 @@ function tires()
 						end
 					end
 					
-					
-					laser.pp.tire(config.get('x'),config.get('y'),config.get('z'),tireDirection,1)
+					print(tireX..' '..tireY..' '..tireZ..' '..tireDirection)
+					laser.pp.tire(tireX,tireY,tireZ,tireDirection,1)
 					-- LANCER LE TIRE ICI
 					boucle=true
 					while boucle do
@@ -503,7 +503,7 @@ function retourAlavie(ordre)
 					liste[idJoueur].position.x=x
 					liste[idJoueur].position.y=y
 					liste[idJoueur].direction=orientation
-					modem.pp.transmit(liste[idJoueur].couleur,84,{"onboard",{x=x,y=y,direction=liste[idJoueur].direction}}})					
+					modem.pp.transmit(liste[idJoueur].couleur,84,{"onboard",{x=x,y=y,direction=liste[idJoueur].direction}})					
 					os.sleep(1)
 					enAttente=enAttente+1
 					liste[idJoueur].turtlePret=false
