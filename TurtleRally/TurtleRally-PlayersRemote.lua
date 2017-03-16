@@ -4,6 +4,10 @@ color=colors[colorString]
 modem.open(color+1)
 xmax,ymax=term.getSize()
 
+if fs.exists('Tirage') then
+	fs.delete('Tirage')
+end
+
 os.loadAPI('ahb')
 os.loadAPI('windows')
 os.loadAPI('choices')
@@ -70,6 +74,7 @@ function actuDonne(data)
 	end
 end
 local derTirage={}
+
 function tirage(data)
 	preActions=data.actions
 	mesActions={}
@@ -96,6 +101,9 @@ function tirage(data)
 	end
 	actuAffichage(true)
 end
+function forcage()
+	
+end
 function choixClic(x,y)
 	local continue=true
 	if y>8 then
@@ -119,14 +127,18 @@ function choixClic(x,y)
 			end
 		else
 			if y-8<=#derTirage then
-				table.insert(mesActions,derTirage[y-8])
-				table.remove(derTirage,y-8)
+				if derTirage[y-8] then
+					table.insert(mesActions,derTirage[y-8])
+					table.remove(derTirage,y-8)
+				end
 			end
 		end
 	else
 		if y-2<=#mesActions then
-			table.insert(derTirage,mesActions[y-2])
-			table.remove(mesActions,y-2)
+			if mesActions[y-8] then
+				table.insert(derTirage,mesActions[y-2])
+				table.remove(mesActions,y-2)
+			end
 		end
 	end
 	actuAffichage(continue)
@@ -136,6 +148,7 @@ function choixClic(x,y)
 		thingsToDo={os.pullEvent,'modem_message'}
 	end
 end
+
 function actuAffichage(continue)
 	affWin(windows.playWindow)
 	windows.playWindow.clear()
@@ -224,6 +237,15 @@ while true do
 				affWin(windows.leaveGame)				
 			end
 			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,1,xmax,ymax,join}}
+		elseif message.action=="CHOIXIMPOSER" then
+			forcage()
+			thingsToDo={os.pullEvent,'modem_message'}
+		elseif message.action=="TIME" then
+			countDown.clear()
+			countDown.setCursorPos(2,1)
+			countDown.write(message.time)
+			affWin(countDown)			
+			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,3,xmax,ymax,choixClic}}
 		elseif message.action=="WAIT" then
 			affWin(windows.waitingScreen)
 			thingsToDo={os.pullEvent,'modem_message'}
