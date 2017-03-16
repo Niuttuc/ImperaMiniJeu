@@ -13,10 +13,11 @@ os.loadAPI('windows')
 os.loadAPI('choices')
 os.loadAPI('sync')
 os.loadAPI('clicAPI')
+version='1.0'
 local coeur=0
 local vie=0
 local checkpoint=0
-local mesActions={}
+mesActions={}
 local preActions={}
 local tours={-1,-1,-1,-1,-1}
 function affWin(win)
@@ -256,14 +257,12 @@ while true do
 			windows.countDown.clear()
 			windows.countDown.setCursorPos(2,1)
 			windows.countDown.write('0')
-			affWin(windows.countDown)
 			forcage()
 			thingsToDo={os.pullEvent,'modem_message'}
 		elseif message.action=="TIME" then
 			windows.countDown.clear()
 			windows.countDown.setCursorPos(2,1)
 			windows.countDown.write(message.t)
-			affWin(windows.countDown)			
 			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,3,xmax,ymax,choixClic}}
 		elseif message.action=="WAIT" then
 			affWin(windows.waitingScreen)
