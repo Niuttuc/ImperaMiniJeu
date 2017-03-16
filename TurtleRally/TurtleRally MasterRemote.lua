@@ -6,13 +6,13 @@ selectedCommand={}
 starts={}
 for i=1,6 do
 	if i%2==0 then
-		starts[i]={x=2*i,y=16}
+		starts[i]={x=2*i,y=16,direction='MY'}
 	else
-		starts[i]={x=2*i,y=17}
+		starts[i]={x=2*i,y=17,direction='MY'}
 	end
 end
 
-checkpoints={{x=9,y=2},{x=3,y=4},{x=13,y=6},{x=8,y=9}}
+checkpoints={{x=9,y=2,direction='MX'},{x=3,y=4,direction='MX'},{x=13,y=6,direction='MY'},{x=8,y=9,direction='MY'}}
 xmax,ymax=term.getSize()
 function center(texte,mon,y)
 	xmax=mon.getSize()
@@ -69,7 +69,10 @@ function move(turtles)
 			term.setCursorPos(1,3)
 			term.write('y=')
 			y=read()
-			sendMess(color[i],{'bouge',{x=tonumber(x),y=tonumber(y)}})
+			term.setCursorPos(1,4)
+			term.write('Direction=')
+			dir=read()
+			sendMess(color[i],{'bouge',{x=tonumber(x),y=tonumber(y),direction=string.upper(dir)}})
 		end
 	end
 	return true
