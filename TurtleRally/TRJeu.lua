@@ -1,4 +1,4 @@
-print("LOAD jeu v0.16")
+print("LOAD jeu v0.17")
 os.loadAPI("ahb")
 os.loadAPI("config")
 os.loadAPI("joueur")
@@ -34,6 +34,7 @@ function ecoute()
 		end
 	end
 end
+actions={}
 function jeu()
 	while true do
 		config.set("etapeTelecommande","JOIN")
@@ -50,7 +51,7 @@ function jeu()
 			print("===============================")
 			local ordre=joueur.tirageOrdre()
 			config.set("etapeTelecommande","CHOIX")
-			local actions=joueur.demandeChoix()
+			actions=joueur.demandeChoix()
 			config.set("etapeTelecommande","TOUR")
 			
 			--print("Action TOUTES RECU")
