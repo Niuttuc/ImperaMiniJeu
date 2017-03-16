@@ -1,4 +1,4 @@
-print("Turtle charge version Git v3.2")
+print("Turtle charge version Git v3.3")
 modem=peripheral.find('modem')
 compass=peripheral.find('compass')
 color=colors[string.lower(string.sub(os.getComputerLabel(),7,-1))] --recuperation de la couleur associe a la turtle dans son label
@@ -320,9 +320,9 @@ function waitForModem()
 				if type(mess[i])=='string' then
 					mess[i]=string.lower(mess[i])
 				elseif type(mess[i])=='table' then
-					for j=1,#mess[i] do
-						if type(mess[i][j])=='string' then
-							mess[i][j]=string.lower(mess[i][j])
+					for k,v in pairs(mess[i]) do
+						if type(v)=='string' then
+							mess[i][k]=string.lower(v)
 						end
 					end
 				end
