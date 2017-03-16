@@ -296,7 +296,6 @@ function demandeChoix2timer()
 			else
 				for idJoueurTemp=1,#liste do
 					if liste[idJoueurTemp].actif and not(liste[idJoueurTemp].dodo) then
-						print('TIME '..idJoueurTemp)
 						affichageTC(idJoueur,{action="TIME",t=timeTime})
 					end
 				end	

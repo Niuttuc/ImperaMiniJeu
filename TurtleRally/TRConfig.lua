@@ -1,4 +1,4 @@
-print("LOAD Config v0.41")
+print("LOAD Config v0.42")
 
 local config=ahb.config("TR",{
 	ecran={typ="side",info="Ecran principal"},
@@ -147,10 +147,10 @@ function mapDef()
 	
 	-- FINIR PAR LES TAPIS, LES ENREGISTRER DANS L'ORDRE D'ACTIVATION
 	-- X Y TAPIS {mx=Mouvement en x,my=Mouvement en y,rot="non" ou "clockTurn" ou "trigoTurn"}
-	map.add(2,2,"tapis",{mx=1,my=0,rot="trigoTurn"})
-	map.add(3,2,"tapis",{mx=0,my=-1,rot="trigoTurn"})
-	map.add(2,3,"tapis",{mx=-1,my=0,rot="trigoTurn"})
-	map.add(3,3,"tapis",{mx=0,my=1,rot="trigoTurn"})
+	map.add(2,2,"tapis",{mx=0,my=1,rot="trigoTurn"})
+	map.add(3,2,"tapis",{mx=-1,my=0,rot="trigoTurn"})
+	map.add(2,3,"tapis",{mx=1,my=0,rot="trigoTurn"})
+	map.add(3,3,"tapis",{mx=0,my=-1,rot="trigoTurn"})
 	
 	map.add(7,6,"tapis",{mx=0,my=-1,rot="trigoTurn"})
 	map.add(7,5,"tapis",{mx=1,my=0,rot="clockTurn"})
