@@ -1,4 +1,4 @@
-print("LOAD Map v0.44")
+print("LOAD Map v0.45")
 local tapis={}
 local plaques={}
 local maps={}
@@ -134,10 +134,9 @@ end
 function actionTapis()
 	local redstoneNormal=redstone.getBundledOutput(config.get("redstone"))
 	redstone.setBundledOutput(config.get("redstone"),redstoneNormal+config.get("couleurTapis"))
-	
+	joueur.itapisReset()
 	for iTapis=1, #tapis do
-		local idJoueur=joueur.presentGetId(tapis[iTapis].x,tapis[iTapis].y)
-		joueur.itapisReset()
+		local idJoueur=joueur.presentGetId(tapis[iTapis].x,tapis[iTapis].y)		
 		if not(idJoueur==-1) then
 			if joueur.itapis(idJoueur) then
 				print("ROT "..tapis[iTapis].rot)
