@@ -132,8 +132,9 @@ function get(x,y)
 	return maps[x][y]
 end
 function actionTapis()
-	local redstoneNormal=redstone.getBundledOutput(config.get("redstone"))
-	redstone.setBundledOutput(config.get("redstone"),redstoneNormal+config.get("couleurTapis"))
+	--local redstoneNormal=redstone.getBundledOutput(config.get("redstone"))
+	redstoneNormal=0
+	redstone.setBundledOutput(config.get("redstone2"),redstoneNormal+config.get("couleurTapis"))
 	joueur.itapisReset()
 	for iTapis=1, #tapis do
 		local idJoueur=joueur.presentGetId(tapis[iTapis].x,tapis[iTapis].y)		
@@ -150,7 +151,7 @@ function actionTapis()
 		end
 	end
 	
-	redstone.setBundledOutput(config.get("redstone"),redstoneNormal+config.get("couleurPlaque"))
+	redstone.setBundledOutput(config.get("redstone2"),redstoneNormal+config.get("couleurPlaque"))
 	
 	for iPlaque=1, #plaques do
 		local idJoueur=joueur.presentGetId(plaques[iPlaque].x,plaques[iPlaque].y)
@@ -159,7 +160,7 @@ function actionTapis()
 		end
 	end
 	
-	redstone.setBundledOutput(config.get("redstone"),redstoneNormal)
+	redstone.setBundledOutput(config.get("redstone2"),redstoneNormal)
 	
 	etape.verif()	
 end

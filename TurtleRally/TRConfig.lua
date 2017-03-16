@@ -1,9 +1,10 @@
-print("LOAD Config v0.40")
+print("LOAD Config v0.41")
 
 local config=ahb.config("TR",{
 	ecran={typ="side",info="Ecran principal"},
 	modem={typ="side",info="Modem WIFI"},
 	redstone={typ="side",info="Redstone pour mur"},
+	redstone2={typ="side",info="Redstone pour tapis/plauqe"},
 	couleurTapis={typ="couleur",info="Couleur tapis"},
 	couleurPlaque={typ="couleur",info="Couleur tapis"},
 	laser={typ="side",info="Laser"},
