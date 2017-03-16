@@ -1,4 +1,4 @@
-print("LOAD joueur v1.44")
+print("LOAD joueur v1.45")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -260,6 +260,12 @@ function actifs()
 	return qte
 end
 function lancementGame()
+	ecran.pp.clear()
+	for idJoueur=1,#liste do
+		if liste[idJoueur].actif then
+			liste[idJoueur].ligne.redraw()
+		end
+	end
 	for idJoueur=1,#liste do
 		if liste[idJoueur].actif then
 			liste[idJoueur].vie=config.get("vie")
@@ -653,6 +659,7 @@ end
 function itapisOff(idJoueur)
 	liste[idJoueur].tapisOk=false
 end
+
 function tirageDepart()
 	-- Tirage depart
 	local joueurTirage={}
