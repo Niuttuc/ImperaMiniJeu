@@ -1,4 +1,4 @@
-print("LOAD joueur v1.54")
+print("LOAD joueur v1.55")
 liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -142,7 +142,6 @@ function tires()
 			end
 		end
 	end
-	os.sleep(2)
 end
 function calculPlusUn(x,y,direction)
 	if direction=="MY" then

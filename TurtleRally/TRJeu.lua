@@ -1,4 +1,4 @@
-print("LOAD jeu v0.18")
+print("LOAD jeu v0.19")
 os.loadAPI("ahb")
 os.loadAPI("config")
 os.loadAPI("joueur")
@@ -91,9 +91,10 @@ function jeu()
 									else
 										joueur.afficherInfo(idJoueur,"Tour "..tour.." "..choices[actions[idJoueur][tour]].nomListe..infoEnPlus,colors.red)
 										joueur.affichageTC(idJoueur,{action="infoTour",tour=tour,status=false})
-										os.sleep(0.5)
 									end
+									
 								end
+								os.sleep(0.8)
 							else
 								joueur.affichageTC(idJoueur,{action="infoTour",tour=tour,status=false})
 							end
@@ -103,13 +104,18 @@ function jeu()
 				if config.get("partie") then
 					--print("  ACTION TAPIS, PLAQUE, TIR ;)")
 					map.actionTapis()
+					os.sleep(1)
 					laser.tires()
+					os.sleep(2)
 					joueur.tires()
+					
 				end
 			end
 			if config.get("partie") then
 				--print("  RETOUR A LA VIE")
 				joueur.retourAlavie(ordre)
+			else
+				os.sleep(3)
 			end
 		end
 	end
