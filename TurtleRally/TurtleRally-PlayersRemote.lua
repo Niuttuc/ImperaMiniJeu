@@ -73,17 +73,26 @@ local derTirage={}
 function tirage(data)
 	preActions=data.actions
 	mesActions={}
-	local tirageA={}
-	for k,v in pairs(choices) do
-		for i=1, v.weight do
-			table.insert(tirageA,k)
+	if fs.exists('Tirage') then
+		file=fs.open('Tirage','r')
+		derTirage=textutils.unserialize(file.readAll())
+		file.close()
+	else
+		local tirageA={}
+		for k,v in pairs(choices) do
+			for i=1, v.weight do
+				table.insert(tirageA,k)
+			end
 		end
-	end
-	derTirage={}
-	for i=1, coeur do
-		index=math.random(#tirageA)
-		table.insert(derTirage,tirageA[index])
-		table.remove(tirageA,index)
+		derTirage={}
+		for i=1, coeur do
+			index=math.random(#tirageA)
+			table.insert(derTirage,tirageA[index])
+			table.remove(tirageA,index)
+		end
+		file=fs.open('Tirage','w')
+		file.write(textutils.serialize(derTirage))
+		file.close()
 	end
 	actuAffichage(true)
 end
@@ -105,6 +114,9 @@ function choixClic(x,y)
 			end
 			modem.transmit(84,color+1,{actions=mesActions,dodo=dodo})
 			continue=false
+			if fs.exists('Tirage') then
+				fs.delete('Tirage')
+			end
 		else
 			if y-8<=#derTirage then
 				table.insert(mesActions,derTirage[y-8])
