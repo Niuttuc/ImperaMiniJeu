@@ -101,20 +101,18 @@ function tirage(data)
 	end
 	actuAffichage(true)
 end
-function forcage()
-	if coeur<5 then
-		for i=1,5 do
-			if coeur>=i then
-				if not(mesActions[i]) then
-					index=math.random(#derTirage)
-					mesActions[i]=derTirage[index]
-					table.remove(derTirage,index)					
-				end
-			else
-				mesActions[i]=preActions[i]
+function forcage()	
+	for i=1,5 do
+		if coeur>=i then
+			if not(mesActions[i]) then
+				index=math.random(#derTirage)
+				mesActions[i]=derTirage[index]
+				table.remove(derTirage,index)					
 			end
+		else
+			mesActions[i]=preActions[i]
 		end
-	end
+	end	
 	modem.transmit(84,color+1,{actions=mesActions,dodo=false})
 	if fs.exists('Tirage') then
 		fs.delete('Tirage')

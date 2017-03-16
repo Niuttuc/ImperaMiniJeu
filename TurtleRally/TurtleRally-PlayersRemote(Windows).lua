@@ -87,7 +87,7 @@ for i=1,5 do
 	separateColumn.write(i)
 end
 
-countDown=window.create(playWindow,1,ymax-1,4,1,false)
+countDown=window.create(playWindow,1,ymax-1,4,1,true)
 countDown.setBackgroundColor(colors.black)
 countDown.setTextColor(colors.white)
 countDown.clear()
