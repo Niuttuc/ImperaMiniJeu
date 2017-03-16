@@ -18,7 +18,7 @@ os.loadAPI('choices')
 os.loadAPI('sync')
 os.loadAPI('clicAPI')
 
-windows.affVersion(' v1.1 ')
+windows.affVersion(' v1.2 ')
 
 local coeur=0
 local vie=0
@@ -157,7 +157,7 @@ function choixClic(x,y)
 		end
 	else
 		if y-2<=#mesActions then
-			if mesActions[y-8] then
+			if mesActions[y-2] then
 				table.insert(derTirage,mesActions[y-2])
 				table.remove(mesActions,y-2)
 			end

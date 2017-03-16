@@ -1,4 +1,4 @@
-print("LOAD joueur v1.49")
+print("LOAD joueur v1.50")
 liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -245,6 +245,7 @@ function afficherInfo(idJoueur,info,couleur)
 	liste[idJoueur].affInfo.setCursorPos(2,1)
 	liste[idJoueur].affInfo.write(info)
 end
+local choixRetour={}
 function renvoiDemandeChoix(couleur)
 	for idJoueurTemp=1,#liste do
 		if liste[idJoueurTemp].couleur==couleur then
@@ -275,7 +276,8 @@ end
 function demandeChoix()
 	timerActif=false
 	timeTime=30
-	return parallel.waitForAny(demandeChoix2timer,demandeChoix2)
+	parallel.waitForAny(demandeChoix2timer,demandeChoix2)
+	return choixRetour
 end
 function demandeChoix2timer()
 	local idJoueurTemp
@@ -363,7 +365,7 @@ function demandeChoix2()
 			end
 		end
 	end
-	return retour
+	choixRetour=retour
 end
 function renvoiJoin(couleur)
 	for idJoueur=1,#liste do
