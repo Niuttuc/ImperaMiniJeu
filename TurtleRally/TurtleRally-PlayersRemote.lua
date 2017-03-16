@@ -1,8 +1,12 @@
+version='1.0'
 modem=peripheral.find('modem')
 colorString=string.lower(string.sub(os.getComputerLabel(),7,-1))
 color=colors[colorString]
 modem.open(color+1)
 xmax,ymax=term.getSize()
+
+
+
 
 if fs.exists('Tirage') then
 	fs.delete('Tirage')
@@ -13,7 +17,7 @@ os.loadAPI('windows')
 os.loadAPI('choices')
 os.loadAPI('sync')
 os.loadAPI('clicAPI')
-version='1.0'
+
 local coeur=0
 local vie=0
 local checkpoint=0

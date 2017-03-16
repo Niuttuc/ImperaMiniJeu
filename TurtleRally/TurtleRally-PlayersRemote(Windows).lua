@@ -18,6 +18,12 @@ beforeGame.blit('   la  ','fffffff','eeeeeee')
 beforeGame.setCursorPos(xmax-6, 3)
 beforeGame.blit(' partie','fffffff','eeeeeee')
 
+fversion=window.create(beforeGame,xmax-5,ymax,5,1,true)
+fversion.setBackgroundColor(colors.black)
+fversion.setTextColor(colors.white)
+fversion.clear()
+fversion.write(version)
+
 
 
 
@@ -47,6 +53,7 @@ leaveGame.clear()
 ahb.center('Cliquer',leaveGame,math.floor(ymax/2)-1)
 ahb.center("pour rejoindre",leaveGame,math.floor(ymax/2))
 ahb.center("le jeu",leaveGame,math.floor(ymax/2)+1)
+
 
 gameInProgress=window.create(term.current(),1,1,xmax,ymax,false)
 
@@ -87,10 +94,16 @@ for i=1,5 do
 	separateColumn.write(i)
 end
 
-countDown=window.create(playWindow,1,ymax-1,4,1,true)
+countDown=window.create(playWindow,1,ymax,4,1,true)
 countDown.setBackgroundColor(colors.black)
 countDown.setTextColor(colors.white)
 countDown.clear()
+
+fversion=window.create(playWindow,xmax-5,ymax,5,1,true)
+fversion.setBackgroundColor(colors.black)
+fversion.setTextColor(colors.white)
+fversion.clear()
+fversion.write(version)
 
 validerBouton=window.create(playWindow,math.floor(xmax/2)-5,9,11,3,true)
 validerBouton.setBackgroundColor(colors.white)
