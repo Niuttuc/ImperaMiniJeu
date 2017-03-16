@@ -1,4 +1,4 @@
-print("Turtle charge version Git v3.3")
+print("Turtle charge version Git v3.4")
 modem=peripheral.find('modem')
 compass=peripheral.find('compass')
 color=colors[string.lower(string.sub(os.getComputerLabel(),7,-1))] --recuperation de la couleur associe a la turtle dans son label
@@ -26,7 +26,7 @@ for k,v in pairs(card) do							--On calcule les directions qui nous manque
 	end
 end
 cardPlateau={[px]=1,[py]=2,[mx]=3,[my]=4}
-cardNamePlateau={px=px,py=py,my=mx,my=my}
+cardNamePlateau={px=px,py=py,mx=mx,my=my}
 
 --Forme des coordonnees: {x=coordonee en x relatif,y=coordonee en y relatif}
 --L'entree du garage doit etre libre d'acces selon l'AXE DES Y et un niveau au dessus du plateau
