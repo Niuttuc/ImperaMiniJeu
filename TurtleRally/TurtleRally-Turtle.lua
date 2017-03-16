@@ -319,6 +319,12 @@ function waitForModem()
 			for i=1,#mess do
 				if type(mess[i])=='string' then
 					mess[i]=string.lower(mess[i])
+				elseif type(mess[i])=='table' then
+					for j=1,#mess[i] do
+						if type(mess[i][j])=='string' then
+							mess[i][j]=string.lower(mess[i][j])
+						end
+					end
 				end
 			end
 		end
