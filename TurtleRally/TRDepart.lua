@@ -1,7 +1,7 @@
 print("LOAD Depart v0.04")
 departs={}
-function add(x,y,idPeri,idTurtle)
-	table.insert(departs,{x=x,y=y,numero=0,ecran=ahb.addPeripheral(idPeri),idTurtle=idTurtle})
+function add(x,y,idPeri,idTurtle,orientation)
+	table.insert(departs,{x=x,y=y,orientation=orientation,numero=0,ecran=ahb.addPeripheral(idPeri),idTurtle=idTurtle})
 end
 function total()
 	return #departs
@@ -14,12 +14,12 @@ function def(idDepart,idJoueur,couleur,actif)
 		departs[idDepart].ecran.pp.setBackgroundColour(colors.black)
 	end
 	departs[idDepart].ecran.pp.clear()
-	return departs[idDepart].x, departs[idDepart].y
+	return departs[idDepart].x, departs[idDepart].y, departs[idDepart].orientation
 end
 function joueur(idJoueur)
 	for idDepart=1,#departs do 
 		if departs[idDepart].idJoueur==idJoueur then
-			return departs[idDepart].x, departs[idDepart].y
+			return departs[idDepart].x, departs[idDepart].y, departs[idDepart].orientation
 		end
 	end
 end

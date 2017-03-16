@@ -16,6 +16,7 @@ fc={
 	end,
 	damageself=function(idJoueur) 
 		joueur.degat(idJoueur)
+		joueur.degat(idJoueur)
 	end,
 	reroll=function(idJoueur)
 		tirageAll()

@@ -1,4 +1,4 @@
-print("LOAD Etape v0.03")
+print("LOAD Etape v0.05")
 function tirage()
 	etapesTirage={}
 	for etapesI=1, #etapes do
@@ -19,13 +19,13 @@ function tirage()
 	end
 end
 etapes={}
-function add(x,y,id)
-	table.insert(etapes,{x=x,y=y,numero=0,ecran=ahb.addPeripheral(id)})
+function add(x,y,id,orientation)
+	table.insert(etapes,{x=x,y=y,orientation=orientation,numero=0,ecran=ahb.addPeripheral(id)})
 end
 function coord(numero)
 	for iEt=1,#etapes do
 		if etapes[iEt].numero==numero then
-			return etapes[iEt].x, etapes[iEt].y
+			return etapes[iEt].x, etapes[iEt].y, etapes[iEt].orientation
 		end
 	end
 end

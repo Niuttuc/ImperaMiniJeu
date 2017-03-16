@@ -1,4 +1,4 @@
-print("LOAD joueur v1.35")
+print("LOAD joueur v1.37")
 local liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -79,7 +79,6 @@ function tourne(idJoueur,action)
 			boucle=false
 		end
 	end
-	print("Fin tourne")
 end
 function deplacement(idJoueur,x,y,pousseJoueur,mode)
 	local reussi=true
@@ -89,7 +88,6 @@ function deplacement(idJoueur,x,y,pousseJoueur,mode)
 				local joueurPousser=joueur.trouver(x,y)
 				local pousseReussi=deplacement(joueurPousser,x+(x-liste[idJoueur].position.x),y+(y-liste[idJoueur].position.y),false)
 				if pousseReussi then
-					print("Joueur"..liste[joueurPousser].nom.." pousser")
 				else
 					joueur.degat(joueurPousser)			
 					return false, liste[idJoueur].coeur
@@ -105,7 +103,6 @@ function deplacement(idJoueur,x,y,pousseJoueur,mode)
 			joueur.degat(idJoueur)
 		end
 		if reussi then
-			print("Joueur"..liste[idJoueur].nom.." avance en "..x.." "..y)
 			modem.pp.transmit(liste[idJoueur].couleur,84,{"bouge",{x=x,y=y}})
 			local boucle=true
 			while boucle do
@@ -124,7 +121,6 @@ function deplacement(idJoueur,x,y,pousseJoueur,mode)
 	else
 		return false, liste[idJoueur].coeur
 	end
-	print("Envoi de "..tostring(reussi))
 	return reussi, liste[idJoueur].coeur
 end
 function tires()
@@ -134,30 +130,32 @@ function tires()
 	local boucle=true
 	for idJoueur=1,#liste do
 		if liste[idJoueur].actif then
-			if not(liste[idJoueur].coeur==0) then
-				calx=liste[idJoueur].position.x
-				caly=liste[idJoueur].position.y
-				-- LANCER LE TIRE ICI
-				boucle=true
-				while boucle do
-					calx,caly=calculPlusUn(calx,caly,liste[idJoueur].direction)
-					if map.inmap(calx,caly) then
-						toucher=presentGetId(calx,caly)
-						if toucher==-1 then
-							case=map.get(calx,caly)
-							libre, ldegat=map.preAction(case,calx,caly) 
-							if not(libre) then
+			if not(liste[idJoueur].dodo) then
+				if not(liste[idJoueur].coeur==0) then
+					calx=liste[idJoueur].position.x
+					caly=liste[idJoueur].position.y
+					-- LANCER LE TIRE ICI
+					boucle=true
+					while boucle do
+						calx,caly=calculPlusUn(calx,caly,liste[idJoueur].direction)
+						if map.inmap(calx,caly) then
+							toucher=presentGetId(calx,caly)
+							if toucher==-1 then
+								case=map.get(calx,caly)
+								libre, ldegat=map.preAction(case,calx,caly) 
+								if not(libre) then
+									boucle=false
+								end
+							else
+								joueur.degat(toucher)
 								boucle=false
 							end
 						else
-							joueur.degat(toucher)
 							boucle=false
 						end
-					else
-						boucle=false
 					end
+					os.sleep(0.1)
 				end
-				os.sleep(0.1)
 			end
 		end
 	end
@@ -265,7 +263,6 @@ function renvoiDemandeChoix(couleur)
 	end
 	if liste[idJoueur].actif then
 		if #liste[idJoueur].actions==5 then
-			print("WAITPLAYER")
 			affichageTC(idJoueur,{action="WAITPLAYER",actions=liste[idJoueur].actions})
 		else
 			if liste[idJoueur].dodo then
@@ -312,7 +309,6 @@ function demandeChoix()
 					idJoueur=idJoueurTemp
 				end
 			end
-			print("Action "..idJoueur)
 			if not(idJoueur==-1) then
 				if type(message)=='table' then
 					if #message.actions==5 then
@@ -332,7 +328,6 @@ function demandeChoix()
 					end
 				end
 			end
-			print("Joueur actif "..total.." Nombre de joueur pret "..nbPret)
 		end
 	end
 	return retour
@@ -358,16 +353,13 @@ function attenteInscription()
 					idJoueur=idJoueurTemp
 				end
 			end
-			print("inscription "..idJoueur)
 			if idJoueur~=-1 then
 				if liste[idJoueur].actif then
 					liste[idJoueur].actif=false	
 					joueur.affichageTC(idJoueur,{action="JOIN"})
-					print("Envoi JOIN")
 				else
 					liste[idJoueur].actif=true
 					joueur.affichageTC(idJoueur,{action="LOBBY"})
-					print("Envoi LOBBY")
 				end
 				local cursY=2
 				fenetre.clear()
@@ -443,20 +435,17 @@ function retourAlavie(ordre)
 					liste[idJoueur].coeur=config.get("coeur")
 					actuCoeurAff(idJoueur)
 					if liste[idJoueur].checkpoint==0 then
-						x, y=depart.joueur(idJoueur)
-						liste[idJoueur].position.x=x
-						liste[idJoueur].position.y=y				
+						x, y, orientation=depart.joueur(idJoueur)			
 					else
-						x, y=etape.coord(liste[idJoueur].checkpoint)
+						x, y, orientation=etape.coord(liste[idJoueur].checkpoint)
 						if present(x,y) then
-							x, y=depart.joueur(idJoueur)
+							x, y, orientation=depart.joueur(idJoueur)
 						end
-						liste[idJoueur].position.x=x
-						liste[idJoueur].position.y=y
 					end
-					print("onboard "..x.." "..y)
+					liste[idJoueur].position.x=x
+					liste[idJoueur].position.y=y
 					modem.pp.transmit(liste[idJoueur].couleur,84,{"onboard",{x=x,y=y}})
-					liste[idJoueur].direction="MY"
+					liste[idJoueur].direction=orientation
 					os.sleep(1)
 					enAttente=enAttente+1
 					liste[idJoueur].turtlePret=false
@@ -486,7 +475,6 @@ function retourAlavie(ordre)
 				end				
 			end
 		end
-		print("Plus que "..enAttente)
 	end
 end
 function actuCoeurAff(idJoueur)
@@ -507,17 +495,34 @@ function heal(idJoueur)
 	affichageTC(idJoueur,{action="INFO"})
 end
 function degatAll(idJoueurImu)
-	print("Degat pour tous sauf "..idJoueurImu)
+	local mini=0
 	for idJoueur=1,#liste do
 		if liste[idJoueur].actif then
 			if idJoueur~=idJoueurImu then
-				joueur.degat(idJoueur)
+				mini=math.min(mini,liste[idJoueur].checkpoint)
+			end
+		end
+	end
+	for idJoueur=1,#liste do
+		if liste[idJoueur].actif then
+			if idJoueur~=idJoueurImu then
+				degats=1+((liste[idJoueur].checkpoint-mini)*3)
+				if degats>=liste[idJoueur].coeur then
+					degats=liste[idJoueur].coeur-2
+				end
+				joueur.degat(idJoueur,degats)
 			end
 		end
 	end
 end
-function degat(idJoueur)
-	liste[idJoueur].coeur=liste[idJoueur].coeur-1
+function degat(idJoueur,cb)
+	if cb==nil then
+		cb=1
+	end
+	if cb<0 then
+		cb=0
+	end
+	liste[idJoueur].coeur=liste[idJoueur].coeur-cb
 	if liste[idJoueur].coeur<0 then liste[idJoueur].coeur=0 end
 	if liste[idJoueur].coeur==0 then
 		mort(idJoueur)
@@ -550,7 +555,7 @@ function tirageOrdre()
 			table.insert(joueurTirage,idJoueur)
 		end
 	end
-	
+	ecran.pp.clear()
 	for i=1, #joueurTirage do
 		index=math.random(#joueurTirage)
 		idJoueur=joueurTirage[index]
@@ -562,9 +567,6 @@ function tirageOrdre()
 	return retour
 end
 function passageEtape(idJoueur,numero)
-	print("etape")
-	print(idJoueur)
-	print(numero)
 	if liste[idJoueur].checkpoint==numero-1 then
 		liste[idJoueur].checkpoint=numero
 	end
@@ -584,8 +586,8 @@ function tirageDepart()
 	for idDepart=1, depart.total() do
 		index=math.random(#joueurTirage)
 		idJoueur=joueurTirage[index]
-		local x, y=depart.def(idDepart,idJoueur,liste[idJoueur].couleur,liste[idJoueur].actif)
-		liste[idJoueur].direction="MY"
+		local x, y, orientation=depart.def(idDepart,idJoueur,liste[idJoueur].couleur,liste[idJoueur].actif)
+		liste[idJoueur].direction=orientation
 		liste[idJoueur].position.x=x
 		liste[idJoueur].position.y=y
 		liste[idJoueur].idDepart=idDepart
@@ -599,7 +601,6 @@ function tirageDepart()
 			modem.pp.transmit(liste[idJoueur].couleur,84,"home")
 		end
 	end
-	print("Attente de "..enAttente.." turtle")
 	while enAttente~=0 do
 		enAttente=0
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")
@@ -615,6 +616,5 @@ function tirageDepart()
 				end				
 			end
 		end
-		print("Plus que "..enAttente)
 	end
 end
