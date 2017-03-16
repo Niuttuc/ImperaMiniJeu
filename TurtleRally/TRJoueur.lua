@@ -1,9 +1,8 @@
-print("LOAD joueur v1.50")
+print("LOAD joueur v1.51")
 liste={}
 local ecran=config.ecran()
 local modem=config.modem()
 local fenetre,taille=0
-local laser=ahb.addPeripheral(config.get("laser"))
 function configFenetre(fenetreC,tailleC)
 	fenetre=fenetreC
 	taille=tailleC
