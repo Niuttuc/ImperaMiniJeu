@@ -255,17 +255,17 @@ while true do
 			end
 			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,1,xmax,ymax,join}}
 		elseif message.action=="CHOIXIMPOSER" then
-			countDown.clear()
-			countDown.setCursorPos(2,1)
-			countDown.write('0')
-			affWin(countDown)
+			windows.countDown.clear()
+			windows.countDown.setCursorPos(2,1)
+			windows.countDown.write('0')
+			affWin(windows.countDown)
 			forcage()
 			thingsToDo={os.pullEvent,'modem_message'}
 		elseif message.action=="TIME" then
-			countDown.clear()
-			countDown.setCursorPos(2,1)
-			countDown.write(message.t)
-			affWin(countDown)			
+			windows.countDown.clear()
+			windows.countDown.setCursorPos(2,1)
+			windows.countDown.write(message.t)
+			affWin(windows.countDown)			
 			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,3,xmax,ymax,choixClic}}
 		elseif message.action=="WAIT" then
 			affWin(windows.waitingScreen)
@@ -280,7 +280,7 @@ while true do
 			affWin(windows.gameInProgress)
 			thingsToDo={os.pullEvent,'modem_message'}
 		elseif message.action=="CHOIX" then
-			countDown.clear()
+			windows.countDown.clear()
 			tours={-1,-1,-1,-1,-1}
 			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,3,xmax,ymax,choixClic}}
 			actuDonne(message)
