@@ -345,7 +345,9 @@ function demandeChoix2()
 						retour[idJoueur]=message.actions
 						afficherInfo(idJoueur,"PRET",colors.white)
 						affichageTC(idJoueur,{action="WAITPLAYER",actions=liste[idJoueur].actions})
-						timerActif=true
+						if timeTime~=0 then
+							timerActif=true
+						end
 					end
 				end
 			end
