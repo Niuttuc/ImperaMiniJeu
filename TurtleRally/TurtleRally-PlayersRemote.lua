@@ -18,7 +18,7 @@ os.loadAPI('choices')
 os.loadAPI('sync')
 os.loadAPI('clicAPI')
 
-windows.affVersion(' v1.4 ')
+windows.affVersion(' v1.5 ')
 
 local coeur=0
 local vie=0
@@ -274,7 +274,7 @@ while true do
 			if actionEnvoyer then
 				thingsToDo={os.pullEvent,'modem_message'}
 			else
-				hingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,3,xmax,ymax,choixClic}}
+				thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,3,xmax,ymax,choixClic}}
 			end
 		elseif message.action=="WAIT" then
 			affWin(windows.waitingScreen)
