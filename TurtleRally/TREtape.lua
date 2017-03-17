@@ -1,26 +1,41 @@
-print("LOAD Etape v0.05")
+print("LOAD Etape v0.06")
+local etapesTirage={}
+function tirage2(numero)
+	index=math.random(#etapesTirage)
+	iEtape=etapesTirage[index]
+	etapes[iEtape].numero=numero
+	if numero>config.get("etape") then
+		etapes[iEtape].numero=""
+	end
+	table.remove(etapesTirage,index)
+	
+	etapes[iEtape].ecran.pp.clear()
+	etapes[iEtape].ecran.pp.setTextScale(5)
+	etapes[iEtape].ecran.pp.setCursorPos(1,1)
+	etapes[iEtape].ecran.pp.write(numero)
+end
 function tirage()
 	etapesTirage={}
 	for etapesI=1, #etapes do
-		table.insert(etapesTirage,etapesI)
-	end
-	for i=1, #etapes do
-		index=math.random(#etapesTirage)
-		etapes[i].numero=etapesTirage[index]
-		if etapes[i].numero>config.get("etape") then
-			etapes[i].numero=""
+		etapes[etapesI].numero=""
+		if etapes[etapesI].first then
+			table.insert(etapesTirage,etapesI)
 		end
-		table.remove(etapesTirage,index)
-		
-		etapes[i].ecran.pp.clear()
-		etapes[i].ecran.pp.setTextScale(5)
-		etapes[i].ecran.pp.setCursorPos(1,1)
-		etapes[i].ecran.pp.write(etapes[i].numero)
+	end
+	tirage2(1)
+	
+	for etapesI=1, #etapes do
+		if etapes[etapesI].numero=="" then
+			table.insert(etapesTirage,etapesI)
+		end
+	end
+	for i=2, #etapes do
+		tirage2(i)
 	end
 end
 etapes={}
-function add(x,y,id,orientation)
-	table.insert(etapes,{x=x,y=y,orientation=orientation,numero=0,ecran=ahb.addPeripheral(id)})
+function add(x,y,id,orientation,first)
+	table.insert(etapes,{x=x,y=y,orientation=orientation,numero=0,ecran=ahb.addPeripheral(id),first=first})
 end
 function coord(numero)
 	for iEt=1,#etapes do
