@@ -1,4 +1,4 @@
-print("LOAD jeu v0.21")
+print("LOAD jeu v0.22")
 os.loadAPI("ahb")
 os.loadAPI("config")
 os.loadAPI("joueur")
@@ -37,6 +37,7 @@ end
 actions={}
 function jeu()
 	while true do
+		joueur.retourHomeAll()
 		config.set("etapeTelecommande","JOIN")
 		joueur.affichageTC("all",{action="JOIN"})
 		parallel.waitForAny(joueur.attenteInscription,affichage.attenteLancement)	

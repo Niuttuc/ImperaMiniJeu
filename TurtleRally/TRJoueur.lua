@@ -1,4 +1,4 @@
-print("LOAD joueur v1.57")
+print("LOAD joueur v1.58")
 liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -36,10 +36,15 @@ function configJ(couleur,nom,y)
 	data.affInfo=window.create(data.ligne,42,1,30,1,true)
 	
 	
-	modem.pp.transmit(couleur,84,"home")
+	
 	
 	
 	table.insert(liste,data)
+end
+function retourHomeAll()
+	for idJoueur=1,#liste do
+		modem.pp.transmit(liste[idJoueur].couleur,84,"home")
+	end
 end
 function tourne(idJoueur,action)
 	if action=="clockTurn" then
