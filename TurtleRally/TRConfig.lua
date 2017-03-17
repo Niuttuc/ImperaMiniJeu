@@ -18,6 +18,7 @@ config.tailleX=14
 config.vie=3
 config.etape=4
 config.coeur=10
+config.time=20
 config.partie=false
 config.etapeTelecommande="NONLANCER"
 
@@ -51,6 +52,12 @@ function affichageConf()
 	affichage.addChoix(2,' 2 ',"etape",false)
 	affichage.addChoix(3,' 3 ',"etape",false)
 	affichage.addChoix(4,' 4 ',"etape",true)
+	
+	affichage.addConfig("time",3,"Temps")
+	affichage.addChoix(1,'1  ',"time",false)
+	affichage.addChoix(10,'10 ',"time",false)
+	affichage.addChoix(20,'20 ',"time",false)
+	affichage.addChoix(30,'30 ',"time",true)
 end
 function joueurDef()
 	joueur.configFenetre(affichage.fenetreJoueurs(),affichage.ecranLargeur())

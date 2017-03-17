@@ -1,4 +1,4 @@
-print("LOAD joueur v1.58")
+print("LOAD joueur v1.59")
 liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -262,7 +262,7 @@ function renvoiDemandeChoix(couleur)
 			if liste[idJoueur].dodo then
 				affichageTC(idJoueur,{action="DODO",actions=liste[idJoueur].actions})
 			else
-				if timeTime==30 then
+				if timeTime==config.get("time") then
 					affichageTC(idJoueur,{action="CHOIX",actions=liste[idJoueur].precActions})
 				else
 					affichageTC(idJoueur,{action="CHOIXIMPOSER",actions=liste[idJoueur].precActions})
@@ -278,7 +278,7 @@ function dodo(idJoueur)
 end
 function demandeChoix()
 	timerActif=false
-	timeTime=30
+	timeTime=config.get("time")
 	parallel.waitForAny(demandeChoix2timer,demandeChoix2)
 	return choixRetour
 end
