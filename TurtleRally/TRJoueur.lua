@@ -1,4 +1,4 @@
-print("LOAD joueur v1.56")
+print("LOAD joueur v1.57")
 liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -287,7 +287,7 @@ function demandeChoix2timer()
 					if liste[idJoueurTemp].actif and not(liste[idJoueurTemp].dodo) then
 						if not(#liste[idJoueurTemp].actions==5) then
 							print('CHOIXIMPOSER '..idJoueurTemp)
-							affichageTC(idJoueur,{action="CHOIXIMPOSER",actions=liste[idJoueur].precActions})
+							affichageTC(idJoueurTemp,{action="CHOIXIMPOSER",actions=liste[idJoueurTemp].precActions})
 						end
 					end
 				end				
@@ -295,7 +295,7 @@ function demandeChoix2timer()
 			else
 				for idJoueurTemp=1,#liste do
 					if liste[idJoueurTemp].actif and not(liste[idJoueurTemp].dodo) then
-						affichageTC(idJoueur,{action="TIME",t=timeTime})
+						affichageTC(idJoueurTemp,{action="TIME",t=timeTime})
 					end
 				end	
 				timeTime=timeTime-1
