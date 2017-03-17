@@ -1,18 +1,25 @@
-print("Turtle charge version Git v3.4")
-modem=peripheral.find('modem')
-compass=peripheral.find('compass')
-color=colors[string.lower(string.sub(os.getComputerLabel(),7,-1))] --recuperation de la couleur associe a la turtle dans son label
-card={north=1,east=2,south=3,west=4}
-invCard={'north','east','south','west'}
-paresseux=true
+--Trucs a regler a l'installation
 
-garagePos={x=8,y=22,h=2,diretion='PY'}									--Position relative de l'entrée du garage
+
+-----------------------------------------------------------
+--La turtle doit s'appeler turtleNomDeSaCouleur (en remplaçant bien sûr le nom de sa couleur par ce qu'il faut en anglais)
+color=colors[string.lower(string.sub(os.getComputerLabel(),7,-1))] --recuperation de la couleur associe a la turtle dans son label
+garagePos={x=8,y=22,h=2,diretion='PY'}				--Position relative de l'entrée du garage
 garageStartsDirection='south'						--Direction de la sortie pour les starts du garage par rapport a la route pour se garer.
 sortieTrou='east'
 px='west'								--Direction pour les coordonnees relatives du plateau
 py='north'								--Juste xplus et yplus a remplir
-													--si comme nous vous avez pas pense a ca avant...
+										--si comme nous vous avez pas pense a ca avant...
+xSize=14								--Taille du plateau en x
+ySize=18								--Taille du plateau en y
+----------------------------------------------------------
 
+print("Turtle charge version Git v3.5")
+modem=peripheral.find('modem')
+compass=peripheral.find('compass')
+card={north=1,east=2,south=3,west=4}
+invCard={'north','east','south','west'}
+paresseux=true
 
 
 for k,v in pairs(card) do							--On calcule les directions qui nous manque
@@ -341,7 +348,7 @@ function waitForModem()
 		elseif type(mess)=='table' and mess[1]=='mort' and #mess==1 then
 			if paresseux then
 				pos=getTurtlePos()
-				booll=(not(turtle.detectDown()) and pos.x>0 and pos.x<15 and pos.y>0 and pos.y<19)
+				booll=(not(turtle.detectDown()) and pos.x>0 and pos.x<xSize+1 and pos.y>0 and pos.y<ySize+1)
 				death(booll)
 				seGarer()
 			end
@@ -349,7 +356,7 @@ function waitForModem()
 		elseif type(mess)=='table' and mess[1]=='mort' and #mess==2 then
 			if paresseux then
 				pos=getTurtlePos()
-				booll=(not(turtle.detectDown()) and pos.x>0 and pos.x<15 and pos.y>0 and pos.y<19)
+				booll=(not(turtle.detectDown()) and pos.x>0 and pos.x<xSize+1 and pos.y>0 and pos.y<ySize+1)
 				deathDest(booll,mess[2])
 			end
 			modem.transmit(repFreq, color, 'fini')
