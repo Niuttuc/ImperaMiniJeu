@@ -1,4 +1,4 @@
-print("LOAD jeu v0.20")
+print("LOAD jeu v0.21")
 os.loadAPI("ahb")
 os.loadAPI("config")
 os.loadAPI("joueur")
@@ -104,7 +104,6 @@ function jeu()
 				if config.get("partie") then
 					--print("  ACTION TAPIS, PLAQUE, TIR ;)")
 					map.actionTapis()
-					os.sleep(1)
 					laser.tires()
 					os.sleep(0.7)
 					joueur.tires()

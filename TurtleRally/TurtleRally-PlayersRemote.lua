@@ -18,7 +18,7 @@ os.loadAPI('choices')
 os.loadAPI('sync')
 os.loadAPI('clicAPI')
 
-windows.affVersion(' v1.2 ')
+windows.affVersion(' v1.3 ')
 
 local coeur=0
 local vie=0
@@ -139,9 +139,10 @@ function choixClic(x,y)
 				end
 			end
 			local dodo=false
-			if y>14 then
+			if y>=13 then
 				dodo=true
 			end
+			actionEnvoyer=true
 			modem.transmit(84,color+1,{actions=mesActions,dodo=dodo})
 			continue=false
 			if fs.exists('Tirage') then
@@ -247,7 +248,7 @@ thingsToDo={os.pullEvent,'modem_message'}
 currentWin=windows.waitingScreen
 premierLancement=true
 modem.transmit(84,color+1,'JEFAITQUOI')
-
+actionEnvoyer=false
 while true do
 	idArret,ret1,ret2,ret3,ret4,ret5=sync.waitForAny(sync.listArgs(thingsToDo))
 	if idArret==1 then
@@ -266,11 +267,15 @@ while true do
 			preActions=message.actions
 			forcage()
 			thingsToDo={os.pullEvent,'modem_message'}
-		elseif message.action=="TIME" then
+		elseif message.action=="TIME" then			
 			windows.countDown.clear()
 			windows.countDown.setCursorPos(2,1)
 			windows.countDown.write(message.t)
-			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,3,xmax,ymax,choixClic}}
+			if actionEnvoyer then
+				thingsToDo={os.pullEvent,'modem_message'}}
+			else
+				hingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,3,xmax,ymax,choixClic}}
+			end
 		elseif message.action=="WAIT" then
 			affWin(windows.waitingScreen)
 			thingsToDo={os.pullEvent,'modem_message'}
@@ -284,6 +289,7 @@ while true do
 			affWin(windows.gameInProgress)
 			thingsToDo={os.pullEvent,'modem_message'}
 		elseif message.action=="CHOIX" then
+			actionEnvoyer=false
 			windows.countDown.clear()
 			tours={-1,-1,-1,-1,-1}
 			thingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,3,xmax,ymax,choixClic}}
