@@ -18,7 +18,7 @@ os.loadAPI('choices')
 os.loadAPI('sync')
 os.loadAPI('clicAPI')
 
-windows.affVersion(' v1.3 ')
+windows.affVersion(' v1.4 ')
 
 local coeur=0
 local vie=0
@@ -272,7 +272,7 @@ while true do
 			windows.countDown.setCursorPos(2,1)
 			windows.countDown.write(message.t)
 			if actionEnvoyer then
-				thingsToDo={os.pullEvent,'modem_message'}}
+				thingsToDo={os.pullEvent,'modem_message'}
 			else
 				hingsToDo={os.pullEvent,'modem_message',clicAPI.waitClic,{1,3,xmax,ymax,choixClic}}
 			end
