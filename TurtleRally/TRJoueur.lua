@@ -1,4 +1,4 @@
-print("LOAD joueur v1.59")
+print("LOAD joueur v1.60")
 liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -650,6 +650,7 @@ function tirageDepart()
 			modem.pp.transmit(liste[idJoueur].couleur,84,{"onboard",{x=x,y=y,direction=liste[idJoueur].direction}})
 			enAttente=enAttente+1
 			liste[idJoueur].turtlePret=false
+			os.sleep(1)
 		else
 			modem.pp.transmit(liste[idJoueur].couleur,84,"home")
 		end
