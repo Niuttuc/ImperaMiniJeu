@@ -1,4 +1,4 @@
-print("LOAD Etape v0.06")
+print("LOAD Etape v0.07")
 local etapesTirage={}
 function tirage2(numero)
 	index=math.random(#etapesTirage)
@@ -6,6 +6,7 @@ function tirage2(numero)
 	etapes[iEtape].numero=numero
 	if numero>config.get("etape") then
 		etapes[iEtape].numero=""
+		numero=""
 	end
 	table.remove(etapesTirage,index)
 	
