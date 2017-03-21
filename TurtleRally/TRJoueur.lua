@@ -1,4 +1,4 @@
-print("LOAD joueur v1.57")
+print("LOAD joueur v1.60")
 liste={}
 local ecran=config.ecran()
 local modem=config.modem()
@@ -36,10 +36,15 @@ function configJ(couleur,nom,y)
 	data.affInfo=window.create(data.ligne,42,1,30,1,true)
 	
 	
-	modem.pp.transmit(couleur,84,"home")
+	
 	
 	
 	table.insert(liste,data)
+end
+function retourHomeAll()
+	for idJoueur=1,#liste do
+		modem.pp.transmit(liste[idJoueur].couleur,84,"home")
+	end
 end
 function tourne(idJoueur,action)
 	if action=="clockTurn" then
@@ -257,7 +262,7 @@ function renvoiDemandeChoix(couleur)
 			if liste[idJoueur].dodo then
 				affichageTC(idJoueur,{action="DODO",actions=liste[idJoueur].actions})
 			else
-				if timeTime==30 then
+				if timeTime==config.get("time") then
 					affichageTC(idJoueur,{action="CHOIX",actions=liste[idJoueur].precActions})
 				else
 					affichageTC(idJoueur,{action="CHOIXIMPOSER",actions=liste[idJoueur].precActions})
@@ -273,7 +278,7 @@ function dodo(idJoueur)
 end
 function demandeChoix()
 	timerActif=false
-	timeTime=30
+	timeTime=config.get("time")
 	parallel.waitForAny(demandeChoix2timer,demandeChoix2)
 	return choixRetour
 end
@@ -645,6 +650,7 @@ function tirageDepart()
 			modem.pp.transmit(liste[idJoueur].couleur,84,{"onboard",{x=x,y=y,direction=liste[idJoueur].direction}})
 			enAttente=enAttente+1
 			liste[idJoueur].turtlePret=false
+			os.sleep(1)
 		else
 			modem.pp.transmit(liste[idJoueur].couleur,84,"home")
 		end

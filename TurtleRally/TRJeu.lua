@@ -1,4 +1,4 @@
-print("LOAD jeu v0.21")
+print("LOAD jeu v0.23")
 os.loadAPI("ahb")
 os.loadAPI("config")
 os.loadAPI("joueur")
@@ -11,12 +11,16 @@ os.loadAPI("affichage")
 os.loadAPI('choices')
 os.loadAPI("laser")
 
+
 local modem=config.modem()
 modem.pp.open(84)
 
 config.mapDef()
 config.joueurDef()
 config.affichageConf()
+
+joueur.retourHomeAll()
+
 function ecoute()
 	while true do
 		event, side, frequency, replyFrequency, message, distance = os.pullEvent("modem_message")		
@@ -37,6 +41,7 @@ end
 actions={}
 function jeu()
 	while true do
+		
 		config.set("etapeTelecommande","JOIN")
 		joueur.affichageTC("all",{action="JOIN"})
 		parallel.waitForAny(joueur.attenteInscription,affichage.attenteLancement)	
@@ -117,6 +122,7 @@ function jeu()
 				os.sleep(1)
 			end
 		end
-	end
+		joueur.retourHomeAll()
+	end	
 end
 parallel.waitForAll(jeu,ecoute)

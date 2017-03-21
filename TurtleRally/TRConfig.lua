@@ -1,4 +1,4 @@
-print("LOAD Config v0.42")
+print("LOAD Config v0.43")
 
 local config=ahb.config("TR",{
 	ecran={typ="side",info="Ecran principal"},
@@ -18,6 +18,7 @@ config.tailleX=14
 config.vie=3
 config.etape=4
 config.coeur=10
+config.time=20
 config.partie=false
 config.etapeTelecommande="NONLANCER"
 
@@ -51,6 +52,12 @@ function affichageConf()
 	affichage.addChoix(2,' 2 ',"etape",false)
 	affichage.addChoix(3,' 3 ',"etape",false)
 	affichage.addChoix(4,' 4 ',"etape",true)
+	
+	affichage.addConfig("time",3,"Temps")
+	affichage.addChoix(1,'1  ',"time",false)
+	affichage.addChoix(10,'10 ',"time",false)
+	affichage.addChoix(20,'20 ',"time",false)
+	affichage.addChoix(30,'30 ',"time",true)
 end
 function joueurDef()
 	joueur.configFenetre(affichage.fenetreJoueurs(),affichage.ecranLargeur())
@@ -81,14 +88,14 @@ function mapDef()
 	map.add(15,4,'mur')
 	
 	map.add(5,2,"bonus","openperipheral_selector_84")
-	map.add(9,2,"etape","monitor_27","MX")
+	map.add(9,2,"etape","monitor_27","MX",true)
 	map.add(10,2,"mur")
 	map.add(6,3,"pique")
 	map.add(7,3,"mur")
 	map.add(10,3,"laser","MX")
 	map.add(11,3,"mur")
 	map.add(12,3,"bonus","openperipheral_selector_83")
-	map.add(3,4,"etape","monitor_18","MX")
+	map.add(3,4,"etape","monitor_18","MX",false)
 	map.add(4,4,"mur")
 	map.add(12,4,"mur")
 	map.add(2,5,"trou")
@@ -98,7 +105,7 @@ function mapDef()
 	map.add(3,6,"trou")
 	map.add(5,6,"bonus","openperipheral_selector_82")
 	map.add(9,6,"bonus","openperipheral_selector_78")
-	map.add(13,6,"etape","monitor_26","MY")
+	map.add(13,6,"etape","monitor_26","MY",false)
 	map.add(1,7,"bonus","openperipheral_selector_81")
 	map.add(6,7,"pique")
 	map.add(7,7,"mur")
@@ -110,7 +117,7 @@ function mapDef()
 	map.add(10,8,"mur2","rouge")
 	map.add(4,9,"bout","bleu")
 	map.add(6,9,"mur2","bleu")
-	map.add(8,9,"etape","monitor_25","MY")
+	map.add(8,9,"etape","monitor_25","MY",true)
 	map.add(10,9,"mur2","rouge")
 	map.add(12,9,"bout","rouge")
 	map.add(6,10,"pique")
