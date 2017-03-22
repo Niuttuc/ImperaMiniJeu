@@ -18,6 +18,7 @@ function listArgs(list)
 	return nil
 end
 
+
 function argRep(n,arg)
 	if n>0 then
 		return arg,argRep(n-1,arg)
@@ -25,12 +26,13 @@ function argRep(n,arg)
 	return nil
 end
 
+
 function proxFunc()
-	actual[#actual+1]=coroutine.running()
+	current[#current+1]=coroutine.running()
 	local id=0
 	local funcArgs={}
-	for i=1,#actual do
-		if actual[i]==coroutine.running() then
+	for i=1,#current do
+		if current[i]==coroutine.running() then
 			id=i
 		end
 	end
@@ -54,19 +56,20 @@ function proxFunc()
  	end
  	ret={func(listArgs(funcArgs))}
 end
--- waitForAny({function1,function2},{args1,args2},nb)
+
 function waitForAny(...)
  	args={...}
 	functions={keepFunc(...)}
-	actual={}
+	current={}
 	local endFunc=parallel.waitForAny(argRep(#functions,proxFunc))
 	return endFunc,listArgs(ret)
 end
 
+
 function waitForAll(...)
  	args={...}
  	functions={keepFunc(...)}
-	actual={}
+	current={}
 	parallel.waitForAll(argRep(#functions,proxFunc))
 	return listArgs(ret)
 end
