@@ -1,4 +1,4 @@
-print("LOAD laser v0.01")
+print("LOAD laser v0.02")
 local laser=ahb.addPeripheral(config.get("laser"))
 local lasers={}
 function add(x,y,direction)
@@ -64,7 +64,7 @@ function tire(x,y,direction)
 			tireDirection="NORTH"
 		end
 	end
-	laser.pp.tire(tireX,tireY,tireZ,tireDirection,1)
+	--laser.pp.tire(tireX,tireY,tireZ,tireDirection,1)
 	boucle=true
 	while boucle do		
 		if map.inmap(x,y) then
