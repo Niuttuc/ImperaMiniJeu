@@ -1,4 +1,4 @@
-print("LOAD laser v0.02")
+print("LOAD laser v0.03")
 local laser=ahb.addPeripheral(config.get("laser"))
 local lasers={}
 function add(x,y,direction)
