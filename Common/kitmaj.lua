@@ -1,28 +1,36 @@
--- maj     	  Met a jour tous les programmes + utilitaire
--- maj NOM1, NOM2    Met a jour le programme NOM
-function majUtile()
-	if fs.exists("ahb") then
-		fs.delete("ahb")
+-- Utilisation dans la console :
+-- "maj"     	  	Met a jour tous les programmes + utilitaire
+-- "maj NOM1, NOM2" Met a jour et/ou ajouute le programme NOM
+
+-- Par Adsl-Houba ( Samuel Mandonnaud )
+-- www.youtube.com/user/MrAdslHouba www.adslhouba.fr
+
+-- Remplace le contenu du fichier "fichier" par le contenu de la page "url"
+function majFichierParUrl(fichier,url)
+	if fs.exists(fichier) then
+		fs.delete(fichier)
 	end
-	local content = http.get("https://raw.githubusercontent.com/Niuttuc/ImperaMiniJeu/master/Common/Advanced%20Home%20Base%20(ahb).lua")
-	local file = fs.open("ahb","w")
+	local content = http.get(url)
+	local file = fs.open(fichier,"w")
 	file.write(content.readAll())
 	file.close()
 end
+
+-- Recupere le programme ahb
+function majAHB()
+	majFichierParUrl("ahb","https://raw.githubusercontent.com/Niuttuc/ImperaMiniJeu/master/Common/Advanced%20Home%20Base%20(ahb).lua")
+end
+
+-- Mise a jour via pastebin
 function majPastBin(nom)
 	config=ahb.config("maj"..nom,{
 		pastebin={typ="string"},
 		prog={typ="string",defaut=nom}
 	})
-	if fs.exists(config.prog) then
-		fs.delete(config.prog)
-	end
-	print("PasteBin "..config.pastebin.." vers "..config.prog)
-	local content = http.get("https://pastebin.com/raw/"..config.pastebin)
-	local file = fs.open(config.prog,"w")
-	file.write(content.readAll())
-	file.close()
+	majFichierParUrl(config.prog,"https://pastebin.com/raw/"..config.pastebin)
 end
+
+-- Mise a jour via gitHub
 function majGithub(nom)	
 	configGit=ahb.config("gitHubDef",{
 		user={typ="string",info="utilisateur github.com par default"},
@@ -45,9 +53,12 @@ function majGithub(nom)
 	file.write(content.readAll())
 	file.close()
 end
+
+-- Debut du programme
 local args={ ... }
-if (#args == 0) then	
-	majUtile()
+-- Si pas d'arguement, maj complete
+if (#args == 0) then
+	majAHB()
 	os.loadAPI("ahb")
 	config=ahb.config("majs",{liste={typ="table"}})
 	for prog, site in pairs(config.liste) do
@@ -61,11 +72,11 @@ if (#args == 0) then
 	end
 else 
 	if not(fs.exists("ahb")) then
-		majUtile()
+		majAHB()
 	end
 	for i, prog in pairs(args) do
 		if prog=='ahb' then
-			majUtile()
+			majAHB()
 		else
 			os.loadAPI("ahb")
 			config=ahb.config("majs",{liste={typ="table"}})
