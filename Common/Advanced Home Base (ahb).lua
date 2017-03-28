@@ -62,30 +62,29 @@ function centerBlit(texte,mon,y,tx,bg)
         bg=string.rep(colorsBlit[bg],#texte)
     end    
     z=mon.getSize()
-    print(z,#texte)
     if #texte>z then
         mon.setCursorPos(1,y)
         mon.blit(string.sub(texte,1,z-3)..'...',string.sub(tx,1,z),string.sub(bg,1,z))
     else
         mon.setCursorPos(math.floor(z/2-#texte/2+0.5),y)
-        print(texte)
         mon.blit(texte,tx,bg)
     end
 end
 
 
-configFileFc=function(programName)
+local configFileFc=function(programName)
 	return './config123/'..programName.."Config"
 end
 -- config("NomDuProg",{
 -- 	nomVariable={
---    typ="string", -- choix, side, coord, couleur, boolean, table
+--    typ="string", -- choix, choix2, side, coord, couleur, boolean, table
 --    info="Information complementaire",
 --    defaut=""  -- proposition
---    choix={"choix 1","choix 2"}
+--    choix={"choix 1","choix 2"} -- si typ choix
+--    choix={c1="choix 1",c2="choix 2"} -- si typ choix2 
 --  }
 -- })
-config=function(programName,pConfig)
+function config(programName,pConfig)
     local configFile=configFileFc(programName)
 	local config={}
 	local ok=true
@@ -215,14 +214,14 @@ config=function(programName,pConfig)
 		term.setBackgroundColor(colors.black)
 		term.setTextColor(colors.white)
 		term.clear()
-		term.setCursorPos(1,1)	
+		term.setCursorPos(1,1)
 		file=fs.open(configFile,'w')
 		file.write(textutils.serialize(config))
         file.close()
     end   
     return config
 end
-configTab=function(programName,var,action,key,value)
+function configTab(programName,var,action,key,value)
 	local configFile=configFileFc(programName)
 	if not(fs.exists(configFile)) then
 		error('ahb.configTab doit etre utiliser apres ahb.config')
@@ -239,11 +238,21 @@ configTab=function(programName,var,action,key,value)
 		elseif action=='maj' then
 			config[var][key]=value
 		elseif action=='remove' then
-			table.remove(var)
+			if not(key==false) then
+				table.remove(config[var],key)
+			elseif not(value==false) then
+				key=isIn(value,config[var])
+				if key then
+					table.remove(config[var],key)
+				end
+			else
+				table.remove(config[var])
+			end	
 		end
 		fs.delete(configFile)
 		file=fs.open(configFile,'w')
 		file.write(textutils.serialize(config))
         file.close()
+		return config[var]
 	end
 end

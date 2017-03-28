@@ -37,9 +37,6 @@ local plateforme={
 			file={typ="string",info="fichier sur github.com"},
 			prog={typ="string",info="Nom du fichier pour CC",defaut=nom}
 		})
-		if fs.exists(config.prog) then
-			fs.delete(config.prog)
-		end
 		majFichierParUrl(config.prog,"https://raw.githubusercontent.com/"..config.user.."/"..config.repository.."/"..config.branch.."/"..config.file.."?t"..os.day()..os.time())
 	end,
 	pastebin=function(nom)
@@ -56,7 +53,7 @@ local plateforme={
 		config=ahb.config("maj"..nom,{
 			url={typ="string",info="Url hebergement ",defaut=confiSite.url},
 			fichier={typ="string",info="Nom du fichier"},
-			prog={typ="string",defaut=nom}
+			prog={typ="string",info="Nom du fichier pour CC",defaut=nom}
 		})
 		majFichierParUrl(config.prog,config.url..config.fichier.."?t"..os.day()..os.time())
 	end
