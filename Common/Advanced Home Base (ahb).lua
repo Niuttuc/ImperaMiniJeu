@@ -1,4 +1,5 @@
-addPeripheral=function(id)
+-- Verification et connection a un peripherique
+function addPeripheral(id)
 	if not(type(id)=="string") then
 		error(tostring(id)..' nom perif incorrect')
 	end
@@ -12,7 +13,8 @@ addPeripheral=function(id)
 	}
 end
 
-function isIn(element,table)						--return key of the element in table, or nil
+-- return key of the element in table, or nil
+function isIn(element,table)						
   for key,val in pairs(table) do
     if val==element then
       return key
@@ -21,6 +23,7 @@ function isIn(element,table)						--return key of the element in table, or nil
   return nil
 end
 
+-- Centre le "texte", dans le moniteur ou fenetre "mon", a la hauteur "y"
 function center(texte,mon,y)
     x=mon.getSize()
     if #texte>x then
@@ -31,6 +34,8 @@ function center(texte,mon,y)
         mon.write(texte)
     end
 end
+
+-- Centre avec la fonction blit avec la posibilite d'utilise l'api colors
 colorsBlit={
             [colors.white]='0',
             [colors.orange]='1',
@@ -67,6 +72,8 @@ function centerBlit(texte,mon,y,tx,bg)
         mon.blit(texte,tx,bg)
     end
 end
+
+
 configFileFc=function(programName)
 	return './config123/'..programName.."Config"
 end
@@ -110,12 +117,14 @@ config=function(programName,pConfig)
 				term.setBackgroundColor(colors.white)
 				term.setTextColor(colors.black)
 				term.clear()
-				term.setCursorPos(1,1)
-				question="Reglez "..key
+				term.setCursorPos(1,1)				
 				if data.info~=nil then
-					question=question..data.info
+					question="CONF : "..data.info
+				else
+					question="CONF : "..key
 				end				
 				print(question)
+				
 				if data.typ=="side" then
 					data.choix={"front","back","left","right","top","bottom","autre"}
 				end
@@ -148,7 +157,7 @@ config=function(programName,pConfig)
 						[true]="true",
 						[false]="false"
 					}
-					data.typ="choix2"
+					data.typ="choix2" -- 
 				end
 				
 				if data.typ=="string" then
@@ -190,7 +199,7 @@ config=function(programName,pConfig)
 									else
 										config[key]=cv
 									end
-								else
+								else -- choix2 et couleur
 									config[key]=ck
 								end
 								bool=false
