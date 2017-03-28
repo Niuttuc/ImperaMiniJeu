@@ -10,6 +10,7 @@ function majFichierParUrl(fichier,url)
 	if fs.exists(fichier) then
 		fs.delete(fichier)
 	end
+	print(fichier.." < "..url)
 	local content = http.get(url)
 	local file = fs.open(fichier,"w")
 	file.write(content.readAll())
@@ -21,38 +22,45 @@ function majAHB()
 	majFichierParUrl("ahb","https://raw.githubusercontent.com/Niuttuc/ImperaMiniJeu/master/Common/Advanced%20Home%20Base%20(ahb).lua")
 end
 
--- Mise a jour via pastebin
-function majPastBin(nom)
-	config=ahb.config("maj"..nom,{
-		pastebin={typ="string"},
-		prog={typ="string",defaut=nom}
-	})
-	majFichierParUrl(config.prog,"https://pastebin.com/raw/"..config.pastebin)
-end
-
--- Mise a jour via gitHub
-function majGithub(nom)	
-	configGit=ahb.config("gitHubDef",{
-		user={typ="string",info="utilisateur github.com par default"},
-		repository={typ="string",info="nom repository github.com par default"},
-		branch={typ="string",info="branch github.com par default",defaut="master"}
-	})
-	config=ahb.config("maj"..nom,{
-		user={typ="string",info="utilisateur github.com ",defaut=configGit.user},
-		repository={typ="string",info="nom repository github.com",defaut=configGit.repository},
-		branch={typ="string",info="branch github.com",defaut=configGit.branch},
-		file={typ="string",info="fichier sur github.com"},
-		prog={typ="string",defaut=nom}
-	})
-	if fs.exists(config.prog) then
-		fs.delete(config.prog)
+-- Configuration des plateformes
+local plateforme={
+	github=function(nom)
+		configGit=ahb.config("gitHubDef",{
+			user={typ="string",info="utilisateur github.com par default"},
+			repository={typ="string",info="nom repository github.com par default"},
+			branch={typ="string",info="branch github.com par default",defaut="master"}
+		})
+		config=ahb.config("maj"..nom,{
+			user={typ="string",info="utilisateur github.com ",defaut=configGit.user},
+			repository={typ="string",info="nom repository github.com",defaut=configGit.repository},
+			branch={typ="string",info="branch github.com",defaut=configGit.branch},
+			file={typ="string",info="fichier sur github.com"},
+			prog={typ="string",info="Nom du fichier pour CC",defaut=nom}
+		})
+		if fs.exists(config.prog) then
+			fs.delete(config.prog)
+		end
+		majFichierParUrl(config.prog,"https://raw.githubusercontent.com/"..config.user.."/"..config.repository.."/"..config.branch.."/"..config.file.."?t"..os.day()..os.time())
+	end,
+	pastebin=function(nom)
+		config=ahb.config("maj"..nom,{
+			pastebin={typ="string",info="Identifiant pastbin"},
+			prog={typ="string",info="Nom du fichier pour CC",defaut=nom}
+		})
+		majFichierParUrl(config.prog,"https://pastebin.com/raw/"..config.pastebin)
+	end,
+	site=function(nom)
+		confiSite=ahb.config("siteDef",{
+			url={typ="string",info="Url principal"},
+		})
+		config=ahb.config("maj"..nom,{
+			url={typ="string",info="Url hebergement ",defaut=confiSite.url},
+			fichier={typ="string",info="Nom du fichier"},
+			prog={typ="string",defaut=nom}
+		})
+		majFichierParUrl(config.prog,config.url..config.fichier.."?t"..os.day()..os.time())
 	end
-	print("GitHub "..config.repository.." "..config.file.." vers "..config.prog)
-	local content = http.get("https://raw.githubusercontent.com/"..config.user.."/"..config.repository.."/"..config.branch.."/"..config.file.."?t"..s.day()..os.time())
-	local file = fs.open(config.prog,"w")
-	file.write(content.readAll())
-	file.close()
-end
+}
 
 -- Debut du programme
 local args={ ... }
@@ -62,12 +70,10 @@ if (#args == 0) then
 	os.loadAPI("ahb")
 	config=ahb.config("majs",{liste={typ="table"}})
 	for prog, site in pairs(config.liste) do
-		if site=="pastebin" then
-			majPastBin(prog)
-		elseif site=="github" then
-			majGithub(prog)
+		if plateforme[site] then
+			plateforme[site](prog)
 		else
-			error("Site non config "..prog)
+			error("Plateforme non trouve "..site)
 		end
 	end
 else 
@@ -81,33 +87,37 @@ else
 			os.loadAPI("ahb")
 			config=ahb.config("majs",{liste={typ="table"}})
 			if config.liste[prog]==nil then	
+			
 				term.setBackgroundColor(colors.white)
 				term.setTextColor(colors.black)
 				term.clear()
 				term.setCursorPos(1,1)
-				term.write("Nouveau programe "..prog)
-				term.setCursorPos(2,2)
-				term.write("Pastebin")
-				term.setCursorPos(2,3)
-				term.write("GitHub")
+				term.write("Nouveau programme "..prog)
+				
+				local curs=2
+				for nomPf, fc in pairs(plateforme) do
+					term.setCursorPos(2,curs)
+					term.write(nomPf)
+					curs=curs+1
+				end
+				
 				local bool=true
 				while bool do
 					ev,button,x,y=os.pullEvent("mouse_click")
-					if y==2 then
-						ahb.configTab('majs','liste','add',prog,"pastebin")
-						config.liste[prog]="pastebin"
-						bool=false
-					elseif y==3 then
-						ahb.configTab('majs','liste','add',prog,"github")
-						config.liste[prog]="github"
-						bool=false
-					end				
-				end
+					local curs=2
+					for nomPf, fc in pairs(plateforme) do
+						if y==curs then
+							ahb.configTab('majs','liste','add',prog,nomPf)
+							config.liste[prog]=nomPf
+							bool=false
+						end
+						curs=curs+1
+					end		
+				end				
 			end
-			if config.liste[prog]=="pastebin" then
-				majPastBin(prog)
-			elseif config.liste[prog]=="github" then
-				majGithub(prog)
+			
+			if plateforme[config.liste[prog]] then
+				plateforme[config.liste[prog]](prog)
 			else
 				error("Site non config "..args[1])
 			end
