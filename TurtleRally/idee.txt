@@ -1,0 +1,18 @@
+Turtle'rally mode de jeu :
+- Classique
+- Evenements
+- Combat (pas d'étape)
+
+Evenement :
+- 1 programmation 2 tours
+- tapis et plaque inversé
+- tapis invers
+- plaque inversé
+- tour sans degat
+- tapis et plaque piégé
+- uniquement en reculont
+- ne pas finir sur un sol
+- ne pas finir sur un tapis
+- ne pas finir sur un bonus
+- on retire les etapes
+- tire doubler
