@@ -72,7 +72,7 @@ function centerBlit(texte,mon,y,tx,bg)
 end
 
 
-local configFileFc=function(programName)
+configFileFc=function(programName)
 	return './config123/'..programName.."Config"
 end
 -- config("NomDuProg",{
