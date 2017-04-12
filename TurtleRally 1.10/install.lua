@@ -1,5 +1,6 @@
 {
 	affichage={
+		plateforme="github",
 		user="Niuttuc",
 		repository="ImperaMiniJeu",
 		branch="master",
@@ -7,6 +8,7 @@
 		prog="affichage"
 	},
 	bonus={
+		plateforme="github",
 		user="Niuttuc",
 		repository="ImperaMiniJeu",
 		branch="master",
@@ -14,6 +16,7 @@
 		prog="bonus"
 	},
 	config={
+		plateforme="github",
 		user="Niuttuc",
 		repository="ImperaMiniJeu",
 		branch="master",
@@ -21,6 +24,7 @@
 		prog="config"
 	},
 	depart={
+		plateforme="github",
 		user="Niuttuc",
 		repository="ImperaMiniJeu",
 		branch="master",
@@ -28,6 +32,7 @@
 		prog="depart"
 	},
 	etape={
+		plateforme="github",
 		user="Niuttuc",
 		repository="ImperaMiniJeu",
 		branch="master",
@@ -35,6 +40,7 @@
 		prog="etape"
 	},
 	evenement={
+		plateforme="github",
 		user="Niuttuc",
 		repository="ImperaMiniJeu",
 		branch="master",
@@ -42,6 +48,7 @@
 		prog="evenement"
 	},
 	startup={
+		plateforme="github",
 		user="Niuttuc",
 		repository="ImperaMiniJeu",
 		branch="master",
@@ -49,6 +56,7 @@
 		prog="startup"
 	},
 	joueur={
+		plateforme="github",
 		user="Niuttuc",
 		repository="ImperaMiniJeu",
 		branch="master",
@@ -56,6 +64,7 @@
 		prog="joueur"
 	},
 	laser={
+		plateforme="github",
 		user="Niuttuc",
 		repository="ImperaMiniJeu",
 		branch="master",
@@ -63,6 +72,7 @@
 		prog="laser"
 	},
 	map={
+		plateforme="github",
 		user="Niuttuc",
 		repository="ImperaMiniJeu",
 		branch="master",
@@ -70,6 +80,7 @@
 		prog="map"
 	},
 	mur={
+		plateforme="github",
 		user="Niuttuc",
 		repository="ImperaMiniJeu",
 		branch="master",
