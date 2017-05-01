@@ -13,6 +13,38 @@ function addPeripheral(id)
 	}
 end
 
+fichier={
+	sauvegarde=function(nomDuFichier,valeurAsauvgarder)
+		local file=fs.open(nomDuFichier,"w")
+		file.write(valeurAsauvgarder)
+		file.close()
+	end,
+	charge=function(nomDuFichier)
+		if not(fs.exists(nomDuFichier)) then return nil end
+		local file=fs.open(nomDuFichier,"r")
+		tmp=file.readAll()
+		file.close()
+		return tmp
+	end
+}
+
+function formatChiff(c)
+	local mill=math.floor(c/1000)
+	if mill==0 then
+		return tostring(math.floor(c))
+	else
+		local unit=math.floor(c-(mill*1000))
+		if unit<10 then
+			return mill.." 00"..unit
+		elseif unit<100 then
+			return mill.." 0"..unit
+		else
+			return mill.." "..unit
+		end
+	end
+end
+
+
 -- return key of the element in table, or nil
 function isIn(element,table)						
   for key,val in pairs(table) do
