@@ -7,7 +7,7 @@ items={
 	reroll={id='chisel:futura',dmg=2}
 }
 dessins={
-	damageothers=img=paintutils.loadImage("dessin/damageothers"),
+	damageothers=paintutils.loadImage("dessin/damageothers"),
 	damageself=paintutils.loadImage("dessin/damageself"),
 	heal=paintutils.loadImage("dessin/heal"), -- TConstruct:heartCanister
 	reroll=paintutils.loadImage("dessin/reroll")
