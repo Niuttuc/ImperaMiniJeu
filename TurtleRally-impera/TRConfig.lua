@@ -2,11 +2,7 @@ print("LOAD Config v0.43")
 
 local config=ahb.config("TR",{
 	ecran={typ="side",info="Ecran principal"},
-	modem={typ="side",info="Modem WIFI"},
-	redstone={typ="side",info="Redstone pour mur"},
-	redstone2={typ="side",info="Redstone pour tapis/plauqe"},
-	couleurTapis={typ="couleur",info="Couleur tapis"},
-	couleurPlaque={typ="couleur",info="Couleur tapis"},
+	modem={typ="side",info="Modem WIFI"},	
 	laser={typ="side",info="Laser"},
 	x={typ="string",info="Coordinne 0 0 0 X"},
 	y={typ="string",info="Coordinne 0 0 0 Y"},
