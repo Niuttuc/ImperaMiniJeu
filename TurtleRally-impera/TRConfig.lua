@@ -234,16 +234,16 @@ function mapDef()
 end
 
 local ordiReboot={
-	"computer_15", -- GPS
-	"computer_16", -- GPS
-	"computer_17", -- GPS
-	"computer_18", -- GPS
-	"computer_27", -- Lanceur de turtle
-	"computer_28", -- Lanceur de turtle
-	"computer_29", -- Lanceur de turtle
-	"computer_30", -- Lanceur de turtle
-	"computer_31", -- Lanceur de turtle
-	"computer_32", -- Lanceur de turtle
+	"computer_2", -- GPS
+	"computer_3", -- GPS
+	"computer_4", -- GPS
+	"computer_5", -- GPS
+	"computer_6", -- Lanceur de turtle
+	"computer_7", -- Lanceur de turtle
+	"computer_8", -- Lanceur de turtle
+	"computer_9", -- Lanceur de turtle
+	"computer_10", -- Lanceur de turtle
+	"computer_11", -- Lanceur de turtle
 }
 for ior=1,#ordiReboot do
 	local test=ahb.addPeripheral(ordiReboot[ior])
