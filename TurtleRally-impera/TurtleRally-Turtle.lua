@@ -14,7 +14,7 @@ xSize=14								--Taille du plateau en x
 ySize=18								--Taille du plateau en y
 ----------------------------------------------------------
 
-print("Turtle charge version Git v3.5")
+print("Turtle charge version Git v3.6")
 modem=peripheral.find('modem')
 compass=peripheral.find('compass')
 card={north=1,east=2,south=3,west=4}
@@ -264,10 +264,6 @@ function seGarer()									--la turtle se gare depuis le teleporter du garage
 			if bool and blockInfo.name=='minecraft:wool' and color==2^blockInfo.metadata then
 				turtle.turnLeft()
 				if turtle.forward() then
-					while (turtle.getFuelLimit()-turtle.getFuelLevel())>80 do
-						turtle.suck(math.min(math.floor((turtle.getFuelLimit()-turtle.getFuelLevel()/80)),64))
-						turtle.refuel()
-					end
 					turtle.turnLeft()
 					turtle.turnLeft()
 					return true
@@ -287,10 +283,6 @@ function seGarer()									--la turtle se gare depuis le teleporter du garage
 		if bool and blockInfo.name=='minecraft:wool' and color==2^blockInfo.metadata then
 			turtle.turnLeft()
 			if turtle.forward() then
-				while (turtle.getFuelLimit()-turtle.getFuelLevel())>80 do
-					turtle.suck(math.min(math.floor((turtle.getFuelLimit()-turtle.getFuelLevel()/80)),64))
-					turtle.refuel()
-				end
 				turtle.turnLeft()
 				turtle.turnLeft()
 				return true
