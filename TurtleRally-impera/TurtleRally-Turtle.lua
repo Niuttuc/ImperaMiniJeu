@@ -4,7 +4,7 @@
 -----------------------------------------------------------
 --La turtle doit s'appeler turtleNomDeSaCouleur (en remplaçant bien sûr le nom de sa couleur par ce qu'il faut en anglais)
 color=colors[string.lower(string.sub(os.getComputerLabel(),7,-1))] --recuperation de la couleur associe a la turtle dans son label
-garagePos={x=8,y=22,h=2,diretion='PY'}				--Position relative de l'entrée du garage
+garagePos={x=8,y=22,h=2,direction='PY'}				--Position relative de l'entrée du garage
 garageStartsDirection='south'						--Direction de la sortie pour les starts du garage par rapport a la route pour se garer.
 sortieTrou='east'
 px='west'								--Direction pour les coordonnees relatives du plateau
@@ -14,7 +14,7 @@ xSize=14								--Taille du plateau en x
 ySize=18								--Taille du plateau en y
 ----------------------------------------------------------
 
-print("Turtle charge version Git v3.6")
+print("Turtle charge version Git v3.7")
 modem=peripheral.find('modem')
 compass=peripheral.find('compass')
 card={north=1,east=2,south=3,west=4}
