@@ -3,7 +3,7 @@
 --carte={
 --		nomListe=string,	Nom a afficher dans la liste<12 caracteres
 --		weight=number,		Nombre de cartes de ce type
---		message=string,		Message modem à envoyer	
+--		message=string,		Message modem a envoyer	
 --
 --		}
 
