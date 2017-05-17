@@ -13,10 +13,9 @@ local mur={
 		positionBt={}
 	}
 }
-local redstoneSide=config.get("redstone")
 
-function add(couleur,x,y)
-	table.insert(mur[couleur].position,{x=x,y=y})
+function add(couleur,x,y,redstonePP)
+	table.insert(mur[couleur].position,{x=x,y=y,redstone=ahb.addPeripheral(redstonePP)})
 end
 function addBouton(couleur,x,y)
 	table.insert(mur[couleur].positionBt,{x=x,y=y})
@@ -54,12 +53,16 @@ function test(x,y)
 		for cMur, data in pairs(mur) do
 			if cMur==couleurBouton then
 				mur[cMur].etat=false
+				for iMur,pos in pairs(data.position) do
+					pos.redstone.set(0)
+				end
 			else
 				mur[cMur].etat=true
-				couleurs=couleurs+mur[cMur].couleur
+				for iMur,pos in pairs(data.position) do
+					pos.redstone.set(15)
+				end
 			end
 		end
-		redstone.setBundledOutput(redstoneSide,couleurs)
 	end
 end
 function getEtat(x,y)
@@ -75,6 +78,9 @@ end
 function reset()
 	for cMur, data in pairs(mur) do
 		mur[cMur].etat=false
+		for iMur,pos in pairs(data.position) do
+			pos.redstone.set(0)
+		end
 	end
-	redstone.getBundledInput(redstoneSide,0)
+	
 end
