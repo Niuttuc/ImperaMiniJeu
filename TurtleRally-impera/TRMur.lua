@@ -1,4 +1,4 @@
-print("LOAD mur v0.06")
+print("LOAD mur v1.00")
 local mur={
 	rouge={
 		etat=true,
@@ -54,12 +54,12 @@ function test(x,y)
 			if cMur==couleurBouton then
 				mur[cMur].etat=false
 				for iMur,pos in pairs(data.position) do
-					pos.redstone.set(0)
+					pos.redstone.pp.set(0)
 				end
 			else
 				mur[cMur].etat=true
 				for iMur,pos in pairs(data.position) do
-					pos.redstone.set(15)
+					pos.redstone.pp.set(15)
 				end
 			end
 		end
@@ -79,7 +79,7 @@ function reset()
 	for cMur, data in pairs(mur) do
 		mur[cMur].etat=false
 		for iMur,pos in pairs(data.position) do
-			pos.redstone.set(0)
+			pos.redstone.pp.set(0)
 		end
 	end
 	
