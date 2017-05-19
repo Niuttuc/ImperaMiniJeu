@@ -1,4 +1,4 @@
-print("LOAD bonus v0.03")
+print("LOAD bonus v1.00")
 bonus={}
 items={
 	damageothers={id='minecraft:tnt'},
@@ -9,7 +9,7 @@ items={
 dessins={
 	damageothers=paintutils.loadImage("dessin/damageothers"),
 	damageself=paintutils.loadImage("dessin/damageself"),
-	heal=paintutils.loadImage("dessin/heal"), -- TConstruct:heartCanister
+	heal=paintutils.loadImage("dessin/heal"),
 	reroll=paintutils.loadImage("dessin/reroll")
 }
 
@@ -41,6 +41,7 @@ function add(x,y,nom)
 	else
 		data.selector=false
 		data.monitor=ahb.addPeripheral(nom)
+		data.monitor.setTextScale(0.5)
 	end
 	table.insert(bonus,data)
 end
