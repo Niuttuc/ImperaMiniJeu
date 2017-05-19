@@ -1,4 +1,4 @@
-print("LOAD bonus v1.00")
+print("LOAD bonus v1.01")
 bonus={}
 items={
 	damageothers={id='minecraft:tnt'},
@@ -41,7 +41,7 @@ function add(x,y,nom)
 	else
 		data.selector=false
 		data.monitor=ahb.addPeripheral(nom)
-		data.monitor.setTextScale(0.5)
+		data.monitor.pp.setTextScale(0.5)
 	end
 	table.insert(bonus,data)
 end
