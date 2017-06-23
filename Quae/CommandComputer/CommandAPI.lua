@@ -4,10 +4,10 @@ chat=peripheral.find("chatBox")
 function stop()
 	error('Arret utilisateur')
 end
-commands={"stop"={"group"="_OPS_","func"=stop}}
+commands={["stop"]={["group"]="_OPS_",["func"]=stop }}
 
 function addCommand(command,group,func)
-	commands[command]={"group"=group,"func"=func}
+	commands[command]={["group"]=group,["func"]=func}
 end
 
 function waitCommands()
