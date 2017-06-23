@@ -93,7 +93,7 @@ end
 function add(x,y,ttype,info,info2,info3)
 	maps[x][y]=ttype
 	if ttype=="mur2" then
-		mur.add(info,x,y)
+		mur.add(info,x,y,info2)
 	elseif ttype=="bout" then
 		mur.addBouton(info,x,y)
 	elseif ttype=="laser" then
@@ -131,18 +131,12 @@ function get(x,y)
 	return maps[x][y]
 end
 function actionTapis()
-	--local redstoneNormal=redstone.getBundledOutput(config.get("redstone"))
-	redstoneNormal=0
-	redstone.setBundledOutput(config.get("redstone2"),redstoneNormal+config.get("couleurTapis"))
 	joueur.itapisReset()
 	for iTapis=1, #tapis do
 		local idJoueur=joueur.presentGetId(tapis[iTapis].x,tapis[iTapis].y)		
 		if not(idJoueur==-1) then
 			if joueur.itapis(idJoueur) then
-				print("ROT "..tapis[iTapis].rot)
-				if not(tapis[iTapis].rot=="non") then
-					joueur.tourne(idJoueur,tapis[iTapis].rot)
-				end
+				
 				print("TAPIS")
 				joueur.deplacement(idJoueur,tapis[iTapis].x+tapis[iTapis].mx,tapis[iTapis].y+tapis[iTapis].my,false)
 				joueur.itapisOff(idJoueur)				
@@ -150,7 +144,16 @@ function actionTapis()
 		end
 	end
 	
-	redstone.setBundledOutput(config.get("redstone2"),redstoneNormal+config.get("couleurPlaque"))
+	for iTapis=1, #tapis do
+		local idJoueur=joueur.presentGetId(tapis[iTapis].x,tapis[iTapis].y)		
+		if not(idJoueur==-1) then
+			print("ROT "..tapis[iTapis].rot)
+			if not(tapis[iTapis].rot=="non") then
+				joueur.tourne(idJoueur,tapis[iTapis].rot)
+			end
+		end
+	end
+	
 	
 	for iPlaque=1, #plaques do
 		local idJoueur=joueur.presentGetId(plaques[iPlaque].x,plaques[iPlaque].y)
@@ -159,7 +162,6 @@ function actionTapis()
 		end
 	end
 	
-	redstone.setBundledOutput(config.get("redstone2"),redstoneNormal)
 	
 	etape.verif()	
 end
