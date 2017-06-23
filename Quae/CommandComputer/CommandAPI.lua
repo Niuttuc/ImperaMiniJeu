@@ -21,7 +21,7 @@ end
 
 function waitCommands()
 	while true do
-		global ev,player,args=os.pullEvent("command")
+		ev,player,args=os.pullEvent("command")
 		if storedCommands[args[1]] then
 			command=args[1]
 			table.remove(args,1)
