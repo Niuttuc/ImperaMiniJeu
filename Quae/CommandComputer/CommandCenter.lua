@@ -1,11 +1,11 @@
 os.loadAPI("commandAPI")
 chat=peripheral.find("chatBox")
 
-function addMembre()
- 	for i=1,#commandAPI.args do
-		commands.p("user",commandAPI.args[i],"group","set","membre")
-		chat.tell(commandAPI.args[i],"Vous etes desormais Membre d'Imperacube! Felicitations!",100000,true,"Imperacube")
-		chat.tell(commandAPI.args[i],commandAPI.args[i].." est desormais Membre d'Imperacube!",100000,true,"Imperacube")
+function addMembre(player,args)
+ 	for i=1,#args do
+		commands.p("user",args[i],"group","set","membre")
+		chat.tell(args[i],"Vous etes desormais Membre d'Imperacube! Felicitations!",100000,true,"Imperacube")
+		chat.tell(args[i],args[i].." est desormais Membre d'Imperacube!",100000,true,"Imperacube")
 	end
 end
 
