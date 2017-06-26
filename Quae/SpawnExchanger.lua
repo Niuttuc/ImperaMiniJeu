@@ -27,23 +27,23 @@ function wait()
 		qtyBlankRecordsInit=scan(chestRecord,"Blank Record")
 		qtyBlankRecords=qtyBlankRecordsInit
 		while qtyIron>=3 do
-			chestRod.pushItems("south",1,math.min(math.floor(qtyIron/3),64),1)
+			chestRod.pushItem("south",1,math.min(math.floor(qtyIron/3),64),1)
 			qtyIron=scan(chestRod,"Iron Ingot")
 		end
 		while qtyBlankRecords>=1 do
-			chestRecord.pushItems("south",1,1,1)
+			chestRecord.pushItem("south",1,1,1)
 			qtyBlankRecords=scan(chestRecord,"Blank Record")
 		end
 		for i=1,qtyBlankRecordsInit do
-			chestRecord.pullItem("down",1,1,5+i)
+			chestRecord.pullItem("down",2,1,5+i)
 		end
-		i=1
+		i=1	
 		while math.floor(qtyIronInit/3)>=64 do
-			chestRod.pullItem("down",1,64,6+i)
+			chestRod.pullItem("down",2,64,6+i)
 			qtyIronInit=qtyIronInit-64*3
 			i=i+1
 		end
-		chestRod.pullItem("down",1,64,6+i)
+		chestRod.pullItem("down",1,math.floor(qtyIronInit/3),6+i)
 	end
 end
 
