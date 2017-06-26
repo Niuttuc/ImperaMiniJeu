@@ -4,11 +4,11 @@ monitor=peripheral.wrap("top")
 
 function scan(chest,item)
 	chest.condenseItem()
-	allStacks=chest.getAllStacks
+	allStacks=chest.getAllStacks()
 	qty={tot=0}
 	for i=1,#allStacks do
 		stack=allStacks[i].all()
-		if stack.item_name==item then
+		if stack.display_name==item then
 			qty={[i]=stack.qty}
 			qty.tot=qty.tot+stack.qty
 		end
