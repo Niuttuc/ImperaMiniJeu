@@ -43,7 +43,7 @@ function wait()
 			qtyIronInit=qtyIronInit-64*3
 			i=i+1
 		end
-		chestRod.pullItem("down",1,math.floor(qtyIronInit/3),6+i)
+		chestRod.pullItem("down",2,math.floor(qtyIronInit/3),6+i)
 	end
 end
 
