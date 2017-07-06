@@ -27,7 +27,7 @@ function wait()
 		qtyBlankRecordsInit=scan(chestRecord,"Blank Record")
 		qtyBlankRecords=qtyBlankRecordsInit
 		while qtyIron>=3 do
-			chestRod.pushItem("south",1,math.min(math.floor(qtyIron/3),64),1)
+			chestRod.pushItem("south",1,math.min(math.floor(qtyIron/3)*3,64),1)
 			qtyIron=scan(chestRod,"Iron Ingot")
 		end
 		while qtyBlankRecords>=1 do
