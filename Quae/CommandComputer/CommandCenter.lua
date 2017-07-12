@@ -9,7 +9,7 @@ function addMembre(player,args)
 	end
 end
 function tpOlymcube(player,args)
-	commands.mwtp("Olymcube",player,"-7 7 8")
+	commands.mwtp("Olymcube",player,"-7 9 8")
 end
 commandAPI.addCommand("membre","_OPS_",addMembre)
 commandAPI.addCommand("olymcube","_ALL_",tpOlymcube)
