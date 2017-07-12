@@ -16,7 +16,7 @@ function scan(chest,item)
 end
 
 function wait()
-	monitor.setTextScale(2)
+	monitor.setTextScale(1)
 	xmax,ymax=monitor.getSize()
 	monitor.setCursorPos(math.floor(xmax/2)-10, math.floor(ymax/2)-1)
 	monitor.write("Purgez vous du Warp!")
@@ -34,10 +34,10 @@ function wait()
 			ans1=ItemChest.pushItem("down",1,1,1)
 			ans2=ItemChest.pushItem("down",2,64,1)
 			if ans1==1 and ans2==64 then
-				command.thaumcraft("warp @p set 0")
-				command.thaumcraft("warp @p set 0 PERM")
-				command.thaumcraft("warp @p set 0 TEMP")
-				command.say("@p a ete purifie!")
+				commands.thaumcraft("warp @p set 0")
+				commands.thaumcraft("warp @p set 0 PERM")
+				commands.thaumcraft("warp @p set 0 TEMP")
+				commands.say("@p a ete purifie!")
 			end
 		end
 	end

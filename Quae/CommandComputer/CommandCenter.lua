@@ -8,6 +8,12 @@ function addMembre(player,args)
 		chat.tell(args[i],args[i].." est desormais Membre d'Imperacube!",100000,true,"Imperacube")
 	end
 end
-
+function tpOlymcube(player,args)
+	commands.mwtp("Olymcube",player,"-7 7 8")
+end
 commandAPI.addCommand("membre","_OPS_",addMembre)
+commandAPI.addCommand("olymcube","_ALL_",tpOlymcube)
+commandAPI.addCommand("ol","_ALL_",tpOlymcube)
+commandAPI.addCommand("oc","_ALL_",tpOlymcube)
+
 commandAPI.waitCommands()

@@ -7,7 +7,7 @@ end
 storedCommands={["stop"]={["group"]="_OPS_",["func"]=stop }}
 
 function addCommand(command,group,func)
-	storedCommands[command]={["group"]=group,["func"]=func}
+	storedCommands[string.lower(command)]={["group"]=group,["func"]=func}
 end
 function listArgs(list)
 	local list2=list
@@ -22,8 +22,8 @@ end
 function waitCommands()
 	while true do
 		ev,player,args=os.pullEvent("command")
-		if storedCommands[args[1]] then
-			command=args[1]
+		if storedCommands[string.lower(args[1])] then
+			command=string.lower(args[1])
 			table.remove(args,1)
 			whatever,playerGroups=commands.p('user',player)
 			for i=2,#playerGroups do
