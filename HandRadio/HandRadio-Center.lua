@@ -1,7 +1,10 @@
 perNames=peripheral.getNames()
 periph={}
-for i=1,#perNames() do
-    periph[peripheral.getType(perNames[i])][#periph[peripheral.getType(perNames[i])]+1]=peripheral.wrap(perNames[i])
+for i=1,#perNames do
+    if periph[peripheral.getType(perNames[i])] then
+        periph[peripheral.getType(perNames[i])][#periph[peripheral.getType(perNames[i])]+1]=peripheral.wrap(perNames[i])
+    else
+        periph[peripheral.getType(perNames[i])]={peripheral.wrap(perNames[i])}
 end
 
 reds={
@@ -216,13 +219,13 @@ end
 
 function updatePoints(pointsBleus,pointsRouges)
     reds.dizBlue.set(math.floor(pointsBleus/10))
-    reds.unitBlue.set(pointsBleus%10))
+    reds.unitBlue.set(pointsBleus%10)
     reds.dizRed.set(math.floor(pointsRouges/10))
     reds.unitRed.set(pointsRouges%10)
 end
 function updateTime(minutes,seconds)
     reds.dizMin.set(math.floor(minutes/10))
-    reds.unitMin.set(minutes%10))
+    reds.unitMin.set(minutes%10)
     reds.dizSec.set(math.floor(pointsRouges/10))
     reds.unitRed.set(pointsRouges%10)
 end
