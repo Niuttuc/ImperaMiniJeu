@@ -185,7 +185,7 @@ function scoreTracker()
                 score.blue=score.blue+1
             end
         elseif redstone.getBundledInput('right')==colors.blue then
-            for k,v in pairs(cageSensor.blueSouth.getPlayers) do
+            for k,v in pairs(cageSensor.blueSouth.getPlayers()) do
                 if not(v.name==teams.arbitre[1]) and (ahb.isIn(v.name,teams.red) or ahb.isIn(v.name,teams.blue)) then
                     local infoPlayer=cageSensor.blueSouth.getPlayerByName(v.name).all()
                     if infoPlayer.position.x<=3.7 and infoPlayer.position.x>=-2.0125 and infoPlayer.position.z<=4.0125 then
@@ -193,7 +193,7 @@ function scoreTracker()
                     end
                 end
             end
-            for k,v in pairs(cageSensor.blueNorth.getPlayers) do
+            for k,v in pairs(cageSensor.blueNorth.getPlayers()) do
                 if not(v.name==teams.arbitre[1]) and (ahb.isIn(v.name,teams.red) or ahb.isIn(v.name,teams.blue)) then
                     local infoPlayer=cageSensor.blueNorth.getPlayerByName(v.name).all()
                     if infoPlayer.position.x<=3.7 and infoPlayer.position.x>=-2.0125 and infoPlayer.position.z>=-3.0125 then
@@ -210,6 +210,7 @@ function scoreTracker()
 end
 
 function timer()
+    lasttimer=os.startTimer(1)
     while tempsPartie>0 do
         ev, value=os.pullEvent('timer')
         if value==lastTimer then
