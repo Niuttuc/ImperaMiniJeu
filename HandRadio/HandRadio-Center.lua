@@ -151,7 +151,7 @@ function getCommandsInGame()
                 return false
             elseif args[1]=='end' then
                 tempsPartie=1
-                updateTime()
+                updateTime(minSec(tempsPartie))
             elseif args[1]=='points' and #args>2 and args[2]=='rouge' and tonumber(args[3]) then
                 score.red=score.red+tonumber(args[3])
             elseif args[1]=='points' and #args>2 and args[2]=='bleu' and tonumber(args[3]) then
