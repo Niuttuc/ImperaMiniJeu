@@ -110,7 +110,7 @@ function updateTeams()
         monitor.clear()
         ahb.center('Equipes:',monitor,1)
         if #teams.arbitre>0 then
-            ahb.centerBlit(' Arbitre: '..teams.arbitre[1]..' ',monitor,2,string.rep('3',#('Arbitre: '..teams.arbitre[1])+1),string.rep('2',#('Arbitre: '..teams.arbitre[1])+2))
+            ahb.centerBlit(' Arbitre: '..teams.arbitre[1]..' ',monitor,2,colors.black,colors.pink)
         end
         for i=1,y-3 do
             monitor.separateWindow.setCursorPos(1,i)
@@ -121,7 +121,7 @@ function updateTeams()
                 ahb.centerBlit(' '..teams.blue[i],monitor.blueWin,i,colors.black,colors.blue)
             end
         end
-        for i=1,#teams.orange do
+        for i=1,#teams.red do
             if i<=y-3 then
                 ahb.centerBlit(' '..teams.red[i]..' ',monitor.redWin,i,colors.black,colors.red)
             end
