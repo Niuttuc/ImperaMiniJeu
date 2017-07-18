@@ -159,7 +159,7 @@ function scoreTracker()
         ev=os.pullEvent('redstone')
         if redstone.getBundledInput('right')==colors.red then
             bool=true
-            for k,v in pairs(cageSensor.redSouth.getPlayers)
+            for k,v in pairs(cageSensor.redSouth.getPlayers) do
                 if not(v.name==teams.arbitre[1]) and (ahb.isIn(v.name,teams.red) or ahb.isIn(v.name,teams.blue)) then
                     local infoPlayer=cageSensor.redSouth.getPlayerByName(v.name).all()
                     if infoPlayer.position.x<=3.0125 and infoPlayer.position.x>=-2.7 and infoPlayer.position.z<=4.0125 then
@@ -167,7 +167,7 @@ function scoreTracker()
                     end
                 end
             end
-            for k,v in pairs(cageSensor.redNorth.getPlayers)
+            for k,v in pairs(cageSensor.redNorth.getPlayers) do
                 if not(v.name==teams.arbitre[1]) and (ahb.isIn(v.name,teams.red) or ahb.isIn(v.name,teams.blue)) then
                     local infoPlayer=cageSensor.redNorth.getPlayerByName(v.name).all()
                     if infoPlayer.position.x<=3.0125 and infoPlayer.position.x>=-2.7 and infoPlayer.position.z>=-3.0125 then
@@ -179,7 +179,7 @@ function scoreTracker()
                 score.blue=score.blue+1
             end
         elseif redstone.getBundledInput('right')==colors.blue then
-            for k,v in pairs(cageSensor.blueSouth.getPlayers)
+            for k,v in pairs(cageSensor.blueSouth.getPlayers) do
                 if not(v.name==teams.arbitre[1]) and (ahb.isIn(v.name,teams.red) or ahb.isIn(v.name,teams.blue)) then
                     local infoPlayer=cageSensor.blueSouth.getPlayerByName(v.name).all()
                     if infoPlayer.position.x<=3.7 and infoPlayer.position.x>=-2.0125 and infoPlayer.position.z<=4.0125 then
@@ -187,7 +187,7 @@ function scoreTracker()
                     end
                 end
             end
-            for k,v in pairs(cageSensor.blueNorth.getPlayers)
+            for k,v in pairs(cageSensor.blueNorth.getPlayers) do
                 if not(v.name==teams.arbitre[1]) and (ahb.isIn(v.name,teams.red) or ahb.isIn(v.name,teams.blue)) then
                     local infoPlayer=cageSensor.blueNorth.getPlayerByName(v.name).all()
                     if infoPlayer.position.x<=3.7 and infoPlayer.position.x>=-2.0125 and infoPlayer.position.z>=-3.0125 then
@@ -206,7 +206,7 @@ end
 function timer()
     while tempsPartie>0 do
         ev, value=os.pullEvent('timer')
-        if value=lastTimer then
+        if value==lastTimer then
             tempsPartie=tempsPartie-1
             updateTime(minSec(tempsPartie))
             lasttimer=os.startTimer(1)
@@ -233,7 +233,7 @@ while true do
     tempsPartie=defaultTempsPartie
     getCommandsBeforeGame()
     score={blue=0,red=0}
-    updateScore()
+    updatePoints(score.blue,score.red)
     updateTime(minSec(tempsPartie))
     updateTeams()
     stopped=parallel.waitForAny(getCommandsInGame, scoreTracker, timer)
