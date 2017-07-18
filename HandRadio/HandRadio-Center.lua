@@ -150,7 +150,7 @@ function getCommandsInGame()
             elseif args[1]=='reset' then
                 return false
             elseif args[1]=='end' then
-                tempsPartie=0
+                tempsPartie=1
                 updateTime()
             elseif args[1]=='points' and #args>2 and args[2]=='rouge' and tonumber(args[3]) then
                 score.red=score.red+tonumber(args[3])
@@ -249,7 +249,7 @@ while true do
     if stopped==1 then
         teams={blue={},red={},arbitre={}}
         score={blue=0,red=0}
-        updatePoints()
+        updatePoints(score.blue,score.red)
         updateTeams()
     else
         if score.blue>score.red then
