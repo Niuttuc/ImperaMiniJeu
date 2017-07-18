@@ -165,7 +165,7 @@ function scoreTracker()
         ev=os.pullEvent('redstone')
         if redstone.getBundledInput('right')==colors.red then
             bool=true
-            for k,v in pairs(cageSensor.redSouth.getPlayers) do
+            for k,v in pairs(cageSensor.redSouth.getPlayers()) do
                 if not(v.name==teams.arbitre[1]) and (ahb.isIn(v.name,teams.red) or ahb.isIn(v.name,teams.blue)) then
                     local infoPlayer=cageSensor.redSouth.getPlayerByName(v.name).all()
                     if infoPlayer.position.x<=3.0125 and infoPlayer.position.x>=-2.7 and infoPlayer.position.z<=4.0125 then
@@ -173,7 +173,7 @@ function scoreTracker()
                     end
                 end
             end
-            for k,v in pairs(cageSensor.redNorth.getPlayers) do
+            for k,v in pairs(cageSensor.redNorth.getPlayers()) do
                 if not(v.name==teams.arbitre[1]) and (ahb.isIn(v.name,teams.red) or ahb.isIn(v.name,teams.blue)) then
                     local infoPlayer=cageSensor.redNorth.getPlayerByName(v.name).all()
                     if infoPlayer.position.x<=3.0125 and infoPlayer.position.x>=-2.7 and infoPlayer.position.z>=-3.0125 then
@@ -205,7 +205,7 @@ function scoreTracker()
                 score.red=score.red+1
             end
         end
-        updatePoints()
+        updatePoints(score.blue,score.red)
     end
 end
 
@@ -214,6 +214,7 @@ function timer()
         ev, value=os.pullEvent('timer')
         if value==lastTimer then
             tempsPartie=tempsPartie-1
+            print(tempsPartie)
             updateTime(minSec(tempsPartie))
             lasttimer=os.startTimer(1)
         end
