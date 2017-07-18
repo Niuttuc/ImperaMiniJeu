@@ -145,6 +145,7 @@ function getCommandsInGame()
                 print('game paused')
             elseif args[1]=='resume' then
                 pause=false
+                lastTimer=os.startTimer(1)
                 print('game resumed')
             elseif args[1]=='reset' then
                 return false
@@ -163,7 +164,7 @@ end
 function scoreTracker()
     while true do
         ev=os.pullEvent('redstone')
-        if redstone.getBundledInput('right')==colors.red then
+        if redstone.getBundledInput('right')==colors.red and not(pause) then
             bool=true
             for k,v in pairs(cageSensor.redSouth.getPlayers()) do
                 if not(v.name==teams.arbitre[1]) and (ahb.isIn(v.name,teams.red) or ahb.isIn(v.name,teams.blue)) then
@@ -184,7 +185,7 @@ function scoreTracker()
              if bool then
                 score.blue=score.blue+1
             end
-        elseif redstone.getBundledInput('right')==colors.blue then
+        elseif redstone.getBundledInput('right')==colors.blue and not(pause)then
             for k,v in pairs(cageSensor.blueSouth.getPlayers()) do
                 if not(v.name==teams.arbitre[1]) and (ahb.isIn(v.name,teams.red) or ahb.isIn(v.name,teams.blue)) then
                     local infoPlayer=cageSensor.blueSouth.getPlayerByName(v.name).all()
@@ -206,18 +207,19 @@ function scoreTracker()
             end
         end
         updatePoints(score.blue,score.red)
+        os.sleep(5)
     end
 end
 
 function timer()
-    lasttimer=os.startTimer(1)
+    lastTimer=os.startTimer(1)
     while tempsPartie>0 do
         ev, value=os.pullEvent('timer')
-        if value==lastTimer then
+        if value==lastTimer and not(pause) then
             tempsPartie=tempsPartie-1
             print(tempsPartie)
             updateTime(minSec(tempsPartie))
-            lasttimer=os.startTimer(1)
+            lastTimer=os.startTimer(1)
         end
     end
 end
