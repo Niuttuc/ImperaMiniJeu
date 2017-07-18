@@ -32,6 +32,7 @@ score={blue=0,red=0}
 os.loadAPI('ahb')
 defaultTempsPartie=600
 for k,monitor in pairs(periph.monitor) do
+    monitor.setTextScale(2)
     x,y=monitor.getSize()
     periph.monitor[k].blueWin=window.create(monitor,1,4,math.floor(x/2-0.5),y-3,true)
     periph.monitor[k].separateWindow=window.create(monitor,math.floor(x/2+0.5),4,1,y-3,true)
