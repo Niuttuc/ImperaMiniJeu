@@ -217,7 +217,6 @@ function timer()
         ev, value=os.pullEvent('timer')
         if value==lastTimer and not(pause) then
             tempsPartie=tempsPartie-1
-            print(tempsPartie)
             updateTime(minSec(tempsPartie))
             lastTimer=os.startTimer(1)
         end
@@ -234,7 +233,7 @@ function updateTime(minutes,seconds)
     reds.dizMin.set(math.floor(minutes/10))
     reds.unitMin.set(minutes%10)
     reds.dizSec.set(math.floor(seconds/10))
-    reds.unitRed.set(seconds%10)
+    reds.unitSec.set(seconds%10)
 end
  
  
