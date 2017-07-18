@@ -5,6 +5,7 @@ for i=1,#perNames do
         periph[peripheral.getType(perNames[i])][#periph[peripheral.getType(perNames[i])]+1]=peripheral.wrap(perNames[i])
     else
         periph[peripheral.getType(perNames[i])]={peripheral.wrap(perNames[i])}
+    end
 end
 
 reds={
@@ -107,8 +108,8 @@ function updateTeams()
     for k,monitor in pairs(periph.monitor) do
         monitor.clear()
         ahb.center('Equipes:',monitor,1)
-        if teams.arbitre then
-            ahb.centerBlit(' Arbitre: '..teams.arbitre[1]..' ',monitor,2,string.rep('3',#('Arbitre: '..teams.arbitre[1])+2),string.rep('2',#('Arbitre: '..teams.arbitre[1])+2))
+        if #teams.arbitre>0 then
+            ahb.centerBlit(' Arbitre: '..teams.arbitre[1]..' ',monitor,2,string.rep('3',#('Arbitre: '..teams.arbitre[1])+1),string.rep('2',#('Arbitre: '..teams.arbitre[1])+2))
         end
         for i=1,y-3 do
             monitor.separateWindow.setCursorPos(1,i)
@@ -121,7 +122,7 @@ function updateTeams()
         end
         for i=1,#teams.orange do
             if i<=y-3 then
-                ahb.centerBlit(' '..teams.orange[i]..' ',monitor.redWin,i,string.rep('f',#teams.orange[i]+2),string.rep('1',#teams.orange[i]+2))
+                ahb.centerBlit(' '..teams.red[i]..' ',monitor.redWin,i,string.rep('f',#teams.red[i]+2),string.rep('1',#teams.red[i]+2))
             end
         end
     end
