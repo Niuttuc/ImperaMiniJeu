@@ -117,12 +117,12 @@ function updateTeams()
         end
         for i=1,#teams.blue do
             if i<=y-3 then
-                ahb.centerBlit(' '..teams.blue[i],monitor.blueWin,i,string.rep('f',#teams.blue[i]+1),string.rep('3',#teams.blue[i]+1))
+                ahb.centerBlit(' '..teams.blue[i],monitor.blueWin,i,colors.black,colors.blue)
             end
         end
         for i=1,#teams.orange do
             if i<=y-3 then
-                ahb.centerBlit(' '..teams.red[i]..' ',monitor.redWin,i,string.rep('f',#teams.red[i]+2),string.rep('1',#teams.red[i]+2))
+                ahb.centerBlit(' '..teams.red[i]..' ',monitor.redWin,i,colors.black,colors.red)
             end
         end
     end
