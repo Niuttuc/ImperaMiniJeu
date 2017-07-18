@@ -15,7 +15,7 @@ function minSec(temps)
     if type(temps)=='table' then
         return temps
     else
-        return {minute=(temps-temps%60)/60,seconde=temps%60}
+        return (temps-temps%60)/60,temps%60
     end
 end
  
