@@ -306,11 +306,11 @@ function baseConverter (toConvert,baseOri,baseDest)
   for i=1,#convertList do
     convertDec=convertDec+convertList[i]*baseOri^(#convertList-i)
   end
-  bool=true
-  newList={}
-  newDec=0
+  local bool=true
+  local newList={}
+  local newDec=0
   while not(convertDec==newDec) do
-    temp=convertDec-newDec
+    local temp=convertDec-newDec
     i=0
     while temp>=baseDest do
       temp=(temp-temp%baseDest)/baseDest
@@ -319,7 +319,7 @@ function baseConverter (toConvert,baseOri,baseDest)
     newList[i]=temp
     newDec=newDec+temp*baseDest^i
   end
-  newString=""
+  local newString=""
   for i=table.maxn(newList),0,-1 do
     if newList[i] then
       if newList[i]>9 then
