@@ -289,6 +289,40 @@ function configTab(programName,var,action,key,value)
 	end
 end
 
+function hexToBi(hexString)
+	local biString=""
+	for i=1,#hexString do
+		if tonumber(string.sub(hexString,i,i)) then
+      		local decN=tonumber(string.sub(hexString,i,i))
+    	else
+      		local decN=string.byte(string.sub(hexString,i,i))-87
+    	end
+		local newDec=0
+		local stringN=""
+		while not(decN==newDec) do
+		  local temp=decN-newDec
+		  local j=0
+		  while temp>=2 do
+		    temp=(temp-temp%2)/2
+		    j=j+1
+		  end
+		  stringN=stringN..tostring(temp)
+		  newDec=newDec+temp*2^j
+		end
+		stringN=string.rep("0",math.max(#stringN-4,0))..stringN
+		biString=biString..baseConverter(string.sub(hexString,i,i),16,2)
+	end
+	return biString
+end
+
+function biToHex(biString)
+	local hexString=""
+	for i=#biString,1,-4 do
+		hexString=baseConverter(string.sub(biString,i-3,i),2,16)..hexString
+	end
+	return hexString
+end
+
 function baseConverter (toConvert,baseOri,baseDest)
   if type(toConvert)=='number' then
     toConvert=tostring(toConvert)
@@ -306,7 +340,6 @@ function baseConverter (toConvert,baseOri,baseDest)
   for i=1,#convertList do
     convertDec=convertDec+convertList[i]*baseOri^(#convertList-i)
   end
-  local bool=true
   local newList={}
   local newDec=0
   while not(convertDec==newDec) do
