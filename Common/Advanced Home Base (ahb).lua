@@ -292,10 +292,11 @@ end
 function hexToBi(hexString)
 	local biString=""
 	for i=1,#hexString do
+		local decN=0
 		if tonumber(string.sub(hexString,i,i)) then
-      		local decN=tonumber(string.sub(hexString,i,i))
+      		decN=tonumber(string.sub(hexString,i,i))
     	else
-      		local decN=string.byte(string.sub(hexString,i,i))-87
+      		decN=string.byte(string.sub(hexString,i,i))-87
     	end
 		local newDec=0
 		local stringN=""
