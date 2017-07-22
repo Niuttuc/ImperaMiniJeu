@@ -303,6 +303,7 @@ function hexToBi(hexString)
 		while not(decN==newDec) do
 		  local temp=decN-newDec
 		  local j=0
+		  local jOld=4
 		  while temp>=2 do
 		    temp=(temp-temp%2)/2
 		    j=j+1
@@ -311,10 +312,9 @@ function hexToBi(hexString)
 		  newDec=newDec+temp*2^j
 		  jOld=j
 		end
-		stringN=string.rep("0",4-#stringN)..stringN
-		biString=biString..stringN
+		biString=biString..stringN..' '
 	end
-	return biString
+	return string.sub(biString,1,-2)
 end
 
 function biToHex(biString)
