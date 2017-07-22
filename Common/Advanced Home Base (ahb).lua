@@ -311,7 +311,7 @@ function hexToBi(hexString)
 		  newDec=newDec+temp*2^j
 		end
 		stringN=string.rep("0",math.max(#stringN-4,0))..stringN
-		biString=biString..baseConverter(string.sub(hexString,i,i),16,2)
+		biString=biString..stringN
 	end
 	return biString
 end
