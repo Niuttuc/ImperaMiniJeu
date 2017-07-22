@@ -288,3 +288,48 @@ function configTab(programName,var,action,key,value)
 		return config[var]
 	end
 end
+
+function baseConverter (toConvert,baseOri,baseDest)
+  if type(toConvert)=='number' then
+    toConvert=tostring(toConvert)
+  end
+  local convertList={}
+  for i=1,#toConvert do
+    if tonumber(string.sub(toConvert,i,i)) then
+      convertList[i]=tonumber(string.sub(toConvert,i,i))
+    else
+      convertList[i]=string.byte(string.sub(toConvert,i,i))-87
+    end
+  end
+ 
+  local convertDec=0
+  for i=1,#convertList do
+    convertDec=convertDec+convertList[i]*baseOri^(#convertList-i)
+  end
+  bool=true
+  newList={}
+  newDec=0
+  while not(convertDec==newDec) do
+    temp=convertDec-newDec
+    i=0
+    while temp>=baseDest do
+      temp=(temp-temp%baseDest)/baseDest
+      i=i+1
+    end
+    newList[i]=temp
+    newDec=newDec+temp*baseDest^i
+  end
+  newString=""
+  for i=table.maxn(newList),0,-1 do
+    if newList[i] then
+      if newList[i]>9 then
+        newString=newString..string.char(87+newList[i])
+      else
+        newString=newString..tostring(newList[i])
+      end
+    else
+      newString=newString.."0"
+    end
+  end
+  return newString,tonumber(newString)
+end
