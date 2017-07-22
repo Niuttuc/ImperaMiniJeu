@@ -307,10 +307,11 @@ function hexToBi(hexString)
 		    temp=(temp-temp%2)/2
 		    j=j+1
 		  end
-		  stringN=stringN..tostring(temp)
+		  stringN=stringN..string.rep('0',jOld-j-1)..tostring(temp)
 		  newDec=newDec+temp*2^j
+		  jOld=j
 		end
-		stringN=string.rep("0",math.max(#stringN-4,0))..stringN
+		stringN=string.rep("0",4-#stringN)..stringN
 		biString=biString..stringN
 	end
 	return biString
