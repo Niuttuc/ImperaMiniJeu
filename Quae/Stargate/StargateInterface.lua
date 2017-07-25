@@ -1,11 +1,54 @@
 mon = peripheral.find("monitor")
 sg = peripheral.find("stargate")
+eChest = peripheral.find("ender_chest")
+drive = peripheral.find("drive")
  
 mon.setBackgroundColor(colors.black)
 mon.clear()
 maxEng = 50000
 dialling = {}
 
+if fs.exists('stargateBookmarks') then
+  file = fs.open('stargateBookmarks',"r")
+  bookmarks = textutils.unserialize(file.readAll())
+  file.close()
+else
+  bookmarks={}
+  file = fs.open('stargateBookmarks',"w")
+  file.write(textutils.serialize(bookmarks))
+  file.close()
+end
+if fs.exists('stargateHistory') then
+  file = fs.open('stargateHistory',"r")
+  history = textutils.unserialize(file.readAll())
+  file.close()
+else
+  history={}
+  file = fs.open('stargateHistory',"w")
+  file.write(textutils.serialize(history))
+  file.close()
+end
+if bookmarks.version then
+  if eChest then
+    while not(eChest.getStackInSlot(1)) do
+      sleep(1)
+    end
+    if tonumber(string.sub(eChest.getStackInSlot(1).display_name,2,-1))>bookmarks.version then
+      eChest.pushItem('up',1,1)
+      fs.delete("stargateBookmarks")
+      fs.copy(drive.getMountPath()..'/stargateBookmarks', "stargateBookmarks")
+      file = fs.open('stargateBookmarks',"r")
+      bookmarks = textutils.unserialize(file.readAll())
+      file.close()
+    end
+else
+  eChest.pushItem('up',1,1)
+    fs.delete("stargateBookmarks")
+    fs.copy(drive.getMountPath()..'/stargateBookmarks', "stargateBookmarks")
+    file = fs.open('stargateBookmarks',"r")
+    bookmarks = textutils.unserialize(file.readAll())
+    file.close()
+end
 
 xmax,ymax = mon.getSize()
 homeWin=window.create(mon,1,1,xmax,ymax,false)
@@ -186,30 +229,29 @@ function drawBookmarksPage()
       bookWin.setCursorPos(1, yc)
       bookWin.clearLine(" ")
   end
-  for i= 1,y do
-    if i%2 == 1 then
-      bookWin.setBackgroundColor(colors.red)
-    else
-      bookWin.setBackgroundColor(colors.gray)
-    end
-    if fs.exists(tostring(i)) then
-      file = fs.open(tostring(i),"r")
-      bookmark = textutils.unserialize(file.readAll())
-      file.close()
-      bookWin.setCursorPos(1,i)
-      for k,v in pairs(bookmark) do
-        if k == "name" then
-          bookWin.write(v)
-          bookWin.setCursorPos(x/2, i)
-          bookWin.write(bookmark.address)
-          bookWin.setCursorPos(x,i)
-          bookWin.setBackgroundColor(colors.blue)
-          bookWin.write("X")
-        end
+
+  if fs.exists('stargateBookmarks') then
+    file = fs.open('stargateBookmarks',"r")
+    bookmarks = textutils.unserialize(file.readAll())
+    file.close()
+    for i= 1,min(y,#bookmarks) do
+      if i%2 == 1 then
+        bookWin.setBackgroundColor(colors.red)
+      else
+        bookWin.setBackgroundColor(colors.gray)
       end
-    elseif i < y-2 then
-      bookWin.setCursorPos(1, i)
-      bookWin.write("Ajouter Une Adresse")
+      bookWin.setCursorPos(1,i)
+      if bookmarks[i] then
+        bookWin.write(bookmarks[i].address)
+        bookWin.setCursorPos(x/2, i)
+        bookWin.write(bookmarks[i].address)
+        bookWin.setCursorPos(x,i)
+        bookWin.setBackgroundColor(colors.blue)
+        bookWin.write("X")
+      elseif i < y-2 then
+        bookWin.setCursorPos(1, i)
+        bookWin.write("Ajouter Une Adresse")
+      end
     end
   end
   bookWin.setCursorPos(x/2-2, y-1)
@@ -251,8 +293,8 @@ function drawHistoryButton()
 end
  
 function addToHistory(address)
-  if fs.exists("history") then
-    file = fs.open("history", "r")
+  if fs.exists("stargateHistory") then
+    file = fs.open("stargateHistory", "r")
     history = textutils.unserialize(file.readAll())
     file.close()
   else
@@ -275,7 +317,7 @@ function addToHistory(address)
     --print("string.len too short")
   --end
   table.insert(history, 1, address)
-  file = fs.open("history", "w")
+  file = fs.open("stargateHistory", "w")
   file.write(textutils.serialize(history))
   file.close()
 end
@@ -294,8 +336,8 @@ function drawHistoryPage()
       historyWin.setCursorPos(1, yc)
       historyWin.clearLine(" ")
   end
-  if fs.exists("history") then
-    file = fs.open("history","r")
+  if fs.exists("stargateHistory") then
+    file = fs.open("stargateHistory","r")
     historyTable = textutils.unserialize(file.readAll())
     file.close()
     test = textutils.serialize(historyTable)
@@ -383,38 +425,45 @@ while true do
               drawHome()
               break
             elseif param2 > x-2 then -- user clicked delete on a bookmark
-              if fs.exists(tostring(param3)) then
-                fs.delete(tostring(param3))
+              if fs.exists('stargateBookmarks') then
+                file = fs.open('stargateBookmarks',"r")
+                bookmarks = textutils.unserialize(file.readAll())
+                file.close()
+                if bookmarks[param3] then
+                  table.remove(bookmarks,param3)
+                end
+                file = fs.open('stargateBookmarks',"w")
+                file.write(textutils.serialize(bookmarks))
+                file.close()
               end
             else -- user has clicked on a bookmark
-              if fs.exists(tostring(param3)) then
-                file = fs.open(tostring(param3), "r")
-                gateData = textutils.unserialize(file.readAll()) -- GATE DATA VARIABLE!!!
-                file.close()
-                bookWin.setVisible(false)
-                drawHome()
-                  if gateData.address then
-                    ok, result = pcall(sg.dial, gateData.address)
-                    if ok then
-                      status, int = sg.stargateState()
-                      address = gateData.address
-                      addToHistory(gateData.address)
-                    end
-                  end
-                  sleep(.5)
-                break
+              file = fs.open("stargateBookmarks", "r")
+              bookmarks= textutils.unserialize(file.readAll())
+              file.close()
+              gateData =  bookmarks[param3]-- GATE DATA VARIABLE!!!
+              bookWin.setVisible(false)
+              drawHome()
+              if gateData then
+                ok, result = pcall(sg.dial, gateData.address)
+                if ok then
+                  status, int = sg.stargateState()
+                  address = gateData.address
+                  addToHistory(gateData.address)
+                end
               else
-                x,y = mon.getSize()
                 for i = 1,y do
-                  if fs.exists(tostring(i)) == false then
+                  if not(bookmarks[i]) then
                     homeWin.setVisible(false)
-                    file = fs.open(tostring(i), "w")
-                    file.write(textutils.serialize(inputPage()))
+                    bookmarks[i]=inputPage()
+                    file = fs.open("stargateBookmarks", "w")
+                    file.write(textutils.serialize(bookmarks)
                     file.close()
                     break
                   end
                 end
               end
+              sleep(.5)
+              break
             end
           else
             drawHome()
@@ -433,25 +482,30 @@ while true do
             drawHome()
             break --might break everything
           elseif param2 >= x-9 and param3 <= clickLimit then -- user has clicked save.
-            if fs.exists("history") then
-              file = fs.open("history", "r")
+            if fs.exists("stargateHistory") then
+              file = fs.open("stargateHistory", "r")
               history = textutils.unserialize(file.readAll())
               file.close()
-              for i = 1,y do
-                if fs.exists(tostring(i)) == false then
-                  file = fs.open(tostring(i), "w")
-                  file.write(textutils.serialize(historyInputPage(history[param3])))
-                  file.close()
-                  historyWin.setVisible(false)
-                  break
+              if fs.exists("stargateBookmarks") then
+                file = fs.open('stargateBookmarks',"r")
+                bookmarks = textutils.unserialize(file.readAll())
+                file.close()
+                for i = 1,y do
+                  if not(bookmarks[i]) then                    
+                    bookmarks[i]=historyInputPage(history[param3])
+                    file = fs.open("stargateBookmarks", "w")
+                    file.write(textutils.serialize(bookmarks)
+                    file.close()
+                    break
+                  end
                 end
               end
             end
-          homeWin.setVisible(false)
-          drawHome()
-          break  
-        end    
-      end
+            homeWin.setVisible(false)
+            drawHome()
+            break  
+          end    
+        end
       end
     elseif param2 > x/2+2 and param2 <= x/2+7 and param3 >= y-4 and param3 <= y-2 then -- user clicked TERM
       ok, result = pcall(sg.disconnect)
