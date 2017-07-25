@@ -11,7 +11,7 @@ xmax,ymax = mon.getSize()
 homeWin=window.create(mon,1,1,xmax,ymax,false)
 homeWin.setBackgroundColor(colors.black)
 homeWin.clear()
-homeWin.setCursorPos(x/2-5,1)
+homeWin.setCursorPos(xmax/2-5,1)
 homeWin.setTextColor(colors.red)
 homeWin.write(os.getComputerLabel())
 
@@ -29,11 +29,11 @@ localAdd.write(sg.localAddress())
 irisStateColors={[-1]=colors.red,[0]=colors.black,[1]=colors.lime}
 irisWin={}
 for i=-1,1 do
-  irisWin[i]=window.create(homeWin,6,math.floor(ymax/3)-2,3,y/3+1,false)
+  irisWin[i]=window.create(homeWin,6,math.floor(ymax/3)-2,3,ymax/3+2,false)
   irisWin[i].setBackgroundColor(colors.lightGray)
   irisWin[i].setTextColor(irisStateColors[i])
-
-  for  yc = 1, 10 do
+  irisWin[i].clear()
+  for  yc = 1, ymax/3+1 do
     char = string.sub("   IRIS   ", yc, yc)
     irisWin[i].setCursorPos(2, yc)
     irisWin[i].clearLine()
@@ -64,8 +64,8 @@ hystoryBtonWin.setTextColor(colors.black)
 hystoryBtonWin.clear()
 for  yc = 1, ymax/3+1 do
   char = string.sub("HISTORIQUE", yc, yc)
-  mon.setCursorPos(2, yc)
-  mon.write(char)
+  hystoryBtonWin.setCursorPos(2, yc)
+  hystoryBtonWin.write(char)
 end
 
 bookWin=window.create(mon,1,1,xmax,ymax,false)
@@ -216,6 +216,7 @@ function drawBookmarksPage()
   bookWin.setBackgroundColor(colors.black)
   bookWin.setTextColor(colors.white)
   bookWin.write("RETOUR")
+  bookWin.setVisible(true)
 end
  
 function inputPage(type)
@@ -318,13 +319,14 @@ function drawHistoryPage()
   historyWin.setBackgroundColor(colors.black)
   for yc = y-2, y do
     for xc = 1,x do
-      mon.setCursorPos(xc, yc)
-      mon.write(" ")
+      historyWin.setCursorPos(xc, yc)
+      historyWin.write(" ")
     end
   end
-  mon.setCursorPos(x/2-2, y-1)
-  mon.setTextColor(colors.white)
-  mon.write("RETOUR")
+  historyWin.setCursorPos(x/2-2, y-1)
+  historyWin.setTextColor(colors.white)
+  historyWin.write("RETOUR")
+  hystoryWin.setVisible(true)
 end
  
 function historyInputPage(address)
@@ -356,7 +358,7 @@ while true do
   event, param1, param2, param3 = os.pullEvent()
   if event == "monitor_touch" then
     x,y = mon.getSize()
-    if param2 >= 6 and param2 <= 8 and param3 >= y/3-3 and param3 <= y/3*2+1 then --opens or closes the Irisy
+    if param2 >= 6 and param2 <= 8 and param3 >= y/3-3 and param3 <= y/3*2+1 then --opens or closes the Iris
       if sg.irisState() == "Closed" then
         ok, result = pcall(sg.openIris)
         if ok then
