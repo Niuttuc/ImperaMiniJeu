@@ -15,8 +15,8 @@ homeWin.setCursorPos(xmax/2-5,1)
 homeWin.setTextColor(colors.red)
 homeWin.write(os.getComputerLabel())
 
-powerBarWin=window.create(homeWin,xmax-1,1,2,ymax,false)
-powerWin=window.create(homeWin,xmax-11,ymax,12,1,false)
+powerBarWin=window.create(homeWin,xmax-1,1,2,ymax,true)
+powerWin=window.create(homeWin,xmax-11,ymax,12,1,true)
 
 localAdd=window.create(homeWin,1,ymax,16+#sg.localAddress(),1,true)
 localAdd.setBackgroundColor(colors.black)
@@ -34,7 +34,7 @@ for i=-1,1 do
   irisWin[i].setTextColor(irisStateColors[i])
   irisWin[i].clear()
   for  yc = 1, ymax/3+4 do
-    char = string.sub("  IRIS   ", yc, yc)
+    char = string.sub("   IRIS  ", yc, yc)
     irisWin[i].setCursorPos(2, yc)
     irisWin[i].clearLine()
     irisWin[i].write(char)
@@ -62,7 +62,7 @@ historyBtonWin=window.create(homeWin,xmax-7,math.floor(ymax/3)-4,3,ymax/3+4,fals
 historyBtonWin.setBackgroundColor(colors.lightGray)
 historyBtonWin.setTextColor(colors.black)
 historyBtonWin.clear()
-for  yc = 1, ymax/3+1 do
+for  yc = 1, ymax/3+4 do
   char = string.sub(" HISTORY ", yc, yc)
   historyBtonWin.setCursorPos(2, yc)
   historyBtonWin.write(char)
