@@ -29,12 +29,12 @@ localAdd.write(sg.localAddress())
 irisStateColors={[-1]=colors.red,[0]=colors.black,[1]=colors.lime}
 irisWin={}
 for i=-1,1 do
-  irisWin[i]=window.create(homeWin,6,math.floor(ymax/3)-2,3,ymax/3+2,false)
+  irisWin[i]=window.create(homeWin,6,math.floor(ymax/3)-4,3,ymax/3+4,false)
   irisWin[i].setBackgroundColor(colors.lightGray)
   irisWin[i].setTextColor(irisStateColors[i])
   irisWin[i].clear()
-  for  yc = 1, ymax/3+1 do
-    char = string.sub("   IRIS   ", yc, yc)
+  for  yc = 1, ymax/3+4 do
+    char = string.sub("  IRIS   ", yc, yc)
     irisWin[i].setCursorPos(2, yc)
     irisWin[i].clearLine()
     irisWin[i].write(char)
@@ -58,14 +58,14 @@ for i=0,1 do
   termWin[i].setCursorPos(2, 2)
   termWin[i].write("TERM")
 end
-hystoryBtonWin=window.create(homeWin,xmax-7,math.floor(ymax/3)-2,3,ymax/3+2,false)
-hystoryBtonWin.setBackgroundColor(colors.lightGray)
-hystoryBtonWin.setTextColor(colors.black)
-hystoryBtonWin.clear()
+historyBtonWin=window.create(homeWin,xmax-7,math.floor(ymax/3)-4,3,ymax/3+4,false)
+historyBtonWin.setBackgroundColor(colors.lightGray)
+historyBtonWin.setTextColor(colors.black)
+historyBtonWin.clear()
 for  yc = 1, ymax/3+1 do
-  char = string.sub("HISTORIQUE", yc, yc)
-  hystoryBtonWin.setCursorPos(2, yc)
-  hystoryBtonWin.write(char)
+  char = string.sub(" HISTORY ", yc, yc)
+  historyBtonWin.setCursorPos(2, yc)
+  historyBtonWin.write(char)
 end
 
 bookWin=window.create(mon,1,1,xmax,ymax,false)
@@ -247,7 +247,7 @@ function inputPage(type)
 end
  
 function drawHistoryButton()
-  hystoryBtonWin.setVisible(true)
+  historyBtonWin.setVisible(true)
 end
  
 function addToHistory(address)
@@ -326,7 +326,7 @@ function drawHistoryPage()
   historyWin.setCursorPos(x/2-2, y-1)
   historyWin.setTextColor(colors.white)
   historyWin.write("RETOUR")
-  hystoryWin.setVisible(true)
+  historyWin.setVisible(true)
 end
  
 function historyInputPage(address)
