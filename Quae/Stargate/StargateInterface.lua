@@ -478,6 +478,8 @@ while true do
                 file = fs.open('stargateLocalBookmarks',"w")
                 file.write(textutils.serialize(localBookmarks))
                 file.close()
+                getBookmarksHistory()
+                drawBookmarksPage()
               end
             else -- user has clicked on a bookmark
               gateData =  bookmarks[param3]-- GATE DATA VARIABLE!!!
