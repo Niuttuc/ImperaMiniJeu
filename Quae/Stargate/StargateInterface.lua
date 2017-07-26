@@ -277,29 +277,23 @@ function drawBookmarksPage()
       bookWin.setCursorPos(1, yc)
       bookWin.clearLine(" ")
   end
-
-  if fs.exists('stargateBookmarks') then
-    file = fs.open('stargateBookmarks',"r")
-    bookmarks = textutils.unserialize(file.readAll())
-    file.close()
-    for i= 1,math.min(y,#bookmarks) do
-      if i%2 == 1 then
-        bookWin.setBackgroundColor(colors.red)
-      else
-        bookWin.setBackgroundColor(colors.gray)
-      end
-      bookWin.setCursorPos(1,i)
-      if bookmarks[i] then
-        bookWin.write(bookmarks[i].address)
-        bookWin.setCursorPos(x/2, i)
-        bookWin.write(bookmarks[i].address)
-        bookWin.setCursorPos(x,i)
-        bookWin.setBackgroundColor(colors.blue)
-        bookWin.write("X")
-      elseif i < y-2 then
-        bookWin.setCursorPos(1, i)
-        bookWin.write("Ajouter Une Adresse")
-      end
+  for i= 1,math.min(y,#bookmarks) do
+    if i%2 == 1 then
+      bookWin.setBackgroundColor(colors.red)
+    else
+      bookWin.setBackgroundColor(colors.gray)
+    end
+    bookWin.setCursorPos(1,i)
+    if bookmarks[i] then
+      bookWin.write(bookmarks[i].address)
+      bookWin.setCursorPos(x/2, i)
+      bookWin.write(bookmarks[i].address)
+      bookWin.setCursorPos(x,i)
+      bookWin.setBackgroundColor(colors.blue)
+      bookWin.write("X")
+    elseif i < y-2 then
+      bookWin.setCursorPos(1, i)
+      bookWin.write("Ajouter Une Adresse")
     end
   end
   bookWin.setCursorPos(x/2-2, y-1)
@@ -474,21 +468,18 @@ while true do
               drawHome()
               break
             elseif param2 > x-2 then -- user clicked delete on a bookmark
-              if fs.exists('stargateBookmarks') then
-                file = fs.open('stargateBookmarks',"r")
-                bookmarks = textutils.unserialize(file.readAll())
+              if fs.exists('stargateLocalBookmarks') then
+                file = fs.open('stargateLocalBookmarks',"r")
+                localBookmarks = textutils.unserialize(file.readAll())
                 file.close()
-                if bookmarks[param3] then
-                  table.remove(bookmarks,param3)
+                if localBookmarks[param3] then
+                  table.remove(localBookmarks,param3)
                 end
-                file = fs.open('stargateBookmarks',"w")
-                file.write(textutils.serialize(bookmarks))
+                file = fs.open('stargateLocalBookmarks',"w")
+                file.write(textutils.serialize(localBookmarks))
                 file.close()
               end
             else -- user has clicked on a bookmark
-              file = fs.open("stargateBookmarks", "r")
-              bookmarks= textutils.unserialize(file.readAll())
-              file.close()
               gateData =  bookmarks[param3]-- GATE DATA VARIABLE!!!
               bookWin.setVisible(false)
               drawHome()
@@ -503,9 +494,12 @@ while true do
                 for i = 1,y do
                   if not(bookmarks[i]) then
                     homeWin.setVisible(false)
-                    bookmarks[i]=inputPage()
-                    file = fs.open("stargateBookmarks", "w")
-                    file.write(textutils.serialize(bookmarks))
+                    file = fs.open('stargateLocalBookmarks',"r")
+                    localBookmarks = textutils.unserialize(file.readAll())
+                    file.close()
+                    localBookmarks[table.maxn(localBookmarks)+1]=inputPage()
+                    file = fs.open("stargateLocalBookmarks", "w")
+                    file.write(textutils.serialize(localBookmarks))
                     file.close()
                     break
                   end
@@ -535,15 +529,15 @@ while true do
               file = fs.open("stargateHistory", "r")
               history = textutils.unserialize(file.readAll())
               file.close()
-              if fs.exists("stargateBookmarks") then
-                file = fs.open('stargateBookmarks',"r")
-                bookmarks = textutils.unserialize(file.readAll())
+              if fs.exists("stargateLocalBookmarks") then
+                file = fs.open('stargateLocalBookmarks',"r")
+                localBookmarks = textutils.unserialize(file.readAll())
                 file.close()
                 for i = 1,y do
-                  if not(bookmarks[i]) then                    
-                    bookmarks[i]=historyInputPage(history[param3])
-                    file = fs.open("stargateBookmarks", "w")
-                    file.write(textutils.serialize(bookmarks))
+                  if not(localBookmarks[i]) then                    
+                    localBookmarks[i]=historyInputPage(history[param3])
+                    file = fs.open("stargateLocalBookmarks", "w")
+                    file.write(textutils.serialize(localBookmarks))
                     file.close()
                     break
                   end
