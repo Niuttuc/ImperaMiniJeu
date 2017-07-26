@@ -74,7 +74,7 @@ function getBookmarksHistory()
         file.close()
         fs.delete(drive.getMountPath()..'/stargateDistantBookmarks')
         fs.copy("stargateDistantBookmarks", drive.getMountPath()..'/stargateDistantBookmarks')
-        drive.setLabel("V"..tostring(distantBookmarks.version))
+        drive.setDiskLabel("V"..tostring(distantBookmarks.version))
       end
     end
     if bool then
@@ -85,7 +85,7 @@ function getBookmarksHistory()
       file.close()
       fs.delete(drive.getMountPath()..'/stargateDistantBookmarks')
       fs.copy("stargateDistantBookmarks", drive.getMountPath()..'/stargateDistantBookmarks')
-      drive.setLabel("V"..tostring(distantBookmarks.version))
+      drive.setDiskLabel("V"..tostring(distantBookmarks.version))
     end
     eChest.pullItem('up',1,1)
   end
