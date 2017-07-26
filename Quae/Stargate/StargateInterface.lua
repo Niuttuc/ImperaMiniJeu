@@ -119,7 +119,7 @@ localAdd.setCursorPos(16, 1)
 localAdd.write(sg.localAddress())
 
 remoteAdd=window.create(homeWin,xmax/2-4,ymax/2-1,9,3,true)
-remoteAdd.setBackgroundColor(colors.black)
+remoteAdd.setBackgroundColor(colors.gray)
 remoteAdd.setTextColor(colors.red)
 
 
