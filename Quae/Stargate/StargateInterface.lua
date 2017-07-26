@@ -2,54 +2,101 @@ mon = peripheral.find("monitor")
 sg = peripheral.find("stargate")
 eChest = peripheral.find("ender_chest")
 drive = peripheral.find("drive")
- 
+
+localAddress=sg.localAddress()
 mon.setBackgroundColor(colors.black)
 mon.clear()
 maxEng = 50000
 dialling = {}
-
-if fs.exists('stargateBookmarks') then
-  file = fs.open('stargateBookmarks',"r")
-  bookmarks = textutils.unserialize(file.readAll())
-  file.close()
-else
-  bookmarks={}
-  file = fs.open('stargateBookmarks',"w")
-  file.write(textutils.serialize(bookmarks))
-  file.close()
-end
-if fs.exists('stargateHistory') then
-  file = fs.open('stargateHistory',"r")
-  history = textutils.unserialize(file.readAll())
-  file.close()
-else
-  history={}
-  file = fs.open('stargateHistory',"w")
-  file.write(textutils.serialize(history))
-  file.close()
-end
-if bookmarks.version then
-  if eChest then
-    while not(eChest.getStackInSlot(1)) do
-      sleep(1)
-    end
-    if tonumber(string.sub(eChest.getStackInSlot(1).display_name,2,-1))>bookmarks.version then
-      eChest.pushItem('up',1,1)
-      fs.delete("stargateBookmarks")
-      fs.copy(drive.getMountPath()..'/stargateBookmarks', "stargateBookmarks")
-      file = fs.open('stargateBookmarks',"r")
-      bookmarks = textutils.unserialize(file.readAll())
-      file.close()
-    end
-else
-  eChest.pushItem('up',1,1)
-    fs.delete("stargateBookmarks")
-    fs.copy(drive.getMountPath()..'/stargateBookmarks', "stargateBookmarks")
-    file = fs.open('stargateBookmarks',"r")
-    bookmarks = textutils.unserialize(file.readAll())
+function getBookmarksHistory()
+  if fs.exists('stargateLocalBookmarks') then
+    file = fs.open('stargateLocalBookmarks',"r")
+    localBookmarks = textutils.unserialize(file.readAll())
     file.close()
+  else
+    localBookmarks={}
+    file = fs.open('stargateBookmarks',"w")
+    file.write(textutils.serialize(bookmarks))
+    file.close()
+  end
+  if fs.exists('stargateDistantBookmarks') then
+    file = fs.open('stargateDistantBookmarks',"r")
+    distantBookmarks = textutils.unserialize(file.readAll())
+    file.close()
+  else
+    distantBookmarks={}
+    file = fs.open('stargateDistantBookmarks',"w")
+    file.write(textutils.serialize(bookmarks))
+    file.close()
+  end
+  if fs.exists('stargateHistory') then
+    file = fs.open('stargateHistory',"r")
+    history = textutils.unserialize(file.readAll())
+    file.close()
+  else
+    history={}
+    file = fs.open('stargateHistory',"w")
+    file.write(textutils.serialize(history))
+    file.close()
+  end
+  if distantBookmarks.version then
+    if eChest then
+      while not(eChest.getStackInSlot(1)) do
+        sleep(1)
+      end
+      if tonumber(string.sub(eChest.getStackInSlot(1).display_name,2,-1))>distantBookmarks.version then
+        eChest.pushItem('up',1,1)
+        fs.delete("stargateDistantBookmarks")
+        fs.copy(drive.getMountPath()..'/stargateDistantBookmarks', "stargateDistantBookmarks")
+        file = fs.open('stargateDistantBookmarks',"r")
+        distantBookmarks = textutils.unserialize(file.readAll())
+        file.close()
+        eChest.pullItem('up',1,1)
+      end
+  else
+    eChest.pushItem('up',1,1)
+    fs.delete("stargateDistantBookmarks")
+    fs.copy(drive.getMountPath()..'/stargateDistantBookmarks', "stargateDistantBookmarks")
+    file = fs.open('stargateDistantBookmarks',"r")
+    distantBookmarks = textutils.unserialize(file.readAll())
+    file.close()
+    bool=true
+    for k,v in distantBookmarks do
+      if v.address and v.address==localAddress then
+        bool=false
+      elseif v.address and string.sub(localAddress,1,7)==v.address then
+        bool=false
+        distantBookmarks[k]={v.name,localAddress}
+        distantBookmarks.version=distantBookmarks.version+1
+        file = fs.open('stargateDistantBookmarks',"w")
+        file.write(textutils.serialize(distantBookmarks))
+        file.close()
+        fs.delete(drive.getMountPath()..'/stargateDistantBookmarks')
+        fs.copy("stargateDistantBookmarks", drive.getMountPath()..'/stargateDistantBookmarks')
+        drive.setLabel("V"..tostring(distantBookmarks.version))
+      end
+    end
+    if bool then
+      distantBookmarks[table.maxn(distantBookmarks)+1]={name=os.getComputerLabel(),address=localAddress}
+      distantBookmarks.version=distantBookmarks.version+1
+      file = fs.open('stargateDistantBookmarks',"w")
+      file.write(textutils.serialize(distantBookmarks))
+      file.close()
+      fs.delete(drive.getMountPath()..'/stargateDistantBookmarks')
+      fs.copy("stargateDistantBookmarks", drive.getMountPath()..'/stargateDistantBookmarks')
+      drive.setLabel("V"..tostring(distantBookmarks.version))
+    end
+    eChest.pullItem('up',1,1)
+  end
+  bookmarks=localBookmarks
+  for k,v in pairs(distantBookmarks)
+    if type(k)=='number' and v.address~=localAddress then
+      bookmarks[table.maxn(bookmarks)+1]=v
+    end
+  end
 end
 
+getBookmarksHistory()
 xmax,ymax = mon.getSize()
 homeWin=window.create(mon,1,1,xmax,ymax,false)
 homeWin.setBackgroundColor(colors.black)
@@ -413,6 +460,7 @@ while true do
           end
       end
     elseif param2 > x/2-5 and param2 <= x/2 and param3 >= y-4 and param3 <= y-2 then -- Click has opened dial menu
+      getBookmarksHistory()
       status, int = sg.stargateState()
       if status == "Idle" then
         while true do
