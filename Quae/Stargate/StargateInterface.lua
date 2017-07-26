@@ -327,6 +327,7 @@ function inputPage(type)
   term.setCursorBlink(false)
   mon.setTextColor(colors.white)
   inputWin.setVisible(false)
+  term.clear()
   return newGate
 end
  
@@ -503,6 +504,8 @@ while true do
                     file = fs.open("stargateLocalBookmarks", "w")
                     file.write(textutils.serialize(localBookmarks))
                     file.close()
+                    bookWin.setVisible(false)
+                    drawHome()
                     break
                   end
                 end
@@ -541,6 +544,8 @@ while true do
                     file = fs.open("stargateLocalBookmarks", "w")
                     file.write(textutils.serialize(localBookmarks))
                     file.close()
+                    getBookmarksHistory()
+                    drawBookmarksPage()
                     break
                   end
                 end
