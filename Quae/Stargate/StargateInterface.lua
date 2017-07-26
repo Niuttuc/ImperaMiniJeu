@@ -63,9 +63,9 @@ function getBookmarksHistory()
     file.close()
     bool=true
     for k,v in pairs(distantBookmarks) do
-      if v.address and v.address==localAddress then
+      if type(v)=="table" and v.address==localAddress then
         bool=false
-      elseif v.address and string.sub(localAddress,1,7)==v.address then
+      elseif type(v)=="table" and string.sub(localAddress,1,7)==v.address then
         bool=false
         distantBookmarks[k]={v.name,localAddress}
         distantBookmarks.version=distantBookmarks.version+1
