@@ -16,7 +16,7 @@ function getBookmarksHistory()
   else
     localBookmarks={}
     file = fs.open('stargateLocalBookmarks',"w")
-    file.write(textutils.serialize(bookmarks))
+    file.write(textutils.serialize(localBookmarks))
     file.close()
   end
   if fs.exists('stargateDistantBookmarks') then
@@ -26,7 +26,7 @@ function getBookmarksHistory()
   else
     distantBookmarks={}
     file = fs.open('stargateDistantBookmarks',"w")
-    file.write(textutils.serialize(bookmarks))
+    file.write(textutils.serialize(distantBookmarks))
     file.close()
   end
   if fs.exists('stargateHistory') then
