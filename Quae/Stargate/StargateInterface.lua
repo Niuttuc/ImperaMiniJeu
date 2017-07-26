@@ -275,7 +275,7 @@ function drawBookmarksPage()
       bookWin.setBackgroundColor(colors.gray)
     end
       bookWin.setCursorPos(1, yc)
-      bookWin.clearLine(" ")
+      bookWin.clearLine()
   end
   for i= 1,math.min(y,#bookmarks) do
     if i%2 == 1 then
@@ -285,7 +285,7 @@ function drawBookmarksPage()
     end
     bookWin.setCursorPos(1,i)
     if bookmarks[i] then
-      bookWin.write(bookmarks[i].address)
+      bookWin.write(bookmarks[i].name)
       bookWin.setCursorPos(x/2, i)
       bookWin.write(bookmarks[i].address)
       bookWin.setCursorPos(x,i)
