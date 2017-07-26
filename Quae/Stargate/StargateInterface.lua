@@ -496,7 +496,6 @@ while true do
                   bookWin.setVisible(false)
                   drawHome()
                   break
-                  end
                 end
               else
                 for i = 1,y do
