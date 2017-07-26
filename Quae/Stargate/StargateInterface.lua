@@ -8,6 +8,7 @@ mon.setBackgroundColor(colors.black)
 mon.clear()
 maxEng = 50000
 dialling = {}
+remoteAdress=""
 function getBookmarksHistory()
   if fs.exists('stargateLocalBookmarks') then
     file = fs.open('stargateLocalBookmarks',"r")
@@ -117,6 +118,12 @@ localAdd.write("Adresse Locale:")
 localAdd.setCursorPos(16, 1)
 localAdd.write(sg.localAddress())
 
+remoteAdd=window.create(homeWin,xmax/2-4,ymax/2-1,9,3,true)
+remoteAdd.setBackgroundColor(colors.black)
+remoteAdd.setTextColor(colors.red)
+
+
+
 irisStateColors={[-1]=colors.red,[0]=colors.black,[1]=colors.lime}
 irisWin={}
 for i=-1,1 do
@@ -221,6 +228,23 @@ end
 function drawLocalAddress() -- draws the address stargate being controlled
   localAdd.setVisible(true)
 end
+
+function drawRemoteAddress()
+  remoteAdd.setVisible(true)
+  remoteAdd.clear()
+  if sg.remoteAddress()~="" then
+    remoteAdd.setCursorPos(1,1)
+    remoteAdd.write("Connexion")
+    remoteAdd.setCursorPos(1,2)
+    for k,v in pairs(bookmarks) do
+      if type(v)=="table" and v.address==sg.remoteAddress() then
+        remoteAdd.write(v.name)
+      end
+    end
+    remoteAdd.setCursorPos(1,3)
+    remoteAdd.write(sg.remoteAddress())
+  end
+end
  
 function drawDial() -- draws the button to access the dialing menu
   state, int = sg.stargateState()
@@ -251,6 +275,7 @@ function drawHome() -- draws the home screen
   homeWin.setVisible(true)
   drawPowerBar()
   drawLocalAddress()
+  drawRemoteAddress()
   status, int = sg.stargateState()
   drawHistoryButton()
   if sg.irisState()  == "Open" then
@@ -563,9 +588,11 @@ while true do
       end
     elseif param2 > x/2+2 and param2 <= x/2+7 and param3 >= y-4 and param3 <= y-2 then -- user clicked TERM
       ok, result = pcall(sg.disconnect)
+      remoteAdress=""
     end
   elseif event == "sgDialIn" then
     alarmSet(true)
+    remoteAdress=param2
     if fs.exists("currentSec") then
       file = fs.open("currentSec", "r")
       currentSec = file.readAll()
@@ -574,6 +601,7 @@ while true do
     addToHistory(param2)
   elseif event == "sgDialOut" then
     alarmSet(true)
+    remoteAdress=param2
     if fs.exists("currentSec") then
       file = fs.open("currentSec", "r")
       currentSec = file.readAll()
