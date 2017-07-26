@@ -118,7 +118,7 @@ localAdd.write("Adresse Locale:")
 localAdd.setCursorPos(16, 1)
 localAdd.write(sg.localAddress())
 
-remoteAdd=window.create(homeWin,xmax/2-4,ymax/2-1,9,3,true)
+remoteAdd=window.create(homeWin,xmax/2-5,ymax/2-2,11,5,true)
 remoteAdd.setBackgroundColor(colors.gray)
 remoteAdd.setTextColor(colors.red)
 
@@ -232,17 +232,22 @@ end
 function drawRemoteAddress()
   remoteAdd.setVisible(true)
   remoteAdd.clear()
+  remoteAdd.setCursorPos(2,2)
+  remoteAdd.write("Connexion")
   if sg.remoteAddress()~="" then
-    remoteAdd.setCursorPos(1,1)
-    remoteAdd.write("Connexion")
-    remoteAdd.setCursorPos(1,2)
+    remoteAdd.setCursorPos(2,3)
     for k,v in pairs(bookmarks) do
       if type(v)=="table" and v.address==sg.remoteAddress() then
         remoteAdd.write(v.name)
       end
     end
-    remoteAdd.setCursorPos(1,3)
+    remoteAdd.setCursorPos(2,4)
     remoteAdd.write(sg.remoteAddress())
+  else
+    remoteAdd.setCursorPos(2,3)
+    remoteAdd.write("Stargate")
+    remoteAdd.setCursorPos(4,4)
+    remoteAdd.write("libre")
   end
 end
  
