@@ -15,7 +15,7 @@ function getBookmarksHistory()
     file.close()
   else
     localBookmarks={}
-    file = fs.open('stargateBookmarks',"w")
+    file = fs.open('stargateLocalBookmarks',"w")
     file.write(textutils.serialize(bookmarks))
     file.close()
   end
@@ -53,6 +53,7 @@ function getBookmarksHistory()
         file.close()
         eChest.pullItem('up',1,1)
       end
+    end
   else
     eChest.pushItem('up',1,1)
     fs.delete("stargateDistantBookmarks")
@@ -61,7 +62,7 @@ function getBookmarksHistory()
     distantBookmarks = textutils.unserialize(file.readAll())
     file.close()
     bool=true
-    for k,v in distantBookmarks do
+    for k,v in pairs(distantBookmarks) do
       if v.address and v.address==localAddress then
         bool=false
       elseif v.address and string.sub(localAddress,1,7)==v.address then
@@ -89,7 +90,7 @@ function getBookmarksHistory()
     eChest.pullItem('up',1,1)
   end
   bookmarks=localBookmarks
-  for k,v in pairs(distantBookmarks)
+  for k,v in pairs(distantBookmarks) do
     if type(k)=='number' and v.address~=localAddress then
       bookmarks[table.maxn(bookmarks)+1]=v
     end
@@ -281,7 +282,7 @@ function drawBookmarksPage()
     file = fs.open('stargateBookmarks',"r")
     bookmarks = textutils.unserialize(file.readAll())
     file.close()
-    for i= 1,min(y,#bookmarks) do
+    for i= 1,math.min(min(y,#bookmarks)) do
       if i%2 == 1 then
         bookWin.setBackgroundColor(colors.red)
       else
@@ -504,7 +505,7 @@ while true do
                     homeWin.setVisible(false)
                     bookmarks[i]=inputPage()
                     file = fs.open("stargateBookmarks", "w")
-                    file.write(textutils.serialize(bookmarks)
+                    file.write(textutils.serialize(bookmarks))
                     file.close()
                     break
                   end
@@ -542,7 +543,7 @@ while true do
                   if not(bookmarks[i]) then                    
                     bookmarks[i]=historyInputPage(history[param3])
                     file = fs.open("stargateBookmarks", "w")
-                    file.write(textutils.serialize(bookmarks)
+                    file.write(textutils.serialize(bookmarks))
                     file.close()
                     break
                   end
