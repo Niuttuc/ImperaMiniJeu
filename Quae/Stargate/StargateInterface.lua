@@ -492,6 +492,11 @@ while true do
                   status, int = sg.stargateState()
                   address = gateData.address
                   addToHistory(gateData.address)
+                  sleep(0.5)
+                  bookWin.setVisible(false)
+                  drawHome()
+                  break
+                  end
                 end
               else
                 for i = 1,y do
