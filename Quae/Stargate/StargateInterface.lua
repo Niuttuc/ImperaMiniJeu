@@ -282,7 +282,7 @@ function drawBookmarksPage()
     file = fs.open('stargateBookmarks',"r")
     bookmarks = textutils.unserialize(file.readAll())
     file.close()
-    for i= 1,math.min(min(y,#bookmarks)) do
+    for i= 1,math.min(y,#bookmarks) do
       if i%2 == 1 then
         bookWin.setBackgroundColor(colors.red)
       else
