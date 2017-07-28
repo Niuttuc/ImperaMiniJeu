@@ -528,10 +528,10 @@ while true do
               end
             elseif param3==y-3 and param2<=x/2+#("^^^ Page "..tostring(page).." VVV")/2 and param2>=x/2+#("^^^ Page "..tostring(page).." VVV")/2-3 then
               --user has clicked on next page
-              if #bookmarks>=(curPage-1)*(ymax-4) then
+              if #bookmarks>=(curPage)*(ymax-4) then
                 curPage=curPage+1
               end
-            else -- user has clicked on a bookmark
+            elseif param3<=y4 then -- user has clicked on a bookmark
               gateData =  bookmarks[param3]-- GATE DATA VARIABLE!!!
               bookWin.setVisible(false)
               drawHome()
