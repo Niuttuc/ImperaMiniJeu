@@ -531,7 +531,7 @@ while true do
               if #bookmarks>=(curPage)*(ymax-4) then
                 curPage=curPage+1
               end
-            elseif param3<=y4 then -- user has clicked on a bookmark
+            elseif param3<=y-4 then -- user has clicked on a bookmark
               gateData =  bookmarks[param3]-- GATE DATA VARIABLE!!!
               bookWin.setVisible(false)
               drawHome()
