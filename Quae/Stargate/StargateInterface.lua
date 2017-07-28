@@ -336,6 +336,7 @@ function drawBookmarksPage(page)
   bookWin.write("^^^ Page "..tostring(page).." VVV")
   bookWin.setBackgroundColor(colors.black)
   bookWin.setTextColor(colors.white)
+  bookWin.setCursorPos(x/2-3, y-1)
   bookWin.write("RETOUR")
   bookWin.setVisible(true)
 end
@@ -496,7 +497,7 @@ while true do
       getBookmarksHistory()
       status, int = sg.stargateState()
       if status == "Idle" then
-        curPage=0
+        curPage=1
         while true do
           homeWin.setVisible(false)
           drawBookmarksPage(curPage)
