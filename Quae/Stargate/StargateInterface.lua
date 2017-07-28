@@ -519,7 +519,7 @@ while true do
                 file.write(textutils.serialize(localBookmarks))
                 file.close()
                 getBookmarksHistory()
-                drawBookmarksPage()
+                drawBookmarksPage(curPage)
               end
             elseif param3==y-3 and param2>=x/2-#("^^^ Page "..tostring(page).." VVV")/2 and param2<=x/2-#("^^^ Page "..tostring(page).." VVV")/2+2 then
               --user has clicked on previous page
