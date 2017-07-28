@@ -521,12 +521,12 @@ while true do
                 getBookmarksHistory()
                 drawBookmarksPage(curPage)
               end
-            elseif param3==y-3 and param2>=x/2-#("^^^ Page "..tostring(page).." VVV")/2+1 and param2<=x/2-#("^^^ Page "..tostring(page).." VVV")/2+3 then
+            elseif param3==y-3 and param2>=x/2-#("^^^ Page "..tostring(page).." VVV")/2 and param2<=x/2-#("^^^ Page "..tostring(page).." VVV")/2+3 then
               --user has clicked on previous page
               if curPage>1 then
                 curPage=curPage-1
               end
-            elseif param3==y-3 and param2<=x/2+#("^^^ Page "..tostring(page).." VVV")/2-1 and param2>=x/2+#("^^^ Page "..tostring(page).." VVV")/2-4 then
+            elseif param3==y-3 and param2<=x/2+#("^^^ Page "..tostring(page).." VVV")/2-1 and param2>=x/2+#("^^^ Page "..tostring(page).." VVV")/2-5 then
               --user has clicked on next page
               if #bookmarks>=(curPage)*(ymax-4) then
                 curPage=curPage+1
