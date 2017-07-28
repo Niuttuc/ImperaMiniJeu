@@ -9,6 +9,7 @@ mon.clear()
 maxEng = 50000
 dialling = {}
 remoteAdress=""
+xmax,ymax = mon.getSize()
 function getBookmarksHistory()
   if fs.exists('stargateLocalBookmarks') then
     file = fs.open('stargateLocalBookmarks',"r")
@@ -97,87 +98,88 @@ function getBookmarksHistory()
     end
   end
 end
+function initWin()
+  getBookmarksHistory()
+  homeWin=window.create(mon,1,1,xmax,ymax,false)
+  homeWin.setBackgroundColor(colors.black)
+  homeWin.clear()
+  homeWin.setCursorPos(xmax/2-5,1)
+  homeWin.setTextColor(colors.red)
+  homeWin.write(os.getComputerLabel())
 
-getBookmarksHistory()
-xmax,ymax = mon.getSize()
-homeWin=window.create(mon,1,1,xmax,ymax,false)
-homeWin.setBackgroundColor(colors.black)
-homeWin.clear()
-homeWin.setCursorPos(xmax/2-5,1)
-homeWin.setTextColor(colors.red)
-homeWin.write(os.getComputerLabel())
+  powerBarWin=window.create(homeWin,xmax-1,1,2,ymax,true)
+  powerWin=window.create(homeWin,xmax-11,ymax,12,1,true)
 
-powerBarWin=window.create(homeWin,xmax-1,1,2,ymax,true)
-powerWin=window.create(homeWin,xmax-11,ymax,12,1,true)
+  localAdd=window.create(homeWin,1,ymax,16+#sg.localAddress(),1,true)
+  localAdd.setBackgroundColor(colors.black)
+  localAdd.setTextColor(colors.lightGray)
+  localAdd.setCursorPos(1,1)
+  localAdd.write("Adresse Locale:")
+  localAdd.setCursorPos(16, 1)
+  localAdd.write(sg.localAddress())
 
-localAdd=window.create(homeWin,1,ymax,16+#sg.localAddress(),1,true)
-localAdd.setBackgroundColor(colors.black)
-localAdd.setTextColor(colors.lightGray)
-localAdd.setCursorPos(1,1)
-localAdd.write("Adresse Locale:")
-localAdd.setCursorPos(16, 1)
-localAdd.write(sg.localAddress())
-
-remoteAdd=window.create(homeWin,xmax/2-5,ymax/2-2,11,5,true)
-remoteAdd.setBackgroundColor(colors.gray)
-remoteAdd.setTextColor(colors.red)
-
+  remoteAdd=window.create(homeWin,xmax/2-5,ymax/2-2,11,5,true)
+  remoteAdd.setBackgroundColor(colors.gray)
+  remoteAdd.setTextColor(colors.red)
 
 
-irisStateColors={[-1]=colors.red,[0]=colors.black,[1]=colors.lime}
-irisWin={}
-for i=-1,1 do
-  irisWin[i]=window.create(homeWin,6,math.floor(ymax/3)-4,3,ymax/3+4,false)
-  irisWin[i].setBackgroundColor(colors.lightGray)
-  irisWin[i].setTextColor(irisStateColors[i])
-  irisWin[i].clear()
-  for  yc = 1, ymax/3+4 do
-    char = string.sub("   IRIS  ", yc, yc)
-    irisWin[i].setCursorPos(2, yc)
-    irisWin[i].clearLine()
-    irisWin[i].write(char)
+
+  irisStateColors={[-1]=colors.red,[0]=colors.black,[1]=colors.lime}
+  irisWin={}
+  for i=-1,1 do
+    irisWin[i]=window.create(homeWin,6,math.floor(ymax/3)-4,3,ymax/3+4,false)
+    irisWin[i].setBackgroundColor(colors.lightGray)
+    irisWin[i].setTextColor(irisStateColors[i])
+    irisWin[i].clear()
+    for  yc = 1, ymax/3+4 do
+      char = string.sub("   IRIS  ", yc, yc)
+      irisWin[i].setCursorPos(2, yc)
+      irisWin[i].clearLine()
+      irisWin[i].write(char)
+    end
   end
-end
-comWin={}
-for i=0,1 do
-  comWin[i]=window.create(homeWin,math.floor(xmax/2)-5,ymax-4,5,3,false)
-  comWin[i].setBackgroundColor(colors.gray*2^i)
-  comWin[i].setTextColor(colors.black)
-  comWin[i].clear()
-  comWin[i].setCursorPos(2, 2)
-  comWin[i].write("COM")
-end
-termWin={}
-for i=0,1 do
-  termWin[i]=window.create(homeWin,math.floor(xmax/2)+2,ymax-4,6,3,false)
-  termWin[i].setBackgroundColor(colors.gray*2^i)
-  termWin[i].setTextColor(colors.black)
-  termWin[i].clear()
-  termWin[i].setCursorPos(2, 2)
-  termWin[i].write("TERM")
-end
-historyBtonWin=window.create(homeWin,xmax-7,math.floor(ymax/3)-4,3,ymax/3+4,false)
-historyBtonWin.setBackgroundColor(colors.lightGray)
-historyBtonWin.setTextColor(colors.black)
-historyBtonWin.clear()
-for  yc = 1, ymax/3+4 do
-  char = string.sub(" HISTORY ", yc, yc)
-  historyBtonWin.setCursorPos(2, yc)
-  historyBtonWin.write(char)
+  comWin={}
+  for i=0,1 do
+    comWin[i]=window.create(homeWin,math.floor(xmax/2)-5,ymax-4,5,3,false)
+    comWin[i].setBackgroundColor(colors.gray*2^i)
+    comWin[i].setTextColor(colors.black)
+    comWin[i].clear()
+    comWin[i].setCursorPos(2, 2)
+    comWin[i].write("COM")
+  end
+  termWin={}
+  for i=0,1 do
+    termWin[i]=window.create(homeWin,math.floor(xmax/2)+2,ymax-4,6,3,false)
+    termWin[i].setBackgroundColor(colors.gray*2^i)
+    termWin[i].setTextColor(colors.black)
+    termWin[i].clear()
+    termWin[i].setCursorPos(2, 2)
+    termWin[i].write("TERM")
+  end
+  historyBtonWin=window.create(homeWin,xmax-7,math.floor(ymax/3)-4,3,ymax/3+4,false)
+  historyBtonWin.setBackgroundColor(colors.lightGray)
+  historyBtonWin.setTextColor(colors.black)
+  historyBtonWin.clear()
+  for  yc = 1, ymax/3+4 do
+    char = string.sub(" HISTORY ", yc, yc)
+    historyBtonWin.setCursorPos(2, yc)
+    historyBtonWin.write(char)
+  end
+
+  bookWin=window.create(mon,1,1,xmax,ymax,false)
+  historyWin=window.create(mon,1,1,xmax,ymax,false)
+  inputWin=window.create(mon,1,1,xmax,ymax,false)
+  inputWin.setTextColor(colors.red)
+  inputWin.setBackgroundColor(colors.black)
+  inputWin.setCursorPos(xmax/2-11, ymax/2-2)
+  inputWin.write("Entrez le nom et/ou l'adresse")
+  inputWin.setCursorPos(xmax/2 - 8, ymax/2-1)
+  inputWin.write("Dans l'ordinateur")
+  inputWin.setCursorPos(xmax/2 - 4, ymax/2)
+  inputWin.write("         ")
 end
 
-bookWin=window.create(mon,1,1,xmax,ymax,false)
-historyWin=window.create(mon,1,1,xmax,ymax,false)
-inputWin=window.create(mon,1,1,xmax,ymax,false)
-inputWin.setTextColor(colors.red)
-inputWin.setBackgroundColor(colors.black)
-inputWin.setCursorPos(xmax/2-11, ymax/2-2)
-inputWin.write("Entrez le nom et/ou l'adresse")
-inputWin.setCursorPos(xmax/2 - 8, ymax/2-1)
-inputWin.write("Dans l'ordinateur")
-inputWin.setCursorPos(xmax/2 - 4, ymax/2)
-inputWin.write("         ")
-
+initWin()
 local function alarmSet(set)
   rs.setOutput("left", set)
   return
@@ -293,12 +295,12 @@ function drawHome() -- draws the home screen
   drawTerm()
 end
  
-function drawBookmarksPage()
+function drawBookmarksPage(page)
   bookWin.setBackgroundColor(colors.black)
   bookWin.clear()
   bookWin.setTextColor(colors.black)
   x,y = bookWin.getSize()
-  for yc = 1,y-3 do
+  for yc = 1,y-4 do
     if yc%2 == 1 then
       bookWin.setBackgroundColor(colors.red)
     else
@@ -307,26 +309,31 @@ function drawBookmarksPage()
       bookWin.setCursorPos(1, yc)
       bookWin.clearLine()
   end
-  for i= 1,math.min(y,#bookmarks) do
+  for i= 1,math.min(y-4,math.max(#bookmarks-(page-1)*(y-4),0)) do
     if i%2 == 1 then
       bookWin.setBackgroundColor(colors.red)
     else
       bookWin.setBackgroundColor(colors.gray)
     end
     bookWin.setCursorPos(1,i)
-    if bookmarks[i] then
-      bookWin.write(bookmarks[i].name)
+    if bookmarks[i+(page-1)*(y-4)] then
+      bookWin.write(bookmarks[i+(page-1)*(y-4)].name)
       bookWin.setCursorPos(x/2, i)
-      bookWin.write(bookmarks[i].address)
+      bookWin.write(bookmarks[i+(page-1)*(y-4)].address)
       bookWin.setCursorPos(x,i)
       bookWin.setBackgroundColor(colors.blue)
       bookWin.write("X")
-    elseif i < y-2 then
+    elseif i < y-3 then
       bookWin.setCursorPos(1, i)
       bookWin.write("Ajouter Une Adresse")
     end
   end
-  bookWin.setCursorPos(x/2-2, y-1)
+  bookWin.setBackgroundColor(colors.black)
+  bookWin.setCursorPos(x/2-#("^^^ Page "..tostring(page).." VVV")/2, y-3)
+  bookWin.clearLine()
+  bookWin.setBackgroundColor(colors.white)
+  bookWin.setTextColor(colors.black)
+  bookWin.write("^^^ Page "..tostring(page).." VVV")
   bookWin.setBackgroundColor(colors.black)
   bookWin.setTextColor(colors.white)
   bookWin.write("RETOUR")
@@ -489,9 +496,10 @@ while true do
       getBookmarksHistory()
       status, int = sg.stargateState()
       if status == "Idle" then
+        curPage=0
         while true do
           homeWin.setVisible(false)
-          drawBookmarksPage()
+          drawBookmarksPage(curPage)
           event, param1, param2, param3 = os.pullEvent()
           if event == "monitor_touch" then
             if param3 >= y-2 then -- user clicked back
@@ -511,6 +519,16 @@ while true do
                 file.close()
                 getBookmarksHistory()
                 drawBookmarksPage()
+              end
+            elseif param3==y-3 and param2>=x/2-#("^^^ Page "..tostring(page).." VVV")/2 and param2<=x/2-#("^^^ Page "..tostring(page).." VVV")/2+2 then
+              --user has clicked on previous page
+              if curPage>1 then
+                curPage=curPage-1
+              end
+            elseif param3==y-3 and param2<=x/2+#("^^^ Page "..tostring(page).." VVV")/2 and param2>=x/2+#("^^^ Page "..tostring(page).." VVV")/2-3 then
+              --user has clicked on next page
+              if #bookmarks>=(curPage-1)*(ymax-4) then
+                curPage=curPage+1
               end
             else -- user has clicked on a bookmark
               gateData =  bookmarks[param3]-- GATE DATA VARIABLE!!!
