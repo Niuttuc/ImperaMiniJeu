@@ -9,12 +9,12 @@ for i=1,#perNames do
 end
 
 reds={
-    dizRed=peripheral.wrap('hb_interupteur_0'),
-    unitRed=peripheral.wrap('hb_interupteur_1'),
-    dizBlue=peripheral.wrap('hb_interupteur_2'),
-    unitBlue=peripheral.wrap('hb_interupteur_3'),
-    dizMin=peripheral.wrap('hb_interupteur_4'),
-    unitMin=peripheral.wrap('hb_interupteur_5'),
+    dizRed=peripheral.wrap('hb_interupteur_40'),
+    unitRed=peripheral.wrap('hb_interupteur_41'),
+    dizBlue=peripheral.wrap('hb_interupteur_38'),
+    unitBlue=peripheral.wrap('hb_interupteur_39'),
+    dizMin=peripheral.wrap('hb_interupteur_5'),
+    unitMin=peripheral.wrap('hb_interupteur_4'),
     dizSec=peripheral.wrap('hb_interupteur_6'),
     unitSec=peripheral.wrap('hb_interupteur_7')
 }
