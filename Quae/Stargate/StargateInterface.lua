@@ -644,6 +644,24 @@ while true do
       currentSec = file.readAll()
       file.close()
     end
+    if sg.remoteAddress()~="" then
+      isConnected=true
+      eChest.pushItem('up',1,1)
+      fs.delete("irisState")
+      fs.copy(drive.getMountPath()..'/irisState', "irisState")
+      file = fs.open('irisState',"r")
+      netIrisState = textutils.unserialize(file.readAll())
+      file.close()
+      eChest.pullItem('up',1,1)
+      if not(netIrisState[sg.remoteAddress()]) then
+        temp=0
+      elseif netIrisState[sg.remoteAddress()]=="Closed" or netIrisState[sg.remoteAdress()]=="Closing" then
+        temp=-1
+      else
+        temp=1
+      end
+      remIrisWin[temp].setVisible(true)
+    end
     addToHistory(param2)
   elseif event == "sgDialOut" then
     alarmSet(true)
@@ -653,16 +671,8 @@ while true do
       currentSec = file.readAll()
       file.close()
     end
-    addToHistory(param2)
-  elseif event == "sgStargateStateChange" then
-    homeWin.setVisible(false)
-    drawHome()
-    status, int = sg.stargateState()
-    if status == "Idle" or status == "Closing" or status == "Offline" then
-      for i=-1,1 do
-        remIrisWin[i].setVisible(false)
-      end
-    elseif sg.remoteAdress()~="" then
+    if sg.remoteAddress()~="" then
+      isConnected=true
       eChest.pushItem('up',1,1)
       fs.delete("irisState")
       fs.copy(drive.getMountPath()..'/irisState', "irisState")
@@ -670,9 +680,37 @@ while true do
       netIrisState = textutils.unserialize(file.readAll())
       file.close()
       eChest.pullItem('up',1,1)
-      if not(netIrisState[sg.remoteAdress()]) then
+      if not(netIrisState[sg.remoteAddress()]) then
         temp=0
-      elseif netIrisState[sg.remoteAdress()]=="Closed" or netIrisState[sg.remoteAdress()]=="Closing" then
+      elseif netIrisState[sg.remoteAddress()]=="Closed" or netIrisState[sg.remoteAdress()]=="Closing" then
+        temp=-1
+      else
+        temp=1
+      end
+      remIrisWin[temp].setVisible(true)
+    end
+    addToHistory(param2)
+  elseif event == "sgStargateStateChange" then
+    homeWin.setVisible(false)
+    drawHome()
+    status, int = sg.stargateState()
+    if status == "Idle" or status == "Closing" or status == "Offline" then
+      isConnected=false
+      for i=-1,1 do
+        remIrisWin[i].setVisible(false)
+      end
+    elseif sg.remoteAddress()~="" then
+      isConnected=true
+      eChest.pushItem('up',1,1)
+      fs.delete("irisState")
+      fs.copy(drive.getMountPath()..'/irisState', "irisState")
+      file = fs.open('irisState',"r")
+      netIrisState = textutils.unserialize(file.readAll())
+      file.close()
+      eChest.pullItem('up',1,1)
+      if not(netIrisState[sg.remoteAddress()]) then
+        temp=0
+      elseif netIrisState[sg.remoteAddress()]=="Closed" or netIrisState[sg.remoteAdress()]=="Closing" then
         temp=-1
       else
         temp=1
