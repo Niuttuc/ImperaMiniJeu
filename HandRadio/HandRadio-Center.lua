@@ -9,12 +9,12 @@ for i=1,#perNames do
 end
 
 reds={
-    dizRed=peripheral.wrap('hb_interupteur_0'),
-    unitRed=peripheral.wrap('hb_interupteur_1'),
-    dizBlue=peripheral.wrap('hb_interupteur_2'),
-    unitBlue=peripheral.wrap('hb_interupteur_3'),
-    dizMin=peripheral.wrap('hb_interupteur_4'),
-    unitMin=peripheral.wrap('hb_interupteur_5'),
+    dizRed=peripheral.wrap('hb_interupteur_40'),
+    unitRed=peripheral.wrap('hb_interupteur_41'),
+    dizBlue=peripheral.wrap('hb_interupteur_38'),
+    unitBlue=peripheral.wrap('hb_interupteur_39'),
+    dizMin=peripheral.wrap('hb_interupteur_5'),
+    unitMin=peripheral.wrap('hb_interupteur_4'),
     dizSec=peripheral.wrap('hb_interupteur_6'),
     unitSec=peripheral.wrap('hb_interupteur_7')
 }
@@ -154,8 +154,10 @@ function getCommandsInGame()
                 updateTime(minSec(tempsPartie))
             elseif args[1]=='points' and #args>2 and args[2]=='rouge' and tonumber(args[3]) then
                 score.red=score.red+tonumber(args[3])
+                updatePoints(score.blue,score.red)
             elseif args[1]=='points' and #args>2 and args[2]=='bleu' and tonumber(args[3]) then
                 score.blue=score.blue+tonumber(args[3])
+                updatePoints(score.blue,score.red)
             end
         end
     end
@@ -185,7 +187,8 @@ function scoreTracker()
              if bool then
                 score.blue=score.blue+1
             end
-        elseif redstone.getBundledInput('right')==colors.blue and not(pause)then
+        elseif redstone.getBundledInput('right')==colors.blue and not(pause) then
+            bool=true
             for k,v in pairs(cageSensor.blueSouth.getPlayers()) do
                 if not(v.name==teams.arbitre[1]) and (ahb.isIn(v.name,teams.red) or ahb.isIn(v.name,teams.blue)) then
                     local infoPlayer=cageSensor.blueSouth.getPlayerByName(v.name).all()
