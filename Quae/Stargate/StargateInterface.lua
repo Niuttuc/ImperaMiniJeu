@@ -705,6 +705,8 @@ while true do
     file = fs.open('irisState',"w")
     file.write(textutils.serialize(netIrisState))
     file.close()
+    fs.delete(drive.getMountPath()..'/irisState')
+    fs.copy("irisState",drive.getMountPath()..'/irisState')
     eChest.pullItem('up',1,1)
   end
 end
