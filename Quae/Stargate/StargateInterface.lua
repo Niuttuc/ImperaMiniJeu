@@ -311,6 +311,9 @@ function drawRemIris()
   elseif sg.remoteAddress()~="" then
     remIrisWin[2].setVisible(false)
     isConnected=true
+    while not(eChest.getStackInSlot(1)) do
+      sleep(1)
+    end
     eChest.pushItem('up',1,1)
     fs.delete("irisState")
     fs.copy(drive.getMountPath()..'/irisState', "irisState")
@@ -688,6 +691,9 @@ while true do
     drawHome()
     status, int = sg.stargateState()
   elseif event == "irisStateChange" then
+    while not(eChest.getStackInSlot(1)) do
+      sleep(1)
+    end
     eChest.pushItem('up',1,1)
     fs.delete("irisState")
     fs.copy(drive.getMountPath()..'/irisState', "irisState")
