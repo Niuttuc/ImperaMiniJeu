@@ -320,7 +320,7 @@ function drawRemIris()
     eChest.pullItem('up',1,1)
     if not(netIrisState[sg.remoteAddress()]) then
       temp=0
-    elseif netIrisState[sg.remoteAddress()]=="Closed" or netIrisState[sg.remoteAdress()]=="Closing" then
+    elseif netIrisState[sg.remoteAddress()]=="Closed" or netIrisState[sg.remoteAddress()]=="Closing" then
       temp=-1
     else
       temp=1
