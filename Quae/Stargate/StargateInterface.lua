@@ -690,6 +690,7 @@ while true do
     homeWin.setVisible(false)
     drawHome()
     status, int = sg.stargateState()
+  end
   if event == "irisStateChange" then
     while not(eChest.getStackInSlot(1)) do
       sleep(1)
