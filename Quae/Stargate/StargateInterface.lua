@@ -121,7 +121,29 @@ function initWin()
   remoteAdd=window.create(homeWin,xmax/2-5,ymax/2-2,11,5,true)
   remoteAdd.setBackgroundColor(colors.gray)
   remoteAdd.setTextColor(colors.red)
+  
+  remIrisStateColors={[-1]=colors.red,[0]=colors.white,[1]=colors.lime}
+  remIrisWin={}
 
+
+  for i=-1,1 do
+    remIrisWin[i]=window.create(homeWin,xmax/2-5,math.floor(ymax/3)-4,12,4,false)
+    locx,locy=remIrisWin[i].getSize()
+    remIrisWin[i].setBackgroundColor(remIrisStateColors[i])
+    remIrisWin[i].setTextColor(colors.black)
+    remIrisWin[i].clear()
+    remIrisWin[i].setCursorPos(2, 2)
+    remIrisWin[i].write("Iris distant")
+    if i==-1 then
+      str="Ferme"
+    elseif i==1 then
+      str="Ouvert"
+    else
+      str="Inconnu"
+    end
+    remIrisWin[i].setCursorPos(locx/2-str/2, 3)
+    remIrisWin[i].write(str)
+  end
 
 
   irisStateColors={[-1]=colors.red,[0]=colors.black,[1]=colors.lime}
@@ -636,11 +658,38 @@ while true do
     homeWin.setVisible(false)
     drawHome()
     status, int = sg.stargateState()
-    if status == "idle" then
-      isConnected = false
-    else
-      isConnected = true
+    if status == "Idle" or status == "Closing" or status == "Offline" then
+      for i=-1,1 do
+        remIrisWin[i].setVisible(false)
+      end
+    elseif sg.remoteAdress()~="" then
+      eChest.pushItem('up',1,1)
+      fs.delete("irisState")
+      fs.copy(drive.getMountPath()..'/irisState', "irisState")
+      file = fs.open('irisState',"r")
+      netIrisState = textutils.unserialize(file.readAll())
+      file.close()
+      eChest.pullItem('up',1,1)
+      if not(netIrisState[sg.remoteAdress()]) then
+        temp=0
+      elseif netIrisState[sg.remoteAdress()]=="Closed" or netIrisState[sg.remoteAdress()]=="Closing" then
+        temp=-1
+      else
+        temp=1
+      end
+      remIrisWin[temp].setVisible(true)
     end
+  elseif event == "irisStateChange" then
+    eChest.pushItem('up',1,1)
+    fs.delete("irisState")
+    fs.copy(drive.getMountPath()..'/irisState', "irisState")
+    file = fs.open('irisState',"r")
+    netIrisState = textutils.unserialize(file.readAll())
+    file.close()
+    netIrisState[localAddress]=param2
+    file = fs.open('irisState',"w")
+    file.write(textutils.serialize(netIrisState))
+    file.close()
+    eChest.pullItem('up',1,1)
   end
-  sleep(0)
 end
