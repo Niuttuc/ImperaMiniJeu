@@ -533,6 +533,7 @@ mon.setTextScale(1)
 drawHome()
 while true do
   event, param1, param2, param3 = os.pullEvent()
+
   if event == "monitor_touch" then
     x,y = mon.getSize()
     if param2 >= 6 and param2 <= 8 and param3 >= y/3-3 and param3 <= y/3*2+1 then --opens or closes the Iris
@@ -690,8 +691,7 @@ while true do
     homeWin.setVisible(false)
     drawHome()
     status, int = sg.stargateState()
-  end
-  if event == "irisStateChange" then
+      if event == "sgIrisStateChange" then
     while not(eChest.getStackInSlot(1)) do
       sleep(1)
     end
@@ -709,4 +709,5 @@ while true do
     fs.copy("irisState",drive.getMountPath()..'/irisState')
     eChest.pullItem('up',1,1)
   end
+
 end
