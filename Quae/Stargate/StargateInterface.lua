@@ -141,7 +141,7 @@ function initWin()
     else
       str="Inconnu"
     end
-    remIrisWin[i].setCursorPos(locx/2-str/2, 3)
+    remIrisWin[i].setCursorPos(locx/2-#str/2, 3)
     remIrisWin[i].write(str)
   end
 
