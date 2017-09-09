@@ -1,4 +1,4 @@
-print("LOAD Map v0.46")
+print("LOAD Map v1.00")
 local tapis={}
 local plaques={}
 local maps={}
