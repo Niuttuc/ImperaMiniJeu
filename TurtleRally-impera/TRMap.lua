@@ -1,4 +1,4 @@
-print("LOAD Map v1.02")
+print("LOAD Map v1.03")
 local tapis={}
 local plaques={}
 local maps={}
@@ -103,12 +103,12 @@ function add(x,y,ttype,info,info2,info3)
 		info.y=y
 		table.insert(tapis,info)
 	elseif ttype=="pt" then
-		info2={}
-		info2.x=x
-		info2.y=y
-		info2.rot=info
-		info2.red=info3
-		table.insert(plaques,info2)
+		local info28={}
+		info28.x=x
+		info28.y=y
+		info28.rot=info
+		info28.red=info2
+		table.insert(plaques,info28)
 	elseif ttype=="depart" then
 		depart.add(x,y,info,info2,info3)
 	elseif ttype=="bonus" then
