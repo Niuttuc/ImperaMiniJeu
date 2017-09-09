@@ -14,7 +14,7 @@ xSize=14								--Taille du plateau en x
 ySize=18								--Taille du plateau en y
 ----------------------------------------------------------
 
-print("Turtle charge version Git v3.5")
+print("Turtle charge version Git v3.8")
 modem=peripheral.find('modem')
 compass=peripheral.find('compass')
 card={north=1,east=2,south=3,west=4}
