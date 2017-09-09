@@ -288,3 +288,83 @@ function configTab(programName,var,action,key,value)
 		return config[var]
 	end
 end
+
+function hexToBi(hexString)
+	local biString=""
+	for i=1,#hexString do
+		local decN=0
+		if tonumber(string.sub(hexString,i,i)) then
+      		decN=tonumber(string.sub(hexString,i,i))
+    	else
+      		decN=string.byte(string.sub(hexString,i,i))-87
+    	end
+		local newDec=0
+		local stringN=""
+		while not(decN==newDec) do
+		  local temp=decN-newDec
+		  local j=0
+		  local jOld=4
+		  while temp>=2 do
+		    temp=(temp-temp%2)/2
+		    j=j+1
+		  end
+		  stringN=stringN..string.rep('0',jOld-j-1)..tostring(temp)
+		  newDec=newDec+temp*2^j
+		  jOld=j
+		end
+		biString=biString..stringN..' '
+	end
+	return string.sub(biString,1,-2)
+end
+
+function biToHex(biString)
+	local hexString=""
+	for i=#biString,1,-4 do
+		hexString=baseConverter(string.sub(biString,i-3,i),2,16)..hexString
+	end
+	return hexString
+end
+
+function baseConverter (toConvert,baseOri,baseDest)
+  if type(toConvert)=='number' then
+    toConvert=tostring(toConvert)
+  end
+  local convertList={}
+  for i=1,#toConvert do
+    if tonumber(string.sub(toConvert,i,i)) then
+      convertList[i]=tonumber(string.sub(toConvert,i,i))
+    else
+      convertList[i]=string.byte(string.sub(toConvert,i,i))-87
+    end
+  end
+ 
+  local convertDec=0
+  for i=1,#convertList do
+    convertDec=convertDec+convertList[i]*baseOri^(#convertList-i)
+  end
+  local newList={}
+  local newDec=0
+  while not(convertDec==newDec) do
+    local temp=convertDec-newDec
+    i=0
+    while temp>=baseDest do
+      temp=(temp-temp%baseDest)/baseDest
+      i=i+1
+    end
+    newList[i]=temp
+    newDec=newDec+temp*baseDest^i
+  end
+  local newString=""
+  for i=table.maxn(newList),0,-1 do
+    if newList[i] then
+      if newList[i]>9 then
+        newString=newString..string.char(87+newList[i])
+      else
+        newString=newString..tostring(newList[i])
+      end
+    else
+      newString=newString.."0"
+    end
+  end
+  return newString,tonumber(newString)
+end
