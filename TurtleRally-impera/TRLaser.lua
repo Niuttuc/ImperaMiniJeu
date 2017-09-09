@@ -1,4 +1,4 @@
-print("LOAD laser v0.03")
+print("LOAD laser v1.00")
 local laser=ahb.addPeripheral(config.get("laser"))
 local lasers={}
 function add(x,y,direction)
@@ -12,9 +12,9 @@ function tires()
 end
 function tire(x,y,direction)
 	local tireDirection=''
-	local tireX=config.get('x')
-	local tireY=config.get('y')
-	local tireZ=config.get('z')
+	local tireX=tonumber(config.get('x'))
+	local tireY=tonumber(config.get('y'))
+	local tireZ=tonumber(config.get('z'))
 	if config.get("orientation")=="WEST" then
 		tireX=tireX+(x*-1)
 		tireZ=tireZ+(y*-1)
