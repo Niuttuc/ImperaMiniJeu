@@ -1,4 +1,4 @@
-print("LOAD Config v0.47")
+print("LOAD Config v0.48")
 
 local config=ahb.config("TR",{
 	ecran={typ="side",info="Ecran principal"},
@@ -268,6 +268,7 @@ local ordiReboot={
 	"computer_9", -- Lanceur de turtle
 	"computer_10", -- Lanceur de turtle
 	"computer_11", -- Lanceur de turtle
+	"computer_13", -- Pluis
 }
 for ior=1,#ordiReboot do
 	local test=ahb.addPeripheral(ordiReboot[ior])
