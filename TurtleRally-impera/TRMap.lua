@@ -1,4 +1,4 @@
-print("LOAD Map v1.03")
+print("LOAD Map v1.04")
 local tapis={}
 local plaques={}
 local maps={}
@@ -145,13 +145,13 @@ function actionTapis()
 		if not(idJoueur==-1) then
 			if joueur.itapis(idJoueur) then
 				for iPeriphs=1, #groupeTapis[tapis[iTapis].red] do
-					groupeTapis[tapis[iTapis].red][iPeriphs].set(15)
+					groupeTapis[tapis[iTapis].red][iPeriphs].pp.set(15)
 				end
 				print("TAPIS")
 				joueur.deplacement(idJoueur,tapis[iTapis].x+tapis[iTapis].mx,tapis[iTapis].y+tapis[iTapis].my,false)
 				joueur.itapisOff(idJoueur)	
 				for iPeriphs=1, #groupeTapis[tapis[iTapis].red] do
-					groupeTapis[tapis[iTapis].red][iPeriphs].set(0)
+					groupeTapis[tapis[iTapis].red][iPeriphs].pp.set(0)
 				end
 			end
 		end
@@ -163,11 +163,11 @@ function actionTapis()
 			print("ROT "..tapis[iTapis].rot)
 			if not(tapis[iTapis].rot=="non") then
 				for iPeriphs=1, #groupeTapis[tapis[iTapis].red] do
-					groupeTapis[tapis[iTapis].red][iPeriphs].set(15)
+					groupeTapis[tapis[iTapis].red][iPeriphs].pp.set(15)
 				end
 				joueur.tourne(idJoueur,tapis[iTapis].rot)
 				for iPeriphs=1, #groupeTapis[tapis[iTapis].red] do
-					groupeTapis[tapis[iTapis].red][iPeriphs].set(0)
+					groupeTapis[tapis[iTapis].red][iPeriphs].pp.set(0)
 				end
 			end
 		end
@@ -178,11 +178,11 @@ function actionTapis()
 		local idJoueur=joueur.presentGetId(plaques[iPlaque].x,plaques[iPlaque].y)
 		if not(idJoueur==-1) then
 			for iPeriphs=1, #groupeTapis[plaques[iPlaque].red] do
-				groupeTapis[plaques[iPlaque].red][iPeriphs].set(15)
+				groupeTapis[plaques[iPlaque].red][iPeriphs].pp.set(15)
 			end
 			joueur.tourne(idJoueur,plaques[iPlaque].rot)
 			for iPeriphs=1, #groupeTapis[plaques[iPlaque].red] do
-				groupeTapis[plaques[iPlaque].red][iPeriphs].set(0)
+				groupeTapis[plaques[iPlaque].red][iPeriphs].pp.set(0)
 			end
 		end
 	end
