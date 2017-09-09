@@ -1,4 +1,4 @@
-print("LOAD Config v0.45")
+print("LOAD Config v0.46")
 
 local config=ahb.config("TR",{
 	ecran={typ="side",info="Ecran principal"},
@@ -151,21 +151,21 @@ function mapDef()
 	
 	-- FINIR PAR LES TAPIS, LES ENREGISTRER DANS L'ORDRE D'ACTIVATION
 	-- X Y TAPIS {mx=Mouvement en x,my=Mouvement en y,rot="non" ou "clockTurn" ou "trigoTurn"}
-	addGroupeTapis('rond',{'0','1','2','3'})
+	map.addGroupeTapis('rond',{'0','1','2','3'})
 	
 	map.add(2,2,"tapis",{mx=0,my=1,rot="trigoTurn",red="rond"})
 	map.add(3,2,"tapis",{mx=-1,my=0,rot="trigoTurn",red="rond"})
 	map.add(2,3,"tapis",{mx=1,my=0,rot="trigoTurn",red="rond"})
 	map.add(3,3,"tapis",{mx=0,my=-1,rot="trigoTurn",red="rond"})
 	
-	addGroupeTapis('bordel4',{'4','5','6','7'})
+	map.addGroupeTapis('bordel4',{'4','5','6','7'})
 	
 	map.add(7,6,"tapis",{mx=0,my=-1,rot="trigoTurn",red="bordel4"})
 	map.add(7,5,"tapis",{mx=1,my=0,rot="clockTurn",red="bordel4"})
 	map.add(8,5,"tapis",{mx=0,my=-1,rot="trigoTurn",red="bordel4"})
 	map.add(8,4,"tapis",{mx=0,my=-1,rot="non",red="bordel4"})
 	
-	addGroupeTapis('bordel5',{'8','9','10','11','12'})
+	map.addGroupeTapis('bordel5',{'8','9','10','11','12'})
 	
 	map.add(11,6,"tapis",{mx=-1,my=0,rot="trigoTurn",red="bordel5"})
 	map.add(10,6,"tapis",{mx=0,my=-1,rot="clockTurn",red="bordel5"})
@@ -173,7 +173,7 @@ function mapDef()
 	map.add(9,5,"tapis",{mx=0,my=-1,rot="clockTurn",red="bordel5"})
 	map.add(9,4,"tapis",{mx=0,my=-1,rot="non",red="bordel5"})
 	
-	addGroupeTapis('bleu',{'19','20','21','22','23','24'})
+	map.addGroupeTapis('bleu',{'19','20','21','22','23','24'})
 	
 	map.add(5,10,"tapis",{mx=-1,my=0,rot="non",red="bleu"})
 	map.add(4,10,"tapis",{mx=-1,my=0,rot="non",red="bleu"})
@@ -182,7 +182,7 @@ function mapDef()
 	map.add(3,8,"tapis",{mx=1,my=0,rot="clockTurn",red="bleu"})
 	map.add(4,8,"tapis",{mx=1,my=0,rot="non",red="bleu"})
 	
-	addGroupeTapis('rouge',{'13','14','15','16','17','18'})
+	map.addGroupeTapis('rouge',{'13','14','15','16','17','18'})
 	
 	map.add(11,10,"tapis",{mx=1,my=0,rot="non",red="rouge"})
 	map.add(12,10,"tapis",{mx=1,my=0,rot="non",red="rouge"})
@@ -191,7 +191,7 @@ function mapDef()
 	map.add(13,8,"tapis",{mx=-1,my=0,rot="trigoTurn",red="rouge"})
 	map.add(12,8,"tapis",{mx=-1,my=0,rot="non",red="rouge"})
 	
-	addGroupeTapis('ligne',{'25','26','27','28','29','30'})
+	map.addGroupeTapis('ligne',{'25','26','27','28','29','30'})
 	
 	map.add(11,12,"tapis",{mx=1,my=0,rot="non",red="ligne"})
 	map.add(10,12,"tapis",{mx=1,my=0,rot="non",red="ligne"})
@@ -203,7 +203,7 @@ function mapDef()
 	-- FINIR PAR LES PLAQUES TOURNANTE
 	-- X Y pt "clockTurn" ou "trigoTurn"
 	
-	addGroupeTapis('laby',{'45','48','49','50','46','47','52','51','53','54','55','56'})
+	map.addGroupeTapis('laby',{'45','48','49','50','46','47','52','51','53','54','55','56'})
 	
 	map.add(11,1,"pt","trigoTurn",'laby')
 	map.add(12,1,"pt","clockTurn",'laby')
@@ -221,32 +221,32 @@ function mapDef()
 	map.add(13,4,"pt","clockTurn",'laby')
 	map.add(14,4,"pt","trigoTurn",'laby')
 	
-	addGroupeTapis('iso1',{'44'})	
+	map.addGroupeTapis('iso1',{'44'})	
 	map.add(7,2,"pt","trigoTurn","iso1")
 	
-	addGroupeTapis('iso2',{'43'})	
+	map.addGroupeTapis('iso2',{'43'})	
 	map.add(5,3,"pt","clockTurn","iso2")
 	
 	
-	addGroupeTapis('iso3',{'42'})	
+	map.addGroupeTapis('iso3',{'42'})	
 	map.add(5,5,"pt","trigoTurn","iso3")
 	
-	addGroupeTapis('iso4',{'41'})	
+	map.addGroupeTapis('iso4',{'41'})	
 	map.add(4,6,"pt","trigoTurn","iso4")
 	
 		
-	addGroupeTapis('iso5',{'58'})
+	map.addGroupeTapis('iso5',{'58'})
 	map.add(1,8,"pt","trigoTurn","iso5")
 	
-	addGroupeTapis('etape',{'38','39','40'})
+	map.addGroupeTapis('etape',{'38','39','40'})
 	map.add(8,8,"pt","trigoTurn",'etape')
 	map.add(7,9,"pt","trigoTurn",'etape')
 	map.add(9,9,"pt","clockTurn",'etape')
 	
-	addGroupeTapis('iso6',{'37'})
+	map.addGroupeTapis('iso6',{'37'})
 	map.add(4,12,"pt","trigoTurn","iso6")
 	
-	addGroupeTapis('departs',{'31','32','33','34','35','36'})
+	map.addGroupeTapis('departs',{'31','32','33','34','35','36'})
 	map.add(2,15,"pt","clockTurn","departs")
 	map.add(4,14,"pt","clockTurn","departs")
 	map.add(6,15,"pt","trigoTurn","departs")
