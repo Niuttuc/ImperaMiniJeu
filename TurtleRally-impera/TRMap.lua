@@ -1,4 +1,4 @@
-print("LOAD Map v1.00")
+print("LOAD Map v1.02")
 local tapis={}
 local plaques={}
 local maps={}
@@ -107,6 +107,7 @@ function add(x,y,ttype,info,info2,info3)
 		info2.x=x
 		info2.y=y
 		info2.rot=info
+		info2.red=info3
 		table.insert(plaques,info2)
 	elseif ttype=="depart" then
 		depart.add(x,y,info,info2,info3)
@@ -130,16 +131,28 @@ function get(x,y)
 	end
 	return maps[x][y]
 end
+groupeTapis={}
+function addGroupeTapis(groupe,periphs)
+	groupeTapis[groupe]={}
+	for iPeriphs=1, #periphs do
+		table.insert(groupeTapis[groupe],ahb.addPeripheral('hb_interupteur_'..periphs[iPeriphs]))
+	end	
+end
 function actionTapis()
 	joueur.itapisReset()
 	for iTapis=1, #tapis do
 		local idJoueur=joueur.presentGetId(tapis[iTapis].x,tapis[iTapis].y)		
 		if not(idJoueur==-1) then
 			if joueur.itapis(idJoueur) then
-				
+				for iPeriphs=1, #groupeTapis[tapis[iTapis].red] do
+					groupeTapis[tapis[iTapis].red][iPeriphs].set(15)
+				end
 				print("TAPIS")
 				joueur.deplacement(idJoueur,tapis[iTapis].x+tapis[iTapis].mx,tapis[iTapis].y+tapis[iTapis].my,false)
-				joueur.itapisOff(idJoueur)				
+				joueur.itapisOff(idJoueur)	
+				for iPeriphs=1, #groupeTapis[tapis[iTapis].red] do
+					groupeTapis[tapis[iTapis].red][iPeriphs].set(0)
+				end
 			end
 		end
 	end
@@ -149,7 +162,13 @@ function actionTapis()
 		if not(idJoueur==-1) then
 			print("ROT "..tapis[iTapis].rot)
 			if not(tapis[iTapis].rot=="non") then
+				for iPeriphs=1, #groupeTapis[tapis[iTapis].red] do
+					groupeTapis[tapis[iTapis].red][iPeriphs].set(15)
+				end
 				joueur.tourne(idJoueur,tapis[iTapis].rot)
+				for iPeriphs=1, #groupeTapis[tapis[iTapis].red] do
+					groupeTapis[tapis[iTapis].red][iPeriphs].set(0)
+				end
 			end
 		end
 	end
@@ -157,8 +176,14 @@ function actionTapis()
 	
 	for iPlaque=1, #plaques do
 		local idJoueur=joueur.presentGetId(plaques[iPlaque].x,plaques[iPlaque].y)
-		if not(idJoueur==-1) then			
+		if not(idJoueur==-1) then
+			for iPeriphs=1, #groupeTapis[plaques[iPlaque].red] do
+				groupeTapis[plaques[iPlaque].red][iPeriphs].set(15)
+			end
 			joueur.tourne(idJoueur,plaques[iPlaque].rot)
+			for iPeriphs=1, #groupeTapis[plaques[iPlaque].red] do
+				groupeTapis[plaques[iPlaque].red][iPeriphs].set(0)
+			end
 		end
 	end
 	
