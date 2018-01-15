@@ -1,4 +1,4 @@
-print("LOAD Config v0.48")
+print("LOAD Config v0.49")
 
 local config=ahb.config("TR",{
 	ecran={typ="side",info="Ecran principal"},
@@ -85,13 +85,13 @@ function mapDef()
 	map.add(15,4,'mur')
 	
 	map.add(5,2,"bonus","monitor_6")
-	map.add(9,2,"etape","monitor_11","MX",true)
+	map.add(9,2,"etape","monitor_19","MX",true)
 	map.add(10,2,"mur")
 	map.add(6,3,"pique")
 	map.add(7,3,"mur")
 	map.add(10,3,"laser","MX")
 	map.add(11,3,"mur")
-	map.add(12,3,"bonus","monitor_7")
+	map.add(12,3,"bonus","monitor_20")
 	map.add(3,4,"etape","monitor_12","MX",false)
 	map.add(4,4,"mur")
 	map.add(12,4,"mur")
@@ -158,14 +158,14 @@ function mapDef()
 	map.add(2,3,"tapis",{mx=1,my=0,rot="trigoTurn",red="rond"})
 	map.add(3,3,"tapis",{mx=0,my=-1,rot="trigoTurn",red="rond"})
 	
-	map.addGroupeTapis('bordel4',{'4','5','6','7'})
+	map.addGroupeTapis('bordel4',{'68','70','69','4'})
 	
 	map.add(7,6,"tapis",{mx=0,my=-1,rot="trigoTurn",red="bordel4"})
 	map.add(7,5,"tapis",{mx=1,my=0,rot="clockTurn",red="bordel4"})
 	map.add(8,5,"tapis",{mx=0,my=-1,rot="trigoTurn",red="bordel4"})
 	map.add(8,4,"tapis",{mx=0,my=-1,rot="non",red="bordel4"})
 	
-	map.addGroupeTapis('bordel5',{'8','9','10','11','12'})
+	map.addGroupeTapis('bordel5',{'67','86','66','11','12'})
 	
 	map.add(11,6,"tapis",{mx=-1,my=0,rot="trigoTurn",red="bordel5"})
 	map.add(10,6,"tapis",{mx=0,my=-1,rot="clockTurn",red="bordel5"})
@@ -203,7 +203,7 @@ function mapDef()
 	-- FINIR PAR LES PLAQUES TOURNANTE
 	-- X Y pt "clockTurn" ou "trigoTurn"
 	
-	map.addGroupeTapis('laby',{'45','48','49','50','46','47','52','51','53','54','55','56'})
+	map.addGroupeTapis('laby',{'64','74','75','76','79','80','81','82','72','71','83','84'})
 	
 	map.add(11,1,"pt","trigoTurn",'laby')
 	map.add(12,1,"pt","clockTurn",'laby')
@@ -221,7 +221,7 @@ function mapDef()
 	map.add(13,4,"pt","clockTurn",'laby')
 	map.add(14,4,"pt","trigoTurn",'laby')
 	
-	map.addGroupeTapis('iso1',{'44'})	
+	map.addGroupeTapis('iso1',{'85'})	
 	map.add(7,2,"pt","trigoTurn","iso1")
 	
 	map.addGroupeTapis('iso2',{'43'})	
@@ -261,14 +261,14 @@ local ordiReboot={
 	"computer_2", -- GPS
 	"computer_3", -- GPS
 	"computer_4", -- GPS
-	"computer_5", -- GPS
+	"computer_14", -- GPS
 	"computer_6", -- Lanceur de turtle
 	"computer_7", -- Lanceur de turtle
 	"computer_8", -- Lanceur de turtle
 	"computer_9", -- Lanceur de turtle
 	"computer_10", -- Lanceur de turtle
 	"computer_11", -- Lanceur de turtle
-	"computer_0", -- Pluis
+	"computer_15", -- Pluie
 }
 for ior=1,#ordiReboot do
 	local test=ahb.addPeripheral(ordiReboot[ior])
