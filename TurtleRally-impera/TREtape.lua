@@ -1,4 +1,4 @@
-print("LOAD Etape v0.07")
+print("LOAD Etape v0.08")
 local etapesTirage={}
 function tirage2(numero)
 	index=math.random(#etapesTirage)
@@ -26,7 +26,7 @@ function tirage()
 	tirage2(1)
 	
 	for etapesI=1, #etapes do
-		if etapes[etapesI].numero=="" then
+		if etapes[etapesI].first==false then
 			table.insert(etapesTirage,etapesI)
 		end
 	end

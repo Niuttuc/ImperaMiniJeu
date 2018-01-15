@@ -14,7 +14,7 @@ xSize=14								--Taille du plateau en x
 ySize=18								--Taille du plateau en y
 ----------------------------------------------------------
 
-print("Turtle charge version Git v3.8")
+print("Turtle charge version Git v3.9")
 modem=peripheral.find('modem')
 compass=peripheral.find('compass')
 card={north=1,east=2,south=3,west=4}
@@ -105,8 +105,13 @@ end
 
 
 function goTo(goalPos)						--va a la coordonee goalPos, garde son orientation si keepDir est vraie
+	print("goto")
 	startDir=compass.getFacing()
 	currentPos=getTurtlePos()
+	print("goalPos.x "..goalPos.x)
+	print("currentPos.x "..currentPos.x)
+	print("goalPos.y "..goalPos.y)
+	print("currentPos.y "..currentPos.y)
 	if math.abs(goalPos.x-currentPos.x)+math.abs(goalPos.y-currentPos.y)==1 then
 		print("Juste 1")
 		if goalPos.x>currentPos.x then
@@ -155,6 +160,7 @@ end
 
 
 function death(trou)								--si trou est a true (j'ai pas pu m'en empecher :D), passe par le bas
+	print("death")
 	h=getTurtlePos().h								-- et se rend au garage, sinon, se rend au garage
 	if trou and h==1 then									
 		down()
@@ -201,6 +207,7 @@ end
 
 
 function deathDest(trou,dest)						--si trou est a true (j'ai pas pu m'en empecher :D), passe par le bas
+	print("deathDest")
 	h=getTurtlePos().h								-- et se rend au garage, sinon, se rend au garage
 	if trou and h==1 then									
 		down()
@@ -235,6 +242,7 @@ function deathDest(trou,dest)						--si trou est a true (j'ai pas pu m'en empech
 end
 
 function enterTheGame(destination)					--quitte le gararge et va se placer sur le depart destination
+	print("enterTheGame")
 	forward()
 	forward()
 	rotateToDirection(garageStartsDirection)
@@ -334,6 +342,7 @@ function waitForModem()
 			modem.transmit(repFreq, color, 'fini')
 		elseif type(mess)=='table' and mess[1]=='bouge' then
 			if paresseux then
+				print("message bouge")
 				goTo(mess[2])
 			end
 			modem.transmit(repFreq, color, 'fini')
